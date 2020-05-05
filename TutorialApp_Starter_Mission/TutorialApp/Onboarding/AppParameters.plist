@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>Application Identifier</key>
-	<string>com.sap.example</string>
+	<string>Fill here</string>
 	<key>Destinations</key>
 	<dict>
 		<key>com.sap.edm.sampleservice.v2</key>
