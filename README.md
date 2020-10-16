@@ -1,5 +1,7 @@
 # Build an iOS and MacOS App with One Code Line Using SAP Cloud Platform SDK for iOS - Sample Project
 
+[![REUSE status](https://api.reuse.software/badge/github.com/SAP-samples/cloud-sdk-ios-maccatalyst-mission-project)](https://api.reuse.software/info/github.com/SAP-samples/cloud-sdk-ios-maccatalyst-mission-project)
+
 ## Description
 This repository contains an Xcode Swift project using the SAP Cloud Platform SDK for iOS frameworks. With the newest version of the SAP Cloud Platform SDK for iOS 5.0 and later you will not have all the latest and greatest technology available but also Mac Catalyst support. The tutorial series which this project belongs too, will show you how to build an app with the Apple SDK, SAP Cloud Platform SDK for iOS and Xcode. This app you will make fit to run on iOS as well as MacOS.
 
