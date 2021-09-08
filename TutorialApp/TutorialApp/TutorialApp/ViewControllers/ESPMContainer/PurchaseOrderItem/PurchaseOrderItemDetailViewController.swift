@@ -1,7 +1,7 @@
 //
 // TutorialApp
 //
-// Created by SAP BTP SDK Assistant for iOS application on 12/07/21
+// Created by SAP BTP SDK Assistant for iOS application on 08/09/21
 //
 
 import ESPMContainerFmwk
@@ -10,13 +10,10 @@ import SAPCommon
 import SAPFiori
 import SAPFoundation
 import SAPOData
-
-import SAPFioriFlows
-import SharedFmwk
-import WidgetKit
+import SAPOfflineOData
 
 class PurchaseOrderItemDetailViewController: FUIFormTableViewController, SAPFioriLoadingIndicator {
-    var dataService: ESPMContainer<OnlineODataProvider>!
+    var dataService: ESPMContainer<OfflineODataProvider>!
     private var validity = [String: Bool]()
     var allowsEditableCells = false
 
@@ -403,7 +400,7 @@ class PurchaseOrderItemDetailViewController: FUIFormTableViewController, SAPFior
                 AlertHelper.displayAlert(with: NSLocalizedString("keyErrorEntityCreationTitle", value: "Create entry failed", comment: "XTIT: Title of alert message about entity creation error."), error: error, viewController: self)
                 return
             }
-            self.reloadWidget()
+
             self.logger.info("Create entry finished successfully.")
             DispatchQueue.main.async {
                 self.dismiss(animated: true) {
@@ -440,7 +437,7 @@ class PurchaseOrderItemDetailViewController: FUIFormTableViewController, SAPFior
                 AlertHelper.displayAlert(with: NSLocalizedString("keyErrorEntityUpdateTitle", value: "Update entry failed", comment: "XTIT: Title of alert message about entity update failure."), error: error, viewController: self)
                 return
             }
-            self.reloadWidget()
+
             self.logger.info("Update entry finished successfully.")
             DispatchQueue.main.async {
                 self.dismiss(animated: true) {
@@ -465,28 +462,6 @@ class PurchaseOrderItemDetailViewController: FUIFormTableViewController, SAPFior
             field == false
         }
         self.navigationItem.rightBarButtonItem?.isEnabled = anyFieldInvalid == nil
-    }
-
-    func reloadWidget() {
-        var cipher: Ciphering
-        do {
-            let auxDataEncryptionKey = try SecurityManager().getAuxiliaryDataEncryptionKey()
-            cipher = CryptoProvider(with: auxDataEncryptionKey, tag: AuxiliaryConfiguration.cryptoProviderTag)
-        } catch {
-            fatalError("No auxiliary data encryption key found!")
-        }
-
-        guard let odataController = OnboardingSessionManager.shared.onboardingSession?.odataControllers[ODataContainerType.eSPMContainer.description] as? ESPMContainerOnlineODataController,
-            let widgetDataLoader = ESPMContainerWidgetDataLoader(controller: odataController, with: cipher),
-            let entitySetName = self.entitySetName else {
-            return
-        }
-
-        widgetDataLoader.loadEntitySet(for: entitySetName) { status in
-            if status {
-                WidgetCenter.shared.reloadTimelines(ofKind: AuxiliaryConfiguration.widgetKind)
-            }
-        }
     }
 }
 

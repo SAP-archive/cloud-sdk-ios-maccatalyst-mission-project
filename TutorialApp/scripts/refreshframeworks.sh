@@ -18,7 +18,7 @@
 #
 #   ASSISTANT_LOCATION: Environment variable containing the path where Assistant is installed. The script checks for ASSISTANT_LOCATION environment location, if it is not set uses this default value: $DEFAULT_ASSISTANT_LOCATION
 
-FRAMEWORK_NAMES=( SAPCommon SAPFiori SAPFioriFlows SAPFoundation SAPOData  )
+FRAMEWORK_NAMES=( SAPCommon SAPFiori SAPFioriFlows SAPFoundation SAPOData SAPOfflineOData )
 DEFAULT_ASSISTANT_LOCATION="/Applications/SAP BTP SDK Assistant for iOS.app/Contents/Resources/iOSFrameworks/Release-xcframework/"
 
 PROJECT="$1"

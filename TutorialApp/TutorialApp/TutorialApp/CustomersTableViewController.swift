@@ -10,6 +10,7 @@ import UIKit
 import SAPFiori
 import SAPFoundation
 import SAPOData
+import SAPOfflineOData
 import SAPFioriFlows
 import SAPCommon
 import ESPMContainerFmwk
@@ -20,8 +21,8 @@ class CustomersTableViewController: UITableViewController, SAPFioriLoadingIndica
 
     let destinations = FileConfigurationProvider("AppParameters").provideConfiguration().configuration["Destinations"] as! NSDictionary
 
-    var dataService: ESPMContainer<OnlineODataProvider>? {
-        guard let odataController = OnboardingSessionManager.shared.onboardingSession?.odataControllers[ODataContainerType.eSPMContainer.description] as? ESPMContainerOnlineODataController, let dataService = odataController.dataService else {
+    var dataService: ESPMContainer<OfflineODataProvider>? {
+        guard let odataController = OnboardingSessionManager.shared.onboardingSession?.odataControllers[ODataContainerType.eSPMContainer.description] as? ESPMContainerOfflineODataController, let dataService = odataController.dataService else {
             AlertHelper.displayAlert(with: "OData service is not reachable, please onboard again.", error: nil, viewController: self)
             return nil
         }

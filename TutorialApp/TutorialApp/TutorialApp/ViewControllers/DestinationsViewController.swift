@@ -1,15 +1,12 @@
 //
 // TutorialApp
 //
-// Created by SAP BTP SDK Assistant for iOS application on 12/07/21
+// Created by SAP BTP SDK Assistant for iOS application on 08/09/21
 //
 
 import SAPFiori
 import SAPFoundation
 import UIKit
-
-import SharedFmwk
-import WidgetKit
 
 class DestinationsViewController: FUIFormTableViewController {
     let destinations = FileConfigurationProvider("AppParameters").provideConfiguration().configuration["Destinations"] as! NSDictionary
@@ -17,18 +14,6 @@ class DestinationsViewController: FUIFormTableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        WidgetCenter.shared.reloadTimelines(ofKind: AuxiliaryConfiguration.widgetKind)
-    }
-
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-
-        Deeplinker.Navigator.shared.check(destination: .none, screen: .destinationList, moveForwardDoing: { dest, _ in
-            if let index = self.odataServiceNames.firstIndex(of: dest.description) {
-                let indexPath = IndexPath(row: index, section: 0)
-                self.handleClick(at: indexPath)
-            }
-        })
     }
 
     // MARK: - Table view data source

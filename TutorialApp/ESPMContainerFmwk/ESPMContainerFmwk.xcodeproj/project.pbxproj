@@ -7,53 +7,53 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0102C27394B07FCF2567665F /* Customer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2A5C0E6CC789B9986FA1193 /* Customer.swift */; };
-		09D027AD37311C6270D52C25 /* ESPMContainerMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83170348417421029EDBF46 /* ESPMContainerMetadata.swift */; };
-		0CEF7A312E516038805942A6 /* ESPMContainerMetadataText.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0120EBF5831675D97D5897 /* ESPMContainerMetadataText.swift */; };
-		1A9B6EB3F6EF6703980DDC87 /* ESPMContainerStaticResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD43E57B8CE449BBE5540332 /* ESPMContainerStaticResolver.swift */; };
-		28CE443C3B28535349F3110F /* Supplier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95A786C813D2D628DC3B806C /* Supplier.swift */; };
-		6B3C5402B948111E1F44779F /* ESPMContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD0E94DF9D305A0362181551 /* ESPMContainer.swift */; };
-		79BA683D5B38D248BF92B451 /* SAPOData.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5FF5D6406B89867DEF6B358 /* SAPOData.xcframework */; };
-		7ED0DE4EB1B1AF03CE5513D8 /* PurchaseOrderHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82517F9FB4BA9440C703D1B5 /* PurchaseOrderHeader.swift */; };
-		8973C831A602DC6B4A1AD658 /* Stock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D2261989181E26D80763880 /* Stock.swift */; };
-		8E08241F94B34586872849B5 /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0FFBA9C677FC0927F3E527F /* Product.swift */; };
-		95C12D88C0B5DF63DD2EE958 /* ESPMContainerMetadataChanges.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA77D0EB0A97A4A13211C7C9 /* ESPMContainerMetadataChanges.swift */; };
-		A73F7EE38BBEFFB5653F5D64 /* SalesOrderItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71DA8CE2A67A8F5C540326F8 /* SalesOrderItem.swift */; };
-		B1BB92434F49BD50AD650771 /* SAPFoundation.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 502384138E17C80BEA196F93 /* SAPFoundation.xcframework */; };
-		C4B9657DE838EAEAF26BE3D5 /* ESPMContainerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60B6BAD14A1BC1084AC7B300 /* ESPMContainerFactory.swift */; };
-		D985CFB69DB8AC8E1AA8F743 /* PurchaseOrderItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34CA04B45FAA8976326025AD /* PurchaseOrderItem.swift */; };
-		DD3D3E2722B45F2FE02C6EB1 /* ProductText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 246E9E4E87097207B66B0509 /* ProductText.swift */; };
-		DFB40956D66601C7FF990DCB /* ESPMContainerMetadataParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23F6981BF4A4168D4AF1D1B9 /* ESPMContainerMetadataParser.swift */; };
-		DFE7FF2B0D1329732564417A /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A332CBAEC1288AE27555C0F /* Address.swift */; };
-		E5B8B467CF02E528B4C21DBC /* ProductCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFD37145F4333B85FE81A8B /* ProductCategory.swift */; };
-		EB236E68A8A0A86B7D46D1CD /* SAPCommon.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E2FD46FC4ECC499777C87FE /* SAPCommon.xcframework */; };
-		EF93982E6F5279A3C2F9A881 /* SalesOrderHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26513B4911F008CB4E6168A /* SalesOrderHeader.swift */; };
+		02BCF16E75D739B95834C895 /* SAPOData.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 169F6A6143C056A53E6C3F6E /* SAPOData.xcframework */; };
+		0482FDEC1590ECB2E9B16292 /* ESPMContainerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941EE28D9055016F1E6F4378 /* ESPMContainerFactory.swift */; };
+		0B41A050AA673F97A4905263 /* SAPFoundation.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DF3F109FC954716DB964ADD /* SAPFoundation.xcframework */; };
+		2514E65E90032D1B6A1F0918 /* ESPMContainerMetadataParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB34FD46A6254DB4653C85CA /* ESPMContainerMetadataParser.swift */; };
+		267A9D3438348E3FDA4CBCD4 /* ESPMContainerMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EEB4478122D9012603B1F31 /* ESPMContainerMetadata.swift */; };
+		28D5CA2D28CA056DC4A495CE /* Stock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F35EC3F59A53E0789C4BB91 /* Stock.swift */; };
+		315C25554E2AD0F412A0A277 /* ESPMContainerMetadataChanges.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB4884CA49053D254B69F84 /* ESPMContainerMetadataChanges.swift */; };
+		3ECBBB4958429193E8FC5554 /* ProductCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDCB6190D2CB30D3A8153E3B /* ProductCategory.swift */; };
+		4A8BC8121AE4891FEFDBD4D0 /* ESPMContainerStaticResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88B4FFABAF41C3D8CD9D8029 /* ESPMContainerStaticResolver.swift */; };
+		4B39794CB92B72D1A0E12366 /* ESPMContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C787F83DC1E9CBA163FC21E0 /* ESPMContainer.swift */; };
+		AD6E930466E5D7994018F19E /* SalesOrderHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3344CC07CB4C5EA81882AA24 /* SalesOrderHeader.swift */; };
+		B8BBD5CD39DB9129334E0641 /* PurchaseOrderHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA33E52AD24B49752E7CA109 /* PurchaseOrderHeader.swift */; };
+		B8FF7DE8E7E4190A3633D01A /* SalesOrderItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD378D5645CC6A81C726AFFE /* SalesOrderItem.swift */; };
+		BD5D9BF13C149CE226635BD1 /* PurchaseOrderItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5550332827EE6C72CAD47F50 /* PurchaseOrderItem.swift */; };
+		BFC75BB71D682D3595E21EF4 /* ESPMContainerMetadataText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D34BF5C329E4ABBE932CE23 /* ESPMContainerMetadataText.swift */; };
+		CC51E195D9A59B07FE995139 /* Supplier.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4C03AFB9FB7F3A4C59EAC8 /* Supplier.swift */; };
+		CE2A8D3772BA352128D29783 /* Customer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADE7AC90515F24E30E05A138 /* Customer.swift */; };
+		DF5CDC22AC279DCD9AD8988A /* ProductText.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDF87617E8509E4C86D42AB5 /* ProductText.swift */; };
+		EA02DC3A757CE5CABDB3A034 /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = 565BE99CA4A717ADCDDB51E1 /* Product.swift */; };
+		EA8912D7F6AB591B2B355FD6 /* SAPCommon.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = F64F438AFB44A90A6C338412 /* SAPCommon.xcframework */; };
+		F7FF2C9FE43FD65FD97F29B7 /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20578B3B6D8D253B8D974C66 /* Address.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		0A332CBAEC1288AE27555C0F /* Address.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Address.swift; path = public/Address.swift; sourceTree = "<group>"; };
-		23F6981BF4A4168D4AF1D1B9 /* ESPMContainerMetadataParser.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ESPMContainerMetadataParser.swift; path = internal/ESPMContainerMetadataParser.swift; sourceTree = "<group>"; };
-		246E9E4E87097207B66B0509 /* ProductText.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ProductText.swift; path = public/ProductText.swift; sourceTree = "<group>"; };
-		34CA04B45FAA8976326025AD /* PurchaseOrderItem.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PurchaseOrderItem.swift; path = public/PurchaseOrderItem.swift; sourceTree = "<group>"; };
-		4E2FD46FC4ECC499777C87FE /* SAPCommon.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.xcframework; name = SAPCommon.xcframework; path = "../Release-xcframework/SAPCommon.xcframework"; sourceTree = "<group>"; };
-		502384138E17C80BEA196F93 /* SAPFoundation.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.xcframework; name = SAPFoundation.xcframework; path = "../Release-xcframework/SAPFoundation.xcframework"; sourceTree = "<group>"; };
-		5D2261989181E26D80763880 /* Stock.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Stock.swift; path = public/Stock.swift; sourceTree = "<group>"; };
-		60B6BAD14A1BC1084AC7B300 /* ESPMContainerFactory.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ESPMContainerFactory.swift; path = internal/ESPMContainerFactory.swift; sourceTree = "<group>"; };
-		71DA8CE2A67A8F5C540326F8 /* SalesOrderItem.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SalesOrderItem.swift; path = public/SalesOrderItem.swift; sourceTree = "<group>"; };
-		82517F9FB4BA9440C703D1B5 /* PurchaseOrderHeader.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PurchaseOrderHeader.swift; path = public/PurchaseOrderHeader.swift; sourceTree = "<group>"; };
+		169F6A6143C056A53E6C3F6E /* SAPOData.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.xcframework; name = SAPOData.xcframework; path = "../Release-xcframework/SAPOData.xcframework"; sourceTree = "<group>"; };
+		20578B3B6D8D253B8D974C66 /* Address.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Address.swift; path = public/Address.swift; sourceTree = "<group>"; };
+		2DF3F109FC954716DB964ADD /* SAPFoundation.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.xcframework; name = SAPFoundation.xcframework; path = "../Release-xcframework/SAPFoundation.xcframework"; sourceTree = "<group>"; };
+		3344CC07CB4C5EA81882AA24 /* SalesOrderHeader.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SalesOrderHeader.swift; path = public/SalesOrderHeader.swift; sourceTree = "<group>"; };
+		3F35EC3F59A53E0789C4BB91 /* Stock.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Stock.swift; path = public/Stock.swift; sourceTree = "<group>"; };
+		5550332827EE6C72CAD47F50 /* PurchaseOrderItem.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PurchaseOrderItem.swift; path = public/PurchaseOrderItem.swift; sourceTree = "<group>"; };
+		565BE99CA4A717ADCDDB51E1 /* Product.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Product.swift; path = public/Product.swift; sourceTree = "<group>"; };
+		6D34BF5C329E4ABBE932CE23 /* ESPMContainerMetadataText.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ESPMContainerMetadataText.swift; path = internal/ESPMContainerMetadataText.swift; sourceTree = "<group>"; };
+		88B4FFABAF41C3D8CD9D8029 /* ESPMContainerStaticResolver.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ESPMContainerStaticResolver.swift; path = internal/ESPMContainerStaticResolver.swift; sourceTree = "<group>"; };
+		8EEB4478122D9012603B1F31 /* ESPMContainerMetadata.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ESPMContainerMetadata.swift; path = public/ESPMContainerMetadata.swift; sourceTree = "<group>"; };
 		91C75DB92463F04100ECC4ED /* ESPMContainerFmwk.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ESPMContainerFmwk.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		91C75DBD2463F04100ECC4ED /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		95A786C813D2D628DC3B806C /* Supplier.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Supplier.swift; path = public/Supplier.swift; sourceTree = "<group>"; };
-		B26513B4911F008CB4E6168A /* SalesOrderHeader.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SalesOrderHeader.swift; path = public/SalesOrderHeader.swift; sourceTree = "<group>"; };
-		B5FF5D6406B89867DEF6B358 /* SAPOData.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.xcframework; name = SAPOData.xcframework; path = "../Release-xcframework/SAPOData.xcframework"; sourceTree = "<group>"; };
-		BD0E94DF9D305A0362181551 /* ESPMContainer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ESPMContainer.swift; path = public/ESPMContainer.swift; sourceTree = "<group>"; };
-		BFFD37145F4333B85FE81A8B /* ProductCategory.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ProductCategory.swift; path = public/ProductCategory.swift; sourceTree = "<group>"; };
-		C83170348417421029EDBF46 /* ESPMContainerMetadata.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ESPMContainerMetadata.swift; path = public/ESPMContainerMetadata.swift; sourceTree = "<group>"; };
-		CD43E57B8CE449BBE5540332 /* ESPMContainerStaticResolver.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ESPMContainerStaticResolver.swift; path = internal/ESPMContainerStaticResolver.swift; sourceTree = "<group>"; };
-		D2A5C0E6CC789B9986FA1193 /* Customer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Customer.swift; path = public/Customer.swift; sourceTree = "<group>"; };
-		E0FFBA9C677FC0927F3E527F /* Product.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Product.swift; path = public/Product.swift; sourceTree = "<group>"; };
-		EA77D0EB0A97A4A13211C7C9 /* ESPMContainerMetadataChanges.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ESPMContainerMetadataChanges.swift; path = internal/ESPMContainerMetadataChanges.swift; sourceTree = "<group>"; };
-		EC0120EBF5831675D97D5897 /* ESPMContainerMetadataText.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ESPMContainerMetadataText.swift; path = internal/ESPMContainerMetadataText.swift; sourceTree = "<group>"; };
+		941EE28D9055016F1E6F4378 /* ESPMContainerFactory.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ESPMContainerFactory.swift; path = internal/ESPMContainerFactory.swift; sourceTree = "<group>"; };
+		AB34FD46A6254DB4653C85CA /* ESPMContainerMetadataParser.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ESPMContainerMetadataParser.swift; path = internal/ESPMContainerMetadataParser.swift; sourceTree = "<group>"; };
+		ADE7AC90515F24E30E05A138 /* Customer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Customer.swift; path = public/Customer.swift; sourceTree = "<group>"; };
+		BD4C03AFB9FB7F3A4C59EAC8 /* Supplier.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Supplier.swift; path = public/Supplier.swift; sourceTree = "<group>"; };
+		C787F83DC1E9CBA163FC21E0 /* ESPMContainer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ESPMContainer.swift; path = public/ESPMContainer.swift; sourceTree = "<group>"; };
+		DCB4884CA49053D254B69F84 /* ESPMContainerMetadataChanges.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ESPMContainerMetadataChanges.swift; path = internal/ESPMContainerMetadataChanges.swift; sourceTree = "<group>"; };
+		DDF87617E8509E4C86D42AB5 /* ProductText.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ProductText.swift; path = public/ProductText.swift; sourceTree = "<group>"; };
+		EA33E52AD24B49752E7CA109 /* PurchaseOrderHeader.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PurchaseOrderHeader.swift; path = public/PurchaseOrderHeader.swift; sourceTree = "<group>"; };
+		F64F438AFB44A90A6C338412 /* SAPCommon.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.xcframework; name = SAPCommon.xcframework; path = "../Release-xcframework/SAPCommon.xcframework"; sourceTree = "<group>"; };
+		FD378D5645CC6A81C726AFFE /* SalesOrderItem.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SalesOrderItem.swift; path = public/SalesOrderItem.swift; sourceTree = "<group>"; };
+		FDCB6190D2CB30D3A8153E3B /* ProductCategory.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ProductCategory.swift; path = public/ProductCategory.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,43 +61,23 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EB236E68A8A0A86B7D46D1CD /* SAPCommon.xcframework in Frameworks */,
-				79BA683D5B38D248BF92B451 /* SAPOData.xcframework in Frameworks */,
-				B1BB92434F49BD50AD650771 /* SAPFoundation.xcframework in Frameworks */,
+				EA8912D7F6AB591B2B355FD6 /* SAPCommon.xcframework in Frameworks */,
+				0B41A050AA673F97A4905263 /* SAPFoundation.xcframework in Frameworks */,
+				02BCF16E75D739B95834C895 /* SAPOData.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		095C4923F4B0B604A805122B /* public */ = {
+		5153D6220928F951805C37AC /* internal */ = {
 			isa = PBXGroup;
 			children = (
-				95A786C813D2D628DC3B806C /* Supplier.swift */,
-				5D2261989181E26D80763880 /* Stock.swift */,
-				71DA8CE2A67A8F5C540326F8 /* SalesOrderItem.swift */,
-				B26513B4911F008CB4E6168A /* SalesOrderHeader.swift */,
-				34CA04B45FAA8976326025AD /* PurchaseOrderItem.swift */,
-				82517F9FB4BA9440C703D1B5 /* PurchaseOrderHeader.swift */,
-				246E9E4E87097207B66B0509 /* ProductText.swift */,
-				BFFD37145F4333B85FE81A8B /* ProductCategory.swift */,
-				E0FFBA9C677FC0927F3E527F /* Product.swift */,
-				C83170348417421029EDBF46 /* ESPMContainerMetadata.swift */,
-				BD0E94DF9D305A0362181551 /* ESPMContainer.swift */,
-				D2A5C0E6CC789B9986FA1193 /* Customer.swift */,
-				0A332CBAEC1288AE27555C0F /* Address.swift */,
-			);
-			name = public;
-			sourceTree = "<group>";
-		};
-		1193BE1FA04FEA0979BB63BD /* internal */ = {
-			isa = PBXGroup;
-			children = (
-				CD43E57B8CE449BBE5540332 /* ESPMContainerStaticResolver.swift */,
-				EC0120EBF5831675D97D5897 /* ESPMContainerMetadataText.swift */,
-				23F6981BF4A4168D4AF1D1B9 /* ESPMContainerMetadataParser.swift */,
-				EA77D0EB0A97A4A13211C7C9 /* ESPMContainerMetadataChanges.swift */,
-				60B6BAD14A1BC1084AC7B300 /* ESPMContainerFactory.swift */,
+				88B4FFABAF41C3D8CD9D8029 /* ESPMContainerStaticResolver.swift */,
+				6D34BF5C329E4ABBE932CE23 /* ESPMContainerMetadataText.swift */,
+				AB34FD46A6254DB4653C85CA /* ESPMContainerMetadataParser.swift */,
+				DCB4884CA49053D254B69F84 /* ESPMContainerMetadataChanges.swift */,
+				941EE28D9055016F1E6F4378 /* ESPMContainerFactory.swift */,
 			);
 			name = internal;
 			sourceTree = "<group>";
@@ -107,7 +87,7 @@
 			children = (
 				91C75DBB2463F04100ECC4ED /* ESPMContainerFmwk */,
 				91C75DBA2463F04100ECC4ED /* Products */,
-				C81901AF5C29E45701BC9A23 /* Frameworks */,
+				B5B721F04F354779D6544A75 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -123,18 +103,38 @@
 			isa = PBXGroup;
 			children = (
 				91C75DBD2463F04100ECC4ED /* Info.plist */,
-				095C4923F4B0B604A805122B /* public */,
-				1193BE1FA04FEA0979BB63BD /* internal */,
+				ADEF0821ED7FB5FC2461844C /* public */,
+				5153D6220928F951805C37AC /* internal */,
 			);
 			path = ESPMContainerFmwk;
 			sourceTree = "<group>";
 		};
-		C81901AF5C29E45701BC9A23 /* Frameworks */ = {
+		ADEF0821ED7FB5FC2461844C /* public */ = {
 			isa = PBXGroup;
 			children = (
-				4E2FD46FC4ECC499777C87FE /* SAPCommon.xcframework */,
-				B5FF5D6406B89867DEF6B358 /* SAPOData.xcframework */,
-				502384138E17C80BEA196F93 /* SAPFoundation.xcframework */,
+				BD4C03AFB9FB7F3A4C59EAC8 /* Supplier.swift */,
+				3F35EC3F59A53E0789C4BB91 /* Stock.swift */,
+				FD378D5645CC6A81C726AFFE /* SalesOrderItem.swift */,
+				3344CC07CB4C5EA81882AA24 /* SalesOrderHeader.swift */,
+				5550332827EE6C72CAD47F50 /* PurchaseOrderItem.swift */,
+				EA33E52AD24B49752E7CA109 /* PurchaseOrderHeader.swift */,
+				DDF87617E8509E4C86D42AB5 /* ProductText.swift */,
+				FDCB6190D2CB30D3A8153E3B /* ProductCategory.swift */,
+				565BE99CA4A717ADCDDB51E1 /* Product.swift */,
+				8EEB4478122D9012603B1F31 /* ESPMContainerMetadata.swift */,
+				C787F83DC1E9CBA163FC21E0 /* ESPMContainer.swift */,
+				ADE7AC90515F24E30E05A138 /* Customer.swift */,
+				20578B3B6D8D253B8D974C66 /* Address.swift */,
+			);
+			name = public;
+			sourceTree = "<group>";
+		};
+		B5B721F04F354779D6544A75 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F64F438AFB44A90A6C338412 /* SAPCommon.xcframework */,
+				2DF3F109FC954716DB964ADD /* SAPFoundation.xcframework */,
+				169F6A6143C056A53E6C3F6E /* SAPOData.xcframework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -217,24 +217,24 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				28CE443C3B28535349F3110F /* Supplier.swift in Sources */,
-				8973C831A602DC6B4A1AD658 /* Stock.swift in Sources */,
-				A73F7EE38BBEFFB5653F5D64 /* SalesOrderItem.swift in Sources */,
-				EF93982E6F5279A3C2F9A881 /* SalesOrderHeader.swift in Sources */,
-				D985CFB69DB8AC8E1AA8F743 /* PurchaseOrderItem.swift in Sources */,
-				7ED0DE4EB1B1AF03CE5513D8 /* PurchaseOrderHeader.swift in Sources */,
-				DD3D3E2722B45F2FE02C6EB1 /* ProductText.swift in Sources */,
-				E5B8B467CF02E528B4C21DBC /* ProductCategory.swift in Sources */,
-				8E08241F94B34586872849B5 /* Product.swift in Sources */,
-				09D027AD37311C6270D52C25 /* ESPMContainerMetadata.swift in Sources */,
-				6B3C5402B948111E1F44779F /* ESPMContainer.swift in Sources */,
-				0102C27394B07FCF2567665F /* Customer.swift in Sources */,
-				DFE7FF2B0D1329732564417A /* Address.swift in Sources */,
-				1A9B6EB3F6EF6703980DDC87 /* ESPMContainerStaticResolver.swift in Sources */,
-				0CEF7A312E516038805942A6 /* ESPMContainerMetadataText.swift in Sources */,
-				DFB40956D66601C7FF990DCB /* ESPMContainerMetadataParser.swift in Sources */,
-				95C12D88C0B5DF63DD2EE958 /* ESPMContainerMetadataChanges.swift in Sources */,
-				C4B9657DE838EAEAF26BE3D5 /* ESPMContainerFactory.swift in Sources */,
+				CC51E195D9A59B07FE995139 /* Supplier.swift in Sources */,
+				28D5CA2D28CA056DC4A495CE /* Stock.swift in Sources */,
+				B8FF7DE8E7E4190A3633D01A /* SalesOrderItem.swift in Sources */,
+				AD6E930466E5D7994018F19E /* SalesOrderHeader.swift in Sources */,
+				BD5D9BF13C149CE226635BD1 /* PurchaseOrderItem.swift in Sources */,
+				B8BBD5CD39DB9129334E0641 /* PurchaseOrderHeader.swift in Sources */,
+				DF5CDC22AC279DCD9AD8988A /* ProductText.swift in Sources */,
+				3ECBBB4958429193E8FC5554 /* ProductCategory.swift in Sources */,
+				EA02DC3A757CE5CABDB3A034 /* Product.swift in Sources */,
+				267A9D3438348E3FDA4CBCD4 /* ESPMContainerMetadata.swift in Sources */,
+				4B39794CB92B72D1A0E12366 /* ESPMContainer.swift in Sources */,
+				CE2A8D3772BA352128D29783 /* Customer.swift in Sources */,
+				F7FF2C9FE43FD65FD97F29B7 /* Address.swift in Sources */,
+				4A8BC8121AE4891FEFDBD4D0 /* ESPMContainerStaticResolver.swift in Sources */,
+				BFC75BB71D682D3595E21EF4 /* ESPMContainerMetadataText.swift in Sources */,
+				2514E65E90032D1B6A1F0918 /* ESPMContainerMetadataParser.swift in Sources */,
+				315C25554E2AD0F412A0A277 /* ESPMContainerMetadataChanges.swift in Sources */,
+				0482FDEC1590ECB2E9B16292 /* ESPMContainerFactory.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

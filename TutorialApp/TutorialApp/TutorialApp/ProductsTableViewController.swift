@@ -10,6 +10,7 @@ import UIKit
 import SAPFiori
 import SAPFoundation
 import SAPOData
+import SAPOfflineOData
 import SAPFioriFlows
 import SAPCommon
 import ESPMContainerFmwk
@@ -23,8 +24,8 @@ class ProductsTableViewController: UITableViewController, SAPFioriLoadingIndicat
     let destinations = FileConfigurationProvider("AppParameters").provideConfiguration().configuration["Destinations"] as! NSDictionary
 
     /// Create a computed property that uses the OnboardingSessionManager to retrieve the onboarding session and uses the destinations dictionary to pull the correct destination. Of course you only have one destination here. Handle the errors in case the OData controller is nil. You are using the AlertHelper to display an AlertDialogue to the user in case of an error. The AlertHelper is a utils class provided through the Assistant.
-    var dataService: ESPMContainer<OnlineODataProvider>? {
-        guard let odataController = OnboardingSessionManager.shared.onboardingSession?.odataControllers[ODataContainerType.eSPMContainer.description] as? ESPMContainerOnlineODataController, let dataService = odataController.dataService else {
+    var dataService: ESPMContainer<OfflineODataProvider>? {
+        guard let odataController = OnboardingSessionManager.shared.onboardingSession?.odataControllers[ODataContainerType.eSPMContainer.description] as? ESPMContainerOfflineODataController, let dataService = odataController.dataService else {
             AlertHelper.displayAlert(with: "OData service is not reachable, please onboard again.", error: nil, viewController: self)
             return nil
         }
@@ -151,7 +152,7 @@ class ProductsTableViewController: UITableViewController, SAPFioriLoadingIndicat
             productCell.detailImageView.image = FUIIconLibrary.system.imageLibrary
 
             // This URL is found in Mobile Services
-            let baseURL = "https://13f920d5trial-dev-com-example.cfapps.eu10.hana.ondemand.com/SampleServices/ESPM.svc/v2"
+            let baseURL = "Your Service URL"
             let url = URL(string: baseURL.appending(productImageURLs[indexPath.row]))
 
             guard let unwrapped = url else {

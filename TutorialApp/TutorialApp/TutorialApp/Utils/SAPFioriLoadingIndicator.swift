@@ -1,13 +1,13 @@
 //
 // TutorialApp
 //
-// Created by SAP BTP SDK Assistant for iOS application on 12/07/21
+// Created by SAP BTP SDK Assistant for iOS application on 08/09/21
 //
 
 import Foundation
 import SAPFiori
 
-protocol SAPFioriLoadingIndicator: class {
+protocol SAPFioriLoadingIndicator: AnyObject {
     var loadingIndicator: FUILoadingIndicatorView? { get set }
 }
 

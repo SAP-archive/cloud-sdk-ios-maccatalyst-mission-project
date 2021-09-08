@@ -1,7 +1,7 @@
 //
 // TutorialApp
 //
-// Created by SAP BTP SDK Assistant for iOS application on 12/07/21
+// Created by SAP BTP SDK Assistant for iOS application on 08/09/21
 //
 
 import ESPMContainerFmwk
@@ -10,13 +10,10 @@ import SAPCommon
 import SAPFiori
 import SAPFoundation
 import SAPOData
-
-import SAPFioriFlows
-import SharedFmwk
-import WidgetKit
+import SAPOfflineOData
 
 class ProductCategoryMasterViewController: FUIFormTableViewController, SAPFioriLoadingIndicator {
-    var dataService: ESPMContainer<OnlineODataProvider>!
+    var dataService: ESPMContainer<OfflineODataProvider>!
     public var loadEntitiesBlock: ((_ completionHandler: @escaping ([ESPMContainerFmwk.ProductCategory]?, Error?) -> Void) -> Void)?
     private var entities: [ESPMContainerFmwk.ProductCategory] = [ESPMContainerFmwk.ProductCategory]()
 
@@ -78,31 +75,8 @@ class ProductCategoryMasterViewController: FUIFormTableViewController, SAPFioriL
                 self.logger.error("Delete entry failed.", error: error)
                 AlertHelper.displayAlert(with: NSLocalizedString("keyErrorDeletingEntryTitle", value: "Delete entry failed", comment: "XTIT: Title of deleting entry error pop up."), error: error, viewController: self)
             } else {
-                self.reloadWidget()
                 self.entities.remove(at: indexPath.row)
                 tableView.deleteRows(at: [indexPath], with: .fade)
-            }
-        }
-    }
-
-    func reloadWidget() {
-        var cipher: Ciphering
-        do {
-            let auxDataEncryptionKey = try SecurityManager().getAuxiliaryDataEncryptionKey()
-            cipher = CryptoProvider(with: auxDataEncryptionKey, tag: AuxiliaryConfiguration.cryptoProviderTag)
-        } catch {
-            fatalError("No auxiliary data encryption key found!")
-        }
-
-        guard let odataController = OnboardingSessionManager.shared.onboardingSession?.odataControllers[ODataContainerType.eSPMContainer.description] as? ESPMContainerOnlineODataController,
-            let widgetDataLoader = ESPMContainerWidgetDataLoader(controller: odataController, with: cipher),
-            let entitySetName = self.entitySetName else {
-            return
-        }
-
-        widgetDataLoader.loadEntitySet(for: entitySetName) { status in
-            if status {
-                WidgetCenter.shared.reloadTimelines(ofKind: AuxiliaryConfiguration.widgetKind)
             }
         }
     }

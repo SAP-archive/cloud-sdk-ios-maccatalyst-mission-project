@@ -1,22 +1,19 @@
 //
 // TutorialApp
 //
-// Created by SAP BTP SDK Assistant for iOS application on 12/07/21
+// Created by SAP BTP SDK Assistant for iOS application on 08/09/21
 //
 
-import BackgroundTasks
 import Foundation
 import SAPCommon
 import SAPFiori
 import SAPFioriFlows
 import SAPFoundation
 import SAPOData
-import SharedFmwk
 import UserNotifications
-import WidgetKit
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDelegate, UNUserNotificationCenterDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDelegate, ConnectivityObserver, UNUserNotificationCenterDelegate {
     var window: UIWindow?
     /// Logger instance initialization
     private let logger = Logger.shared(named: "AppDelegateLogger")
@@ -35,19 +32,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         // Also, hide potentially sensitive data of the real application screen during onboarding
         self.window = UIWindow(frame: UIScreen.main.bounds)
         self.window!.rootViewController = FUIInfoViewController.createInstanceFromStoryboard()
+        self.window!.makeKey()
 
         // Read more about Logging: https://help.sap.com/viewer/fc1a59c210d848babfb3f758a6f55cb1/Latest/en-US/879aaebaa8e6401dac100ea9bb8b817d.html
         Logger.root.logLevel = .debug
 
         self.initializeOnboarding()
+        ConnectivityReceiver.registerObserver(self)
 
         // Customize the UI to align SAP style
         // Read more: https://help.sap.com/doc/978e4f6c968c4cc5a30f9d324aa4b1d7/Latest/en-US/Documents/Frameworks/SAPFiori/Extensions/UINavigationBar.html
         UINavigationBar.applyFioriStyle()
-
-        // MARK: - Widget feature
-
-        self.registerBackgroundStepsTask()
 
         return true
     }
@@ -55,7 +50,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
     func applicationDidEnterBackground(_: UIApplication) {
         // Hides the application UI by presenting a splash screen, @see: ApplicationUIManager.hideApplicationScreen
         OnboardingSessionManager.shared.lock { _ in }
-        scheduleBackgroundStepsTask()
     }
 
     func applicationWillEnterForeground(_: UIApplication) {
@@ -110,6 +104,7 @@ extension AppDelegate {
         let presentationDelegate = ApplicationUIManager(window: self.window!)
         self.onboardingErrorHandler = OnboardingErrorHandler()
         self.sessionManager = OnboardingSessionManager(presentationDelegate: presentationDelegate, flowProvider: self.flowProvider, delegate: self.onboardingErrorHandler)
+        presentationDelegate.isOnboarding = true
         presentationDelegate.showSplashScreenForOnboarding { _ in }
 
         self.onboardUser()
@@ -141,7 +136,6 @@ extension AppDelegate {
             fatalError("Invalid state")
         }
 
-        WidgetCenter.shared.reloadTimelines(ofKind: AuxiliaryConfiguration.widgetKind)
         self.initializeRemoteNotification()
         self.uploadLogs()
         self.uploadUsageReport()
@@ -160,60 +154,31 @@ extension AppDelegate {
     }
 }
 
-// MARK: - Background refresh task management and Widget data handler methods
+// MARK: - ConnectivityObserver implementation
 
 extension AppDelegate {
-    private func registerBackgroundStepsTask() {
-        BGTaskScheduler.shared.register(forTaskWithIdentifier: AuxiliaryConfiguration.backgroundStepsTaskId, using: nil) { task in
-            // Downcast the parameter to an app refresh task as this identifier is used for a refresh request.
-            self.initiateBackgroundStepsTask(task: task as! BGAppRefreshTask)
-        }
+    func connectionEstablished() {
+        // connection established
+        self.logger.info("Connection established.")
     }
 
-    private func initiateBackgroundStepsTask(task: BGAppRefreshTask) {
-        // lets schedule a task first.
-        self.scheduleBackgroundStepsTask()
-        // lets process the steps
-        let sessionManager = self.getBackgroundSessionManager()
-        sessionManager.open(inBackground: true, completionHandler: { error in
-            if let errorNotNil = error {
-                self.logger.error("Error occured during background flow : ", error: errorNotNil)
-                task.setTaskCompleted(success: false)
-
-            } else {
-                self.logger.info("Background flow completed successfully.")
-                task.setTaskCompleted(success: true)
+    func connectionChanged(_ previousReachabilityType: ReachabilityType, reachabilityType _: ReachabilityType) {
+        // connection changed
+        self.logger.info("Connection changed.")
+        if case previousReachabilityType = ReachabilityType.offline {
+            // connection established
+            self.flowProvider.runSynchingFlow = true
+            OnboardingSessionManager.shared.open { error in
+                if let error = error {
+                    self.logger.error("Error in opeing session", error: error)
+                }
             }
-        })
-
-        task.expirationHandler = {
-            task.setTaskCompleted(success: true)
         }
     }
 
-    private func getBackgroundSessionManager() -> OnboardingSessionManager<OnboardingSession> {
-        let onboardingManager = SingleUserOnboardingIDManager(backgroundMode: true)
-        let controller: OnboardingControlling = OnboardingController(flowProvider: OnboardingFlowProvider(), onboardingIDManager: onboardingManager)
-        let presentationDelegate = ApplicationUIManager(window: self.window!)
-        return OnboardingSessionManager(onboardingController: controller, presentationDelegate: presentationDelegate)
-    }
-
-    func scheduleBackgroundStepsTask() {
-        let request = BGAppRefreshTaskRequest(identifier: AuxiliaryConfiguration.backgroundStepsTaskId)
-        request.earliestBeginDate = Date(timeIntervalSinceNow: 2 * 60)
-        do {
-            try BGTaskScheduler.shared.submit(request)
-        } catch {
-            print("Could not schedule app refresh: \(error)")
-        }
-    }
-}
-
-// MARK: - Deep linking handling
-
-extension AppDelegate {
-    func application(_: UIApplication, open url: URL, options _: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
-        return Deeplinker().handle(url)
+    func connectionLost() {
+        // connection lost
+        self.logger.info("Connection lost.")
     }
 }
 

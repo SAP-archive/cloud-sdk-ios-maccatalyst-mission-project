@@ -1,4 +1,4 @@
-// # Proxy Compiler 21.5.2
+// # Proxy Compiler 21.5.5
 
 import Foundation
 import SAPOData
@@ -13,7 +13,7 @@ internal class ESPMContainerMetadataParser {
         parser.logWarnings = false
         parser.csdlOptions = ESPMContainerMetadataParser.options
         let metadata = parser.parseInProxy(ESPMContainerMetadataText.xml, url: "ESPM")
-        metadata.proxyVersion = "21.5.2"
+        metadata.proxyVersion = "21.5.5"
         return metadata
     }
 }

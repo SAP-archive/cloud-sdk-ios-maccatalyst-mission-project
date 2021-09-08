@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>Application Identifier</key>
-	<string>com.example</string>
+	<string>com.sap.example</string>
 	<key>Application Type</key>
-	<string>Online</string>
+	<string>Offline</string>
 	<key>Destinations</key>
 	<dict>
 		<key>ESPMContainer</key>

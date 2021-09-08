@@ -1,7 +1,7 @@
 //
 // TutorialApp
 //
-// Created by SAP BTP SDK Assistant for iOS application on 12/07/21
+// Created by SAP BTP SDK Assistant for iOS application on 08/09/21
 //
 
 import SAPFiori
@@ -47,19 +47,6 @@ class ESPMContainerCollectionsViewController: FUIFormTableViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         self.makeSelection()
-
-        Deeplinker.Navigator.shared.check(destination: .eSPMContainer, screen: .entitiyList, moveForwardDoing: { _, screen in
-            switch screen {
-            case let .named(entityName):
-                if let value = ESPMContainerCollectionType(rawValue: entityName),
-                    let index = self.collections.firstIndex(of: value) {
-                    let indexPath = IndexPath(row: index, section: 0)
-                    self.collectionSelected(at: indexPath)
-                }
-
-            default: break
-            }
-        })
     }
 
     override func viewWillTransition(to _: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -103,28 +90,13 @@ class ESPMContainerCollectionsViewController: FUIFormTableViewController {
     private func collectionSelected(at indexPath: IndexPath) {
         // Load the EntityType specific ViewController from the specific storyboard"
         var masterViewController: UIViewController!
-        guard let odataController = OnboardingSessionManager.shared.onboardingSession?.odataControllers[ODataContainerType.eSPMContainer.description] as? ESPMContainerOnlineODataController, let dataService = odataController.dataService else {
+        guard let odataController = OnboardingSessionManager.shared.onboardingSession?.odataControllers[ODataContainerType.eSPMContainer.description] as? ESPMContainerOfflineODataController, let dataService = odataController.dataService else {
             AlertHelper.displayAlert(with: "OData service is not reachable, please onboard again.", error: nil, viewController: self)
             return
         }
         self.selectedIndex = indexPath
 
         switch self.collections[indexPath.row] {
-        case .purchaseOrderItems:
-            let purchaseOrderItemStoryBoard = UIStoryboard(name: "PurchaseOrderItem", bundle: nil)
-            let purchaseOrderItemMasterViewController = purchaseOrderItemStoryBoard.instantiateViewController(withIdentifier: "PurchaseOrderItemMaster") as! PurchaseOrderItemMasterViewController
-            purchaseOrderItemMasterViewController.dataService = dataService
-            purchaseOrderItemMasterViewController.entitySetName = "PurchaseOrderItems"
-            func fetchPurchaseOrderItems(_ completionHandler: @escaping ([ESPMContainerFmwk.PurchaseOrderItem]?, Error?) -> Void) {
-                // Only request the first 20 values. If you want to modify the requested entities, you can do it here.
-                let query = DataQuery().selectAll().top(20)
-                do {
-                    dataService.fetchPurchaseOrderItems(matching: query, completionHandler: completionHandler)
-                }
-            }
-            purchaseOrderItemMasterViewController.loadEntitiesBlock = fetchPurchaseOrderItems
-            purchaseOrderItemMasterViewController.navigationItem.title = "PurchaseOrderItem"
-            masterViewController = purchaseOrderItemMasterViewController
         case .suppliers:
             let supplierStoryBoard = UIStoryboard(name: "Supplier", bundle: nil)
             let supplierMasterViewController = supplierStoryBoard.instantiateViewController(withIdentifier: "SupplierMaster") as! SupplierMasterViewController
@@ -140,6 +112,96 @@ class ESPMContainerCollectionsViewController: FUIFormTableViewController {
             supplierMasterViewController.loadEntitiesBlock = fetchSuppliers
             supplierMasterViewController.navigationItem.title = "Supplier"
             masterViewController = supplierMasterViewController
+        case .products:
+            let productStoryBoard = UIStoryboard(name: "Product", bundle: nil)
+            let productMasterViewController = productStoryBoard.instantiateViewController(withIdentifier: "ProductMaster") as! ProductMasterViewController
+            productMasterViewController.dataService = dataService
+            productMasterViewController.entitySetName = "Products"
+            func fetchProducts(_ completionHandler: @escaping ([ESPMContainerFmwk.Product]?, Error?) -> Void) {
+                // Only request the first 20 values. If you want to modify the requested entities, you can do it here.
+                let query = DataQuery().selectAll().top(20)
+                do {
+                    dataService.fetchProducts(matching: query, completionHandler: completionHandler)
+                }
+            }
+            productMasterViewController.loadEntitiesBlock = fetchProducts
+            productMasterViewController.navigationItem.title = "Product"
+            masterViewController = productMasterViewController
+        case .stock:
+            let stockStoryBoard = UIStoryboard(name: "Stock", bundle: nil)
+            let stockMasterViewController = stockStoryBoard.instantiateViewController(withIdentifier: "StockMaster") as! StockMasterViewController
+            stockMasterViewController.dataService = dataService
+            stockMasterViewController.entitySetName = "Stock"
+            func fetchStock(_ completionHandler: @escaping ([ESPMContainerFmwk.Stock]?, Error?) -> Void) {
+                // Only request the first 20 values. If you want to modify the requested entities, you can do it here.
+                let query = DataQuery().selectAll().top(20)
+                do {
+                    dataService.fetchStock(matching: query, completionHandler: completionHandler)
+                }
+            }
+            stockMasterViewController.loadEntitiesBlock = fetchStock
+            stockMasterViewController.navigationItem.title = "Stock"
+            masterViewController = stockMasterViewController
+        case .customers:
+            let customerStoryBoard = UIStoryboard(name: "Customer", bundle: nil)
+            let customerMasterViewController = customerStoryBoard.instantiateViewController(withIdentifier: "CustomerMaster") as! CustomerMasterViewController
+            customerMasterViewController.dataService = dataService
+            customerMasterViewController.entitySetName = "Customers"
+            func fetchCustomers(_ completionHandler: @escaping ([ESPMContainerFmwk.Customer]?, Error?) -> Void) {
+                // Only request the first 20 values. If you want to modify the requested entities, you can do it here.
+                let query = DataQuery().selectAll().top(20)
+                do {
+                    dataService.fetchCustomers(matching: query, completionHandler: completionHandler)
+                }
+            }
+            customerMasterViewController.loadEntitiesBlock = fetchCustomers
+            customerMasterViewController.navigationItem.title = "Customer"
+            masterViewController = customerMasterViewController
+        case .productCategories:
+            let productCategoryStoryBoard = UIStoryboard(name: "ProductCategory", bundle: nil)
+            let productCategoryMasterViewController = productCategoryStoryBoard.instantiateViewController(withIdentifier: "ProductCategoryMaster") as! ProductCategoryMasterViewController
+            productCategoryMasterViewController.dataService = dataService
+            productCategoryMasterViewController.entitySetName = "ProductCategories"
+            func fetchProductCategories(_ completionHandler: @escaping ([ESPMContainerFmwk.ProductCategory]?, Error?) -> Void) {
+                // Only request the first 20 values. If you want to modify the requested entities, you can do it here.
+                let query = DataQuery().selectAll().top(20)
+                do {
+                    dataService.fetchProductCategories(matching: query, completionHandler: completionHandler)
+                }
+            }
+            productCategoryMasterViewController.loadEntitiesBlock = fetchProductCategories
+            productCategoryMasterViewController.navigationItem.title = "ProductCategory"
+            masterViewController = productCategoryMasterViewController
+        case .purchaseOrderItems:
+            let purchaseOrderItemStoryBoard = UIStoryboard(name: "PurchaseOrderItem", bundle: nil)
+            let purchaseOrderItemMasterViewController = purchaseOrderItemStoryBoard.instantiateViewController(withIdentifier: "PurchaseOrderItemMaster") as! PurchaseOrderItemMasterViewController
+            purchaseOrderItemMasterViewController.dataService = dataService
+            purchaseOrderItemMasterViewController.entitySetName = "PurchaseOrderItems"
+            func fetchPurchaseOrderItems(_ completionHandler: @escaping ([ESPMContainerFmwk.PurchaseOrderItem]?, Error?) -> Void) {
+                // Only request the first 20 values. If you want to modify the requested entities, you can do it here.
+                let query = DataQuery().selectAll().top(20)
+                do {
+                    dataService.fetchPurchaseOrderItems(matching: query, completionHandler: completionHandler)
+                }
+            }
+            purchaseOrderItemMasterViewController.loadEntitiesBlock = fetchPurchaseOrderItems
+            purchaseOrderItemMasterViewController.navigationItem.title = "PurchaseOrderItem"
+            masterViewController = purchaseOrderItemMasterViewController
+        case .productTexts:
+            let productTextStoryBoard = UIStoryboard(name: "ProductText", bundle: nil)
+            let productTextMasterViewController = productTextStoryBoard.instantiateViewController(withIdentifier: "ProductTextMaster") as! ProductTextMasterViewController
+            productTextMasterViewController.dataService = dataService
+            productTextMasterViewController.entitySetName = "ProductTexts"
+            func fetchProductTexts(_ completionHandler: @escaping ([ESPMContainerFmwk.ProductText]?, Error?) -> Void) {
+                // Only request the first 20 values. If you want to modify the requested entities, you can do it here.
+                let query = DataQuery().selectAll().top(20)
+                do {
+                    dataService.fetchProductTexts(matching: query, completionHandler: completionHandler)
+                }
+            }
+            productTextMasterViewController.loadEntitiesBlock = fetchProductTexts
+            productTextMasterViewController.navigationItem.title = "ProductText"
+            masterViewController = productTextMasterViewController
         case .purchaseOrderHeaders:
             let purchaseOrderHeaderStoryBoard = UIStoryboard(name: "PurchaseOrderHeader", bundle: nil)
             let purchaseOrderHeaderMasterViewController = purchaseOrderHeaderStoryBoard.instantiateViewController(withIdentifier: "PurchaseOrderHeaderMaster") as! PurchaseOrderHeaderMasterViewController
@@ -185,81 +247,6 @@ class ESPMContainerCollectionsViewController: FUIFormTableViewController {
             salesOrderItemMasterViewController.loadEntitiesBlock = fetchSalesOrderItems
             salesOrderItemMasterViewController.navigationItem.title = "SalesOrderItem"
             masterViewController = salesOrderItemMasterViewController
-        case .products:
-            let productStoryBoard = UIStoryboard(name: "Product", bundle: nil)
-            let productMasterViewController = productStoryBoard.instantiateViewController(withIdentifier: "ProductMaster") as! ProductMasterViewController
-            productMasterViewController.dataService = dataService
-            productMasterViewController.entitySetName = "Products"
-            func fetchProducts(_ completionHandler: @escaping ([ESPMContainerFmwk.Product]?, Error?) -> Void) {
-                // Only request the first 20 values. If you want to modify the requested entities, you can do it here.
-                let query = DataQuery().selectAll().top(20)
-                do {
-                    dataService.fetchProducts(matching: query, completionHandler: completionHandler)
-                }
-            }
-            productMasterViewController.loadEntitiesBlock = fetchProducts
-            productMasterViewController.navigationItem.title = "Product"
-            masterViewController = productMasterViewController
-        case .productCategories:
-            let productCategoryStoryBoard = UIStoryboard(name: "ProductCategory", bundle: nil)
-            let productCategoryMasterViewController = productCategoryStoryBoard.instantiateViewController(withIdentifier: "ProductCategoryMaster") as! ProductCategoryMasterViewController
-            productCategoryMasterViewController.dataService = dataService
-            productCategoryMasterViewController.entitySetName = "ProductCategories"
-            func fetchProductCategories(_ completionHandler: @escaping ([ESPMContainerFmwk.ProductCategory]?, Error?) -> Void) {
-                // Only request the first 20 values. If you want to modify the requested entities, you can do it here.
-                let query = DataQuery().selectAll().top(20)
-                do {
-                    dataService.fetchProductCategories(matching: query, completionHandler: completionHandler)
-                }
-            }
-            productCategoryMasterViewController.loadEntitiesBlock = fetchProductCategories
-            productCategoryMasterViewController.navigationItem.title = "ProductCategory"
-            masterViewController = productCategoryMasterViewController
-        case .stock:
-            let stockStoryBoard = UIStoryboard(name: "Stock", bundle: nil)
-            let stockMasterViewController = stockStoryBoard.instantiateViewController(withIdentifier: "StockMaster") as! StockMasterViewController
-            stockMasterViewController.dataService = dataService
-            stockMasterViewController.entitySetName = "Stock"
-            func fetchStock(_ completionHandler: @escaping ([ESPMContainerFmwk.Stock]?, Error?) -> Void) {
-                // Only request the first 20 values. If you want to modify the requested entities, you can do it here.
-                let query = DataQuery().selectAll().top(20)
-                do {
-                    dataService.fetchStock(matching: query, completionHandler: completionHandler)
-                }
-            }
-            stockMasterViewController.loadEntitiesBlock = fetchStock
-            stockMasterViewController.navigationItem.title = "Stock"
-            masterViewController = stockMasterViewController
-        case .customers:
-            let customerStoryBoard = UIStoryboard(name: "Customer", bundle: nil)
-            let customerMasterViewController = customerStoryBoard.instantiateViewController(withIdentifier: "CustomerMaster") as! CustomerMasterViewController
-            customerMasterViewController.dataService = dataService
-            customerMasterViewController.entitySetName = "Customers"
-            func fetchCustomers(_ completionHandler: @escaping ([ESPMContainerFmwk.Customer]?, Error?) -> Void) {
-                // Only request the first 20 values. If you want to modify the requested entities, you can do it here.
-                let query = DataQuery().selectAll().top(20)
-                do {
-                    dataService.fetchCustomers(matching: query, completionHandler: completionHandler)
-                }
-            }
-            customerMasterViewController.loadEntitiesBlock = fetchCustomers
-            customerMasterViewController.navigationItem.title = "Customer"
-            masterViewController = customerMasterViewController
-        case .productTexts:
-            let productTextStoryBoard = UIStoryboard(name: "ProductText", bundle: nil)
-            let productTextMasterViewController = productTextStoryBoard.instantiateViewController(withIdentifier: "ProductTextMaster") as! ProductTextMasterViewController
-            productTextMasterViewController.dataService = dataService
-            productTextMasterViewController.entitySetName = "ProductTexts"
-            func fetchProductTexts(_ completionHandler: @escaping ([ESPMContainerFmwk.ProductText]?, Error?) -> Void) {
-                // Only request the first 20 values. If you want to modify the requested entities, you can do it here.
-                let query = DataQuery().selectAll().top(20)
-                do {
-                    dataService.fetchProductTexts(matching: query, completionHandler: completionHandler)
-                }
-            }
-            productTextMasterViewController.loadEntitiesBlock = fetchProductTexts
-            productTextMasterViewController.navigationItem.title = "ProductText"
-            masterViewController = productTextMasterViewController
         @unknown default:
             masterViewController = UIViewController()
         }
@@ -284,7 +271,7 @@ class ESPMContainerCollectionsViewController: FUIFormTableViewController {
 
     private func selectDefault() {
         // Automatically select first element if we have two panels (iPhone plus and iPad only)
-        guard let odataController = OnboardingSessionManager.shared.onboardingSession?.odataControllers[ODataContainerType.eSPMContainer.description] as? ESPMContainerOnlineODataController else {
+        guard let odataController = OnboardingSessionManager.shared.onboardingSession?.odataControllers[ODataContainerType.eSPMContainer.description] as? ESPMContainerOfflineODataController else {
             AlertHelper.displayAlert(with: "OData service is not reachable, please onboard again.", error: nil, viewController: self)
             return
         }
@@ -299,16 +286,16 @@ class ESPMContainerCollectionsViewController: FUIFormTableViewController {
 
     static func entitySet(withName entitySetName: String?) -> EntitySet? {
         switch entitySetName {
-        case "PurchaseOrderItems": return ESPMContainerMetadata.EntitySets.purchaseOrderItems
         case "Suppliers": return ESPMContainerMetadata.EntitySets.suppliers
+        case "Products": return ESPMContainerMetadata.EntitySets.products
+        case "Stock": return ESPMContainerMetadata.EntitySets.stock
+        case "Customers": return ESPMContainerMetadata.EntitySets.customers
+        case "ProductCategories": return ESPMContainerMetadata.EntitySets.productCategories
+        case "PurchaseOrderItems": return ESPMContainerMetadata.EntitySets.purchaseOrderItems
+        case "ProductTexts": return ESPMContainerMetadata.EntitySets.productTexts
         case "PurchaseOrderHeaders": return ESPMContainerMetadata.EntitySets.purchaseOrderHeaders
         case "SalesOrderHeaders": return ESPMContainerMetadata.EntitySets.salesOrderHeaders
         case "SalesOrderItems": return ESPMContainerMetadata.EntitySets.salesOrderItems
-        case "Products": return ESPMContainerMetadata.EntitySets.products
-        case "ProductCategories": return ESPMContainerMetadata.EntitySets.productCategories
-        case "Stock": return ESPMContainerMetadata.EntitySets.stock
-        case "Customers": return ESPMContainerMetadata.EntitySets.customers
-        case "ProductTexts": return ESPMContainerMetadata.EntitySets.productTexts
         default: return nil
         }
     }
