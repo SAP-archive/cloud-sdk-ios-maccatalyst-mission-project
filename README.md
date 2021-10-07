@@ -13,7 +13,7 @@ The project is documented with the inline comments you also see in the tutorials
 You will find the requirements also in the tutorial series.
 
 To just run this project, make sure to fulfill the following requirements:
-- You have signed up for a SAP BTP trial or have access to [SAP Free Tier](https://discovery-center.cloud.sap/servicessearch/Free%20Tier/?provider=all&regions=all)
+- You have signed up for a SAP BTP trial
 - You have SAP BTP Mobile Services enabled
 - You have an application configuration created in SAP BTP Mobile Service and has the SAMPLE ODATA ESPM feature.
 - You have the latest Xcode installed but at least Xcode 11.3
