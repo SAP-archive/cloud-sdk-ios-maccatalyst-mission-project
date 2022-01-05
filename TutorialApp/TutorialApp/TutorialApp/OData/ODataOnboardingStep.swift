@@ -1,7 +1,7 @@
 //
 // TutorialApp
 //
-// Created by SAP BTP SDK Assistant for iOS application on 08/09/21
+// Created by SAP BTP SDK Assistant for iOS v7.0.0 application on 04/01/22
 //
 
 import SAPCommon
@@ -15,11 +15,11 @@ open class ODataOnboardingStep: OnboardingStep {
     private let logger = Logger.shared(named: "AppDelegateLogger")
 
     public func onboard(context: OnboardingContext, completionHandler: @escaping (OnboardingResult) -> Void) {
-        self.configureOData(using: context, completionHandler: completionHandler)
+        configureOData(using: context, completionHandler: completionHandler)
     }
 
     public func restore(context: OnboardingContext, completionHandler: @escaping (OnboardingResult) -> Void) {
-        self.configureOData(using: context, completionHandler: completionHandler)
+        configureOData(using: context, completionHandler: completionHandler)
     }
 
     public func reset(context: OnboardingContext, completionHandler: @escaping () -> Void) {
@@ -27,7 +27,7 @@ open class ODataOnboardingStep: OnboardingStep {
         do {
             try ESPMContainerOfflineODataController.removeStore(for: context.onboardingID)
         } catch {
-            self.logger.error("Remove Offline Store failed", error: error)
+            logger.error("Remove Offline Store failed", error: error)
         }
     }
 
@@ -50,7 +50,7 @@ open class ODataOnboardingStep: OnboardingStep {
             do {
                 try odataController.configureOData(sapURLSession: context.sapURLSession, serviceRoot: configurationURL, onboardingID: context.onboardingID)
                 let connectivityStatus = ConnectivityUtils.isConnected()
-                self.logger.info("Network connectivity status: \(connectivityStatus)")
+                logger.info("Network connectivity status: \(connectivityStatus)")
                 odataController.openOfflineStore(synchronize: connectivityStatus) { error in
                     if let error = error {
                         completionHandler(.failed(error))
@@ -71,13 +71,13 @@ open class ODataOnboardingStep: OnboardingStep {
     private func topBanner() -> FUIBannerMessageView? {
         let bannerTag = 138
         guard let topController = UIApplication.shared.windows.first!.rootViewController as? FUIInfoViewController else {
-            self.logger.error("Unable to show top banner. Application rootViewController is not an FUIInfoViewController.")
+            logger.error("Unable to show top banner. Application rootViewController is not an FUIInfoViewController.")
             return nil
         }
         var banner: FUIProgressBannerMessageView!
         let alreadyAdded = topController.view.viewWithTag(bannerTag) != nil
         if !alreadyAdded {
-            self.logger.info("Should only be called once.")
+            logger.info("Should only be called once.")
             banner = FUIProgressBannerMessageView(frame: CGRect(x: 0, y: 0, width: topController.view.frame.width, height: 50))
             banner.tag = bannerTag
             topController.view.addSubview(banner)

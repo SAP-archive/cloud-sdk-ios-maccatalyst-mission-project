@@ -1,4 +1,4 @@
-// # Proxy Compiler 21.5.5
+// # Proxy Compiler 21.11.3
 
 import Foundation
 import SAPOData
@@ -59,7 +59,7 @@ open class Address: ComplexValue {
     }
 
     open func copy() -> Address {
-        return CastRequired<Address>.from(self.copyComplex())
+        return CastRequired<Address>.from(copyComplex())
     }
 
     open class var country: Property {
@@ -114,7 +114,7 @@ open class Address: ComplexValue {
         }
     }
 
-    open override var isProxy: Bool {
+    override open var isProxy: Bool {
         return true
     }
 
@@ -167,10 +167,10 @@ open class Address: ComplexValue {
 
     open var street: String? {
         get {
-            return StringValue.optional(self.optionalValue(for: Address.street))
+            return StringValue.optional(optionalValue(for: Address.street))
         }
         set(value) {
-            self.setOptionalValue(for: Address.street, to: StringValue.of(optional: value))
+            setOptionalValue(for: Address.street, to: StringValue.of(optional: value))
         }
     }
 }

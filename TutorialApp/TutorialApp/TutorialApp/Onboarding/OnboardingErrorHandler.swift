@@ -1,7 +1,7 @@
 //
 // TutorialApp
 //
-// Created by SAP BTP SDK Assistant for iOS application on 08/09/21
+// Created by SAP BTP SDK Assistant for iOS v7.0.0 application on 04/01/22
 //
 
 import SAPCommon
@@ -22,7 +22,7 @@ open class ApplicationOnboardingSession: OnboardingSession {
         guard !step.controllers.isEmpty else {
             fatalError("Controllers are missing for ODataOnboardingStep.")
         }
-        self.odataControllers = step.controllers
+        odataControllers = step.controllers
 
         super.init(flow: flow)
     }
@@ -39,9 +39,9 @@ public class OnboardingErrorHandler: OnboardingControllerDelegate {
     public func onboardingController(_ controller: OnboardingControlling, didFail flow: OnboardingFlow, with error: Error, completionHandler: @escaping (OnboardingErrorDisposition) -> Void) {
         switch flow.flowType {
         case .onboard:
-            self.onboardFailed(with: error, completionHandler: completionHandler)
+            onboardFailed(with: error, completionHandler: completionHandler)
         case .restore:
-            self.restoreFailed(with: error, controller: controller, onboardingID: flow.context.onboardingID, completionHandler: completionHandler)
+            restoreFailed(with: error, controller: controller, onboardingID: flow.context.onboardingID, completionHandler: completionHandler)
         default:
             completionHandler(.retry)
         }
@@ -65,7 +65,7 @@ public class OnboardingErrorHandler: OnboardingControllerDelegate {
         switch error {
         // We reset the OnboardingSessionManager if the user has chosen to reset their passcode
         case StoreManagerError.resetPasscode, OnboardingError.cancelled:
-            self.resetOnboardingSessionManager()
+            resetOnboardingSessionManager()
         // We reset the OnboardingSessionManager if the user has exceeded the maximum retry limit
         case StoreManagerError.passcodeRetryLimitReached:
             let alertController = UIAlertController(title: LocalizedStrings.Onboarding.passcodeRetryLimitReachedTitle, message: LocalizedStrings.Onboarding.passcodeRetryLimitReachedMessage, preferredStyle: .alert)
@@ -92,7 +92,13 @@ public class OnboardingErrorHandler: OnboardingControllerDelegate {
         case WelcomeScreenError.demoModeRequested:
             completionHandler(.stop(error))
             return
+        case ApplicationVersioningError.inactive:
+            showAlertWith(error: error)
         default:
+            showAlertWith(error: error)
+        }
+
+        func showAlertWith(error: Error) {
             let alertController = UIAlertController(
                 title: LocalizedStrings.Onboarding.failedToLogonTitle,
                 message: error.localizedDescription,
@@ -117,11 +123,17 @@ public class OnboardingErrorHandler: OnboardingControllerDelegate {
 
         switch error {
         case StoreManagerError.cancelPasscodeEntry, StoreManagerError.skipPasscodeSetup, StoreManagerError.resetPasscode:
-            self.resetOnboarding(onboardingID, controller: controller, completionHandler: completionHandler)
+            resetOnboarding(onboardingID, controller: controller, completionHandler: completionHandler)
             return
         case StoreManagerError.passcodeRetryLimitReached:
             alertController.title = LocalizedStrings.Onboarding.passcodeRetryLimitReachedTitle
             alertController.message = LocalizedStrings.Onboarding.passcodeRetryLimitReachedMessage
+        case ApplicationVersioningError.inactive:
+            alertController.title = LocalizedStrings.Onboarding.failedToLogonTitle
+            alertController.message = error.localizedDescription
+            alertController.addAction(UIAlertAction(title: LocalizedStrings.Onboarding.retryTitle, style: .default) { _ in
+                completionHandler(.retry)
+            })
         default:
             alertController.title = LocalizedStrings.Onboarding.failedToLogonTitle
             alertController.message = error.localizedDescription

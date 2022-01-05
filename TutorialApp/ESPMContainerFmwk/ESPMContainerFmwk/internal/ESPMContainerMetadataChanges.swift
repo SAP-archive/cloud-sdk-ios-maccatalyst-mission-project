@@ -1,9 +1,9 @@
-// # Proxy Compiler 21.5.5
+// # Proxy Compiler 21.11.3
 
 import Foundation
 import SAPOData
 
-internal class ESPMContainerMetadataChanges {
+internal enum ESPMContainerMetadataChanges {
     static func merge(metadata: CSDLDocument) {
         metadata.hasGeneratedProxies = true
         ESPMContainerMetadata.document = metadata

@@ -1,7 +1,7 @@
 //
 // TutorialApp
 //
-// Created by SAP BTP SDK Assistant for iOS application on 08/09/21
+// Created by SAP BTP SDK Assistant for iOS v7.0.0 application on 04/01/22
 //
 
 import Foundation
@@ -37,14 +37,14 @@ class CellCreationHelper {
             // The property is a key or we are creating new entity
             if !property.isKey || entity.isNew {
                 // .. that CAN be edited
-                cell = self.formCellWithEditableContent(tableView: tableView, indexPath: indexPath, property: property, with: value, editingIsAllowed: editingIsAllowed, changeHandler: changeHandler)
+                cell = formCellWithEditableContent(tableView: tableView, indexPath: indexPath, property: property, with: value, editingIsAllowed: editingIsAllowed, changeHandler: changeHandler)
             } else {
                 // .. that CANNOT be edited
-                cell = self.formCellWithNonEditableContent(tableView: tableView, indexPath: indexPath, for: property.name, with: value)
+                cell = formCellWithNonEditableContent(tableView: tableView, indexPath: indexPath, for: property.name, with: value)
             }
         } else {
             // A complex property
-            cell = self.formCellWithNonEditableContent(tableView: tableView, indexPath: indexPath, for: property.name, with: "...")
+            cell = formCellWithNonEditableContent(tableView: tableView, indexPath: indexPath, for: property.name, with: "...")
         }
         return cell
     }
@@ -61,7 +61,7 @@ class CellCreationHelper {
             cell.valueTextField.placeholder = NSLocalizedString("keyRequiredPlaceholder", value: "Required", comment: "XSEL: Placeholder text for required but currently empty textfield.")
         }
 
-        cell.onChangeHandler = { (newValue) -> Void in
+        cell.onChangeHandler = { newValue -> Void in
             let isNewValueValid = changeHandler(newValue)
             if !isNewValueValid {
                 cell.valueTextField.textColor = UIColor.red

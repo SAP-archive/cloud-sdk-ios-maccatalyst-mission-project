@@ -1,9 +1,9 @@
-// # Proxy Compiler 21.5.5
+// # Proxy Compiler 21.11.3
 
 import Foundation
 import SAPOData
 
-public class ESPMContainerMetadata {
+public enum ESPMContainerMetadata {
     private static let document__lock = ObjectBase()
 
     private static var document_: CSDLDocument = ESPMContainerMetadata.resolve()
@@ -33,7 +33,7 @@ public class ESPMContainerMetadata {
         return ESPMContainerMetadataParser.parsed.immortalize()
     }
 
-    public class ComplexTypes {
+    public enum ComplexTypes {
         private static let address__lock = ObjectBase()
 
         private static var address_: ComplexType = ESPMContainerMetadataParser.parsed.complexType(withName: "ESPM.Address")
@@ -56,7 +56,7 @@ public class ESPMContainerMetadata {
         }
     }
 
-    public class EntityTypes {
+    public enum EntityTypes {
         private static let customer__lock = ObjectBase()
 
         private static var customer_: EntityType = ESPMContainerMetadataParser.parsed.entityType(withName: "ESPM.Customer")
@@ -268,7 +268,7 @@ public class ESPMContainerMetadata {
         }
     }
 
-    public class EntitySets {
+    public enum EntitySets {
         private static let customers__lock = ObjectBase()
 
         private static var customers_: EntitySet = ESPMContainerMetadataParser.parsed.entitySet(withName: "Customers")
@@ -480,7 +480,7 @@ public class ESPMContainerMetadata {
         }
     }
 
-    public class ActionImports {
+    public enum ActionImports {
         private static let generateSamplePurchaseOrders__lock = ObjectBase()
 
         private static var generateSamplePurchaseOrders_: DataMethod = ESPMContainerMetadataParser.parsed.dataMethod(withName: "GenerateSamplePurchaseOrders")

@@ -1,4 +1,4 @@
-// # Proxy Compiler 21.5.5
+// # Proxy Compiler 21.11.3
 
 import Foundation
 import SAPOData
@@ -125,7 +125,7 @@ open class Customer: EntityValue {
     }
 
     open func copy() -> Customer {
-        return CastRequired<Customer>.from(self.copyEntity())
+        return CastRequired<Customer>.from(copyEntity())
     }
 
     open class var country: Property {
@@ -284,7 +284,7 @@ open class Customer: EntityValue {
         }
     }
 
-    open override var isProxy: Bool {
+    override open var isProxy: Bool {
         return true
     }
 
@@ -445,10 +445,10 @@ open class Customer: EntityValue {
 
     open var updatedTimestamp: LocalDateTime? {
         get {
-            return LocalDateTime.castOptional(self.optionalValue(for: Customer.updatedTimestamp))
+            return LocalDateTime.castOptional(optionalValue(for: Customer.updatedTimestamp))
         }
         set(value) {
-            self.setOptionalValue(for: Customer.updatedTimestamp, to: value)
+            setOptionalValue(for: Customer.updatedTimestamp, to: value)
         }
     }
 }

@@ -1,4 +1,4 @@
-// # Proxy Compiler 21.5.5
+// # Proxy Compiler 21.11.3
 
 import Foundation
 import SAPOData
@@ -41,7 +41,7 @@ open class ProductText: EntityValue {
     }
 
     open func copy() -> ProductText {
-        return CastRequired<ProductText>.from(self.copyEntity())
+        return CastRequired<ProductText>.from(copyEntity())
     }
 
     open class var id: Property {
@@ -70,7 +70,7 @@ open class ProductText: EntityValue {
         }
     }
 
-    open override var isProxy: Bool {
+    override open var isProxy: Bool {
         return true
     }
 
@@ -205,10 +205,10 @@ open class ProductText: EntityValue {
 
     open var shortDescription: String? {
         get {
-            return StringValue.optional(self.optionalValue(for: ProductText.shortDescription))
+            return StringValue.optional(optionalValue(for: ProductText.shortDescription))
         }
         set(value) {
-            self.setOptionalValue(for: ProductText.shortDescription, to: StringValue.of(optional: value))
+            setOptionalValue(for: ProductText.shortDescription, to: StringValue.of(optional: value))
         }
     }
 }

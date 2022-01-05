@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLI Project Info</key>
+	<dict>
+		<key>Bundle identifier</key>
+		<string>com.example.TutorialApp</string>
+		<key>Cloud application id</key>
+		<string>com.example.tutorialapp</string>
+		<key>Landscape type</key>
+		<string>cf</string>
+		<key>Mac catalyst support</key>
+		<true/>
+		<key>Organization identifier</key>
+		<string>com.example</string>
+		<key>Organization name</key>
+		<string>KM</string>
+		<key>Project name</key>
+		<string>TutorialApp</string>
+		<key>SAP mobile services application url</key>
+		<string>https://6dcf76a7trial-dev-com-example-tutorialapp.cfapps.eu10.hana.ondemand.com</string>
+	</dict>
+	<key>Conduit Info</key>
+	<dict>
+		<key>Conduit URL</key>
+		<string>https://mobile-service-cockpit-web.cfapps.eu10.hana.ondemand.com/cockpit/v1/org/328f849b-5f76-4db9-921a-284961b54d7f/space/805ff5b6-f5e0-49a3-8886-43109a95a5a4/app/com.example.tutorialapp/service/proxy/Admin/proxy/v1/conduitWithHeaderContent</string>
+		<key>Conduit destination base URL</key>
+		<string>https://6dcf76a7trial-dev-com-example-tutorialapp.cfapps.eu10.hana.ondemand.com</string>
+	</dict>
+	<key>Destinations</key>
+	<array>
+		<dict>
+			<key>Additional generation parameters</key>
+			<string></string>
+			<key>Authentication type</key>
+			<string>No Authentication</string>
+			<key>Generated class prefix</key>
+			<string></string>
+			<key>Id</key>
+			<string>com.sap.edm.sampleservice.v2</string>
+			<key>Service class name</key>
+			<string></string>
+			<key>Should generate nullable properties with optional type</key>
+			<true/>
+			<key>Skip proxy class generation</key>
+			<false/>
+		</dict>
+	</array>
+	<key>Features</key>
+	<dict>
+		<key>Client usage</key>
+		<true/>
+		<key>Crash reporting</key>
+		<true/>
+		<key>Discovery service</key>
+		<false/>
+		<key>Discovery service email domain</key>
+		<string></string>
+		<key>Log upload</key>
+		<true/>
+		<key>Logging</key>
+		<true/>
+		<key>OAuth Configuration</key>
+		<dict>
+			<key>Authorization endpoint</key>
+			<string>https://6dcf76a7trial-dev-com-example-tutorialapp.cfapps.eu10.hana.ondemand.com/oauth2/api/v1/authorize</string>
+			<key>Client id</key>
+			<string>9538677f-7e8a-4068-bcc1-3b4a1ff3cbdc</string>
+			<key>Enable Cross Context SSO</key>
+			<false/>
+			<key>Redirect url</key>
+			<string>com.example.TutorialApp://6dcf76a7trial-dev-com-example-tutorialapp.cfapps.eu10.hana.ondemand.com</string>
+			<key>Token endpoint</key>
+			<string>https://6dcf76a7trial-dev-com-example-tutorialapp.cfapps.eu10.hana.ondemand.com/oauth2/api/v1/token</string>
+			<key>Xsuaa authorization endpoint</key>
+			<string>https://6dcf76a7trial.authentication.eu10.hana.ondemand.com/oauth/authorize?response_type=code&amp;client_id=sb-com-example-tutorialapp-dev!t108471&amp;redirect_uri=https%3A%2F%2F6dcf76a7trial-dev-com-example-tutorialapp.cfapps.eu10.hana.ondemand.com%2Flogin%2Fcallback</string>
+		</dict>
+		<key>OData</key>
+		<true/>
+		<key>Offline OData</key>
+		<true/>
+		<key>Onboarding</key>
+		<true/>
+		<key>Onboarding authentication</key>
+		<string>OAuth Authentication</string>
+		<key>Onboarding destination</key>
+		<string>com.sap.edm.sampleservice.v2</string>
+		<key>Remote notification</key>
+		<true/>
+		<key>Widget extension</key>
+		<false/>
+	</dict>
+</dict>
+</plist>

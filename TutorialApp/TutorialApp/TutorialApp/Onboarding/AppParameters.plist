@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>Application Identifier</key>
-	<string>com.sap.example</string>
+	<string>com.example.tutorialapp</string>
 	<key>Application Type</key>
 	<string>Offline</string>
 	<key>Destinations</key>

@@ -1,7 +1,7 @@
 //
 // TutorialApp
 //
-// Created by SAP BTP SDK Assistant for iOS application on 08/09/21
+// Created by SAP BTP SDK Assistant for iOS v7.0.0 application on 04/01/22
 //
 
 import ESPMContainerFmwk
@@ -15,7 +15,7 @@ import SAPOfflineOData
 class ProductTextMasterViewController: FUIFormTableViewController, SAPFioriLoadingIndicator {
     var dataService: ESPMContainer<OfflineODataProvider>!
     public var loadEntitiesBlock: ((_ completionHandler: @escaping ([ESPMContainerFmwk.ProductText]?, Error?) -> Void) -> Void)?
-    private var entities: [ESPMContainerFmwk.ProductText] = [ESPMContainerFmwk.ProductText]()
+    private var entities = [ESPMContainerFmwk.ProductText]()
 
     private let logger = Logger.shared(named: "ProductTextMasterViewControllerLogger")
     private let okTitle = NSLocalizedString("keyOkButtonTitle",
@@ -25,14 +25,14 @@ class ProductTextMasterViewController: FUIFormTableViewController, SAPFioriLoadi
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.edgesForExtendedLayout = []
+        edgesForExtendedLayout = []
         // Add refreshcontrol UI
-        self.refreshControl?.addTarget(self, action: #selector(self.refresh), for: UIControl.Event.valueChanged)
-        self.tableView.addSubview(self.refreshControl!)
+        refreshControl?.addTarget(self, action: #selector(refresh), for: UIControl.Event.valueChanged)
+        tableView.addSubview(refreshControl!)
         // Cell height settings
-        self.tableView.rowHeight = UITableView.automaticDimension
-        self.tableView.estimatedRowHeight = 98
-        self.updateTable()
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 98
+        updateTable()
     }
 
     var preventNavigationLoop = false
@@ -40,7 +40,7 @@ class ProductTextMasterViewController: FUIFormTableViewController, SAPFioriLoadi
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.clearsSelectionOnViewWillAppear = self.splitViewController!.isCollapsed
+        clearsSelectionOnViewWillAppear = splitViewController!.isCollapsed
     }
 
     override func didReceiveMemoryWarning() {
@@ -51,7 +51,7 @@ class ProductTextMasterViewController: FUIFormTableViewController, SAPFioriLoadi
     // MARK: - Table view data source
 
     override func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
-        return self.entities.count
+        return entities.count
     }
 
     override func tableView(_: UITableView, canEditRowAt _: IndexPath) -> Bool {
@@ -59,7 +59,7 @@ class ProductTextMasterViewController: FUIFormTableViewController, SAPFioriLoadi
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let productText = self.entities[indexPath.row]
+        let productText = entities[indexPath.row]
 
         let cell = CellCreationHelper.objectCellWithNonEditableContent(tableView: tableView, indexPath: indexPath, key: "Id", value: "\(productText.id!)")
         return cell
@@ -69,8 +69,8 @@ class ProductTextMasterViewController: FUIFormTableViewController, SAPFioriLoadi
         if editingStyle != .delete {
             return
         }
-        let currentEntity = self.entities[indexPath.row]
-        self.dataService.deleteEntity(currentEntity) { error in
+        let currentEntity = entities[indexPath.row]
+        dataService.deleteEntity(currentEntity) { error in
             if let error = error {
                 self.logger.error("Delete entry failed.", error: error)
                 AlertHelper.displayAlert(with: NSLocalizedString("keyErrorDeletingEntryTitle", value: "Delete entry failed", comment: "XTIT: Title of deleting entry error pop up."), error: error, viewController: self)
@@ -84,7 +84,7 @@ class ProductTextMasterViewController: FUIFormTableViewController, SAPFioriLoadi
     // MARK: - Data accessing
 
     func requestEntities(completionHandler: @escaping (Error?) -> Void) {
-        self.loadEntitiesBlock! { entities, error in
+        loadEntitiesBlock! { entities, error in
             if let error = error {
                 completionHandler(error)
                 return
@@ -99,23 +99,23 @@ class ProductTextMasterViewController: FUIFormTableViewController, SAPFioriLoadi
     override func prepare(for segue: UIStoryboardSegue, sender _: Any?) {
         if segue.identifier == "showDetail" {
             // Show the selected Entity on the Detail view
-            guard let indexPath = self.tableView.indexPathForSelectedRow else {
+            guard let indexPath = tableView.indexPathForSelectedRow else {
                 return
             }
-            self.logger.info("Showing details of the chosen element.")
-            let selectedEntity = self.entities[indexPath.row]
+            logger.info("Showing details of the chosen element.")
+            let selectedEntity = entities[indexPath.row]
             let detailViewController = segue.destination as! ProductTextDetailViewController
             detailViewController.entity = selectedEntity
             detailViewController.navigationItem.leftItemsSupplementBackButton = true
-            detailViewController.navigationItem.title = "\(self.entities[(self.tableView.indexPathForSelectedRow?.row)!].id != nil ? "\(self.entities[(self.tableView.indexPathForSelectedRow?.row)!].id!)" : "")"
+            detailViewController.navigationItem.title = "\(entities[(tableView.indexPathForSelectedRow?.row)!].id != nil ? "\(entities[(tableView.indexPathForSelectedRow?.row)!].id!)" : "")"
             detailViewController.allowsEditableCells = false
             detailViewController.tableUpdater = self
-            detailViewController.preventNavigationLoop = self.preventNavigationLoop
-            detailViewController.dataService = self.dataService
-            detailViewController.entitySetName = self.entitySetName
+            detailViewController.preventNavigationLoop = preventNavigationLoop
+            detailViewController.dataService = dataService
+            detailViewController.entitySetName = entitySetName
         } else if segue.identifier == "addEntity" {
             // Show the Detail view with a new Entity, which can be filled to create on the server
-            self.logger.info("Showing view to add new entity.")
+            logger.info("Showing view to add new entity.")
             let dest = segue.destination as! UINavigationController
             let detailViewController = dest.viewControllers[0] as! ProductTextDetailViewController
             detailViewController.title = NSLocalizedString("keyAddEntityTitle", value: "Add Entity", comment: "XTIT: Title of add new entity screen.")
@@ -125,15 +125,15 @@ class ProductTextMasterViewController: FUIFormTableViewController, SAPFioriLoadi
             detailViewController.navigationItem.leftBarButtonItem = cancelButton
             detailViewController.allowsEditableCells = true
             detailViewController.tableUpdater = self
-            detailViewController.dataService = self.dataService
-            detailViewController.entitySetName = self.entitySetName
+            detailViewController.dataService = dataService
+            detailViewController.entitySetName = entitySetName
         }
     }
 
     // MARK: - Table update
 
     func updateTable() {
-        self.showFioriLoadingIndicator()
+        showFioriLoadingIndicator()
         DispatchQueue.global().async {
             self.loadData {
                 self.hideFioriLoadingIndicator()
@@ -142,7 +142,7 @@ class ProductTextMasterViewController: FUIFormTableViewController, SAPFioriLoadi
     }
 
     private func loadData(completionHandler: @escaping () -> Void) {
-        self.requestEntities { error in
+        requestEntities { error in
             defer {
                 completionHandler()
             }
@@ -171,6 +171,6 @@ class ProductTextMasterViewController: FUIFormTableViewController, SAPFioriLoadi
 
 extension ProductTextMasterViewController: ESPMContainerEntitySetUpdaterDelegate {
     func entitySetHasChanged() {
-        self.updateTable()
+        updateTable()
     }
 }

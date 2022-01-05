@@ -1,7 +1,7 @@
 //
 // TutorialApp
 //
-// Created by SAP BTP SDK Assistant for iOS application on 08/09/21
+// Created by SAP BTP SDK Assistant for iOS v7.0.0 application on 04/01/22
 //
 
 import ESPMContainerFmwk
@@ -20,13 +20,13 @@ class StockDetailViewController: FUIFormTableViewController, SAPFioriLoadingIndi
     private var _entity: ESPMContainerFmwk.Stock?
     var entity: ESPMContainerFmwk.Stock {
         get {
-            if self._entity == nil {
-                self._entity = self.createEntityWithDefaultValues()
+            if _entity == nil {
+                _entity = createEntityWithDefaultValues()
             }
-            return self._entity!
+            return _entity!
         }
         set {
-            self._entity = newValue
+            _entity = newValue
         }
     }
 
@@ -42,8 +42,8 @@ class StockDetailViewController: FUIFormTableViewController, SAPFioriLoadingIndi
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.tableView.rowHeight = UITableView.automaticDimension
-        self.tableView.estimatedRowHeight = 44
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 44
     }
 
     override func didReceiveMemoryWarning() {
@@ -56,19 +56,19 @@ class StockDetailViewController: FUIFormTableViewController, SAPFioriLoadingIndi
     override func prepare(for segue: UIStoryboardSegue, sender _: Any?) {
         if segue.identifier == "updateEntity" {
             // Show the Detail view with the current entity, where the properties scan be edited and updated
-            self.logger.info("Showing a view to update the selected entity.")
+            logger.info("Showing a view to update the selected entity.")
             let dest = segue.destination as! UINavigationController
             let detailViewController = dest.viewControllers[0] as! StockDetailViewController
             detailViewController.title = NSLocalizedString("keyUpdateEntityTitle", value: "Update Entity", comment: "XTIT: Title of update selected entity screen.")
-            detailViewController.dataService = self.dataService
-            detailViewController.entity = self.entity
+            detailViewController.dataService = dataService
+            detailViewController.entity = entity
             let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: detailViewController, action: #selector(detailViewController.updateEntity))
             detailViewController.navigationItem.rightBarButtonItem = doneButton
             let cancelButton = UIBarButtonItem(title: NSLocalizedString("keyCancelButtonToGoPreviousScreen", value: "Cancel", comment: "XBUT: Title of Cancel button."), style: .plain, target: detailViewController, action: #selector(detailViewController.cancel))
             detailViewController.navigationItem.leftBarButtonItem = cancelButton
             detailViewController.allowsEditableCells = true
             detailViewController.entityUpdater = self
-            detailViewController.entitySetName = self.entitySetName
+            detailViewController.entitySetName = entitySetName
         }
     }
 
@@ -77,21 +77,21 @@ class StockDetailViewController: FUIFormTableViewController, SAPFioriLoadingIndi
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch indexPath.row {
         case 0:
-            return self.cellForLotSize(tableView: tableView, indexPath: indexPath, currentEntity: self.entity, property: Stock.lotSize)
+            return cellForLotSize(tableView: tableView, indexPath: indexPath, currentEntity: entity, property: Stock.lotSize)
         case 1:
-            return self.cellForMinStock(tableView: tableView, indexPath: indexPath, currentEntity: self.entity, property: Stock.minStock)
+            return cellForMinStock(tableView: tableView, indexPath: indexPath, currentEntity: entity, property: Stock.minStock)
         case 2:
-            return self.cellForProductID(tableView: tableView, indexPath: indexPath, currentEntity: self.entity, property: Stock.productID)
+            return cellForProductID(tableView: tableView, indexPath: indexPath, currentEntity: entity, property: Stock.productID)
         case 3:
-            return self.cellForQuantity(tableView: tableView, indexPath: indexPath, currentEntity: self.entity, property: Stock.quantity)
+            return cellForQuantity(tableView: tableView, indexPath: indexPath, currentEntity: entity, property: Stock.quantity)
         case 4:
-            return self.cellForQuantityLessMin(tableView: tableView, indexPath: indexPath, currentEntity: self.entity, property: Stock.quantityLessMin)
+            return cellForQuantityLessMin(tableView: tableView, indexPath: indexPath, currentEntity: entity, property: Stock.quantityLessMin)
         case 5:
-            return self.cellForUpdatedTimestamp(tableView: tableView, indexPath: indexPath, currentEntity: self.entity, property: Stock.updatedTimestamp)
+            return cellForUpdatedTimestamp(tableView: tableView, indexPath: indexPath, currentEntity: entity, property: Stock.updatedTimestamp)
         case 6:
             let cell = CellCreationHelper.cellForDefault(tableView: tableView, indexPath: indexPath, editingIsAllowed: false)
             cell.keyName = "ProductDetails"
-            if self.entity.isNew {
+            if entity.isNew {
                 cell.title.textColor = UIColor.lightGray
             }
             cell.value = " "
@@ -108,17 +108,17 @@ class StockDetailViewController: FUIFormTableViewController, SAPFioriLoadingIndi
     }
 
     override func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if self.preventNavigationLoop {
+        if preventNavigationLoop {
             AlertHelper.displayAlert(with: NSLocalizedString("keyAlertNavigationLoop", value: "No further navigation is possible.", comment: "XTIT: Title of alert message about preventing navigation loop."), error: nil, viewController: self)
             return
         }
         switch indexPath.row {
         case 6:
-            if !self.entity.isNew {
-                self.showFioriLoadingIndicator()
+            if !entity.isNew {
+                showFioriLoadingIndicator()
                 let destinationStoryBoard = UIStoryboard(name: "Product", bundle: nil)
                 let destinationDetailVC = destinationStoryBoard.instantiateViewController(withIdentifier: "ProductDetailViewController") as! ProductDetailViewController
-                self.dataService.loadProperty(Stock.productDetails, into: self.entity) { error in
+                dataService.loadProperty(Stock.productDetails, into: entity) { error in
                     self.hideFioriLoadingIndicator()
                     if let error = error {
                         AlertHelper.displayAlert(with: NSLocalizedString("keyErrorLoadingData", value: "Loading data failed!", comment: "XTIT: Title of loading data error pop up."), error: error, viewController: self)
@@ -126,14 +126,14 @@ class StockDetailViewController: FUIFormTableViewController, SAPFioriLoadingIndi
                     }
                 }
 
-                if let productDetails = self.entity.productDetails {
+                if let productDetails = entity.productDetails {
                     destinationDetailVC.entity = productDetails
                 }
                 destinationDetailVC.navigationItem.leftItemsSupplementBackButton = true
                 destinationDetailVC.navigationItem.title = "ProductDetails"
                 destinationDetailVC.allowsEditableCells = false
                 destinationDetailVC.preventNavigationLoop = true
-                self.navigationController?.pushViewController(destinationDetailVC, animated: true)
+                navigationController?.pushViewController(destinationDetailVC, animated: true)
             }
         default:
             return
@@ -147,22 +147,23 @@ class StockDetailViewController: FUIFormTableViewController, SAPFioriLoadingIndi
         if let propertyValue = currentEntity.lotSize {
             value = "\(propertyValue)"
         }
-        return CellCreationHelper.cellForProperty(tableView: tableView, indexPath: indexPath, entity: self.entity, property: property, value: value, editingIsAllowed: allowsEditableCells, changeHandler: { (newValue: String) -> Bool in
-            var isNewValueValid = false
-            // The property is optional, so nil value can be accepted
-            if newValue.isEmpty {
-                currentEntity.lotSize = nil
-                isNewValueValid = true
-            } else {
-                if let validValue = BigDecimal.parse(newValue) {
-                    currentEntity.lotSize = validValue
+        return CellCreationHelper.cellForProperty(tableView: tableView, indexPath: indexPath, entity: entity, property: property, value: value, editingIsAllowed: allowsEditableCells, changeHandler:
+            { (newValue: String) -> Bool in
+                var isNewValueValid = false
+                // The property is optional, so nil value can be accepted
+                if newValue.isEmpty {
+                    currentEntity.lotSize = nil
                     isNewValueValid = true
+                } else {
+                    if let validValue = BigDecimal.parse(newValue) {
+                        currentEntity.lotSize = validValue
+                        isNewValueValid = true
+                    }
                 }
-            }
-            self.validity[property.name] = isNewValueValid
-            self.barButtonShouldBeEnabled()
-            return isNewValueValid
-        })
+                self.validity[property.name] = isNewValueValid
+                self.barButtonShouldBeEnabled()
+                return isNewValueValid
+            })
     }
 
     private func cellForMinStock(tableView: UITableView, indexPath: IndexPath, currentEntity: ESPMContainerFmwk.Stock, property: Property) -> UITableViewCell {
@@ -170,22 +171,23 @@ class StockDetailViewController: FUIFormTableViewController, SAPFioriLoadingIndi
         if let propertyValue = currentEntity.minStock {
             value = "\(propertyValue)"
         }
-        return CellCreationHelper.cellForProperty(tableView: tableView, indexPath: indexPath, entity: self.entity, property: property, value: value, editingIsAllowed: allowsEditableCells, changeHandler: { (newValue: String) -> Bool in
-            var isNewValueValid = false
-            // The property is optional, so nil value can be accepted
-            if newValue.isEmpty {
-                currentEntity.minStock = nil
-                isNewValueValid = true
-            } else {
-                if let validValue = BigDecimal.parse(newValue) {
-                    currentEntity.minStock = validValue
+        return CellCreationHelper.cellForProperty(tableView: tableView, indexPath: indexPath, entity: entity, property: property, value: value, editingIsAllowed: allowsEditableCells, changeHandler:
+            { (newValue: String) -> Bool in
+                var isNewValueValid = false
+                // The property is optional, so nil value can be accepted
+                if newValue.isEmpty {
+                    currentEntity.minStock = nil
                     isNewValueValid = true
+                } else {
+                    if let validValue = BigDecimal.parse(newValue) {
+                        currentEntity.minStock = validValue
+                        isNewValueValid = true
+                    }
                 }
-            }
-            self.validity[property.name] = isNewValueValid
-            self.barButtonShouldBeEnabled()
-            return isNewValueValid
-        })
+                self.validity[property.name] = isNewValueValid
+                self.barButtonShouldBeEnabled()
+                return isNewValueValid
+            })
     }
 
     private func cellForProductID(tableView: UITableView, indexPath: IndexPath, currentEntity: ESPMContainerFmwk.Stock, property: Property) -> UITableViewCell {
@@ -193,22 +195,23 @@ class StockDetailViewController: FUIFormTableViewController, SAPFioriLoadingIndi
         if let propertyValue = currentEntity.productID {
             value = "\(propertyValue)"
         }
-        return CellCreationHelper.cellForProperty(tableView: tableView, indexPath: indexPath, entity: self.entity, property: property, value: value, editingIsAllowed: allowsEditableCells, changeHandler: { (newValue: String) -> Bool in
-            var isNewValueValid = false
-            // The property is optional, so nil value can be accepted
-            if newValue.isEmpty {
-                currentEntity.productID = nil
-                isNewValueValid = true
-            } else {
-                if Stock.productID.isOptional || newValue != "" {
-                    currentEntity.productID = newValue
+        return CellCreationHelper.cellForProperty(tableView: tableView, indexPath: indexPath, entity: entity, property: property, value: value, editingIsAllowed: allowsEditableCells, changeHandler:
+            { (newValue: String) -> Bool in
+                var isNewValueValid = false
+                // The property is optional, so nil value can be accepted
+                if newValue.isEmpty {
+                    currentEntity.productID = nil
                     isNewValueValid = true
+                } else {
+                    if Stock.productID.isOptional || newValue != "" {
+                        currentEntity.productID = newValue
+                        isNewValueValid = true
+                    }
                 }
-            }
-            self.validity[property.name] = isNewValueValid
-            self.barButtonShouldBeEnabled()
-            return isNewValueValid
-        })
+                self.validity[property.name] = isNewValueValid
+                self.barButtonShouldBeEnabled()
+                return isNewValueValid
+            })
     }
 
     private func cellForQuantity(tableView: UITableView, indexPath: IndexPath, currentEntity: ESPMContainerFmwk.Stock, property: Property) -> UITableViewCell {
@@ -216,22 +219,23 @@ class StockDetailViewController: FUIFormTableViewController, SAPFioriLoadingIndi
         if let propertyValue = currentEntity.quantity {
             value = "\(propertyValue)"
         }
-        return CellCreationHelper.cellForProperty(tableView: tableView, indexPath: indexPath, entity: self.entity, property: property, value: value, editingIsAllowed: allowsEditableCells, changeHandler: { (newValue: String) -> Bool in
-            var isNewValueValid = false
-            // The property is optional, so nil value can be accepted
-            if newValue.isEmpty {
-                currentEntity.quantity = nil
-                isNewValueValid = true
-            } else {
-                if let validValue = BigDecimal.parse(newValue) {
-                    currentEntity.quantity = validValue
+        return CellCreationHelper.cellForProperty(tableView: tableView, indexPath: indexPath, entity: entity, property: property, value: value, editingIsAllowed: allowsEditableCells, changeHandler:
+            { (newValue: String) -> Bool in
+                var isNewValueValid = false
+                // The property is optional, so nil value can be accepted
+                if newValue.isEmpty {
+                    currentEntity.quantity = nil
                     isNewValueValid = true
+                } else {
+                    if let validValue = BigDecimal.parse(newValue) {
+                        currentEntity.quantity = validValue
+                        isNewValueValid = true
+                    }
                 }
-            }
-            self.validity[property.name] = isNewValueValid
-            self.barButtonShouldBeEnabled()
-            return isNewValueValid
-        })
+                self.validity[property.name] = isNewValueValid
+                self.barButtonShouldBeEnabled()
+                return isNewValueValid
+            })
     }
 
     private func cellForQuantityLessMin(tableView: UITableView, indexPath: IndexPath, currentEntity: ESPMContainerFmwk.Stock, property: Property) -> UITableViewCell {
@@ -239,22 +243,23 @@ class StockDetailViewController: FUIFormTableViewController, SAPFioriLoadingIndi
         if let propertyValue = currentEntity.quantityLessMin {
             value = "\(propertyValue)"
         }
-        return CellCreationHelper.cellForProperty(tableView: tableView, indexPath: indexPath, entity: self.entity, property: property, value: value, editingIsAllowed: allowsEditableCells, changeHandler: { (newValue: String) -> Bool in
-            var isNewValueValid = false
-            // The property is optional, so nil value can be accepted
-            if newValue.isEmpty {
-                currentEntity.quantityLessMin = nil
-                isNewValueValid = true
-            } else {
-                if let validValue = Bool(newValue) {
-                    currentEntity.quantityLessMin = validValue
+        return CellCreationHelper.cellForProperty(tableView: tableView, indexPath: indexPath, entity: entity, property: property, value: value, editingIsAllowed: allowsEditableCells, changeHandler:
+            { (newValue: String) -> Bool in
+                var isNewValueValid = false
+                // The property is optional, so nil value can be accepted
+                if newValue.isEmpty {
+                    currentEntity.quantityLessMin = nil
                     isNewValueValid = true
+                } else {
+                    if let validValue = Bool(newValue) {
+                        currentEntity.quantityLessMin = validValue
+                        isNewValueValid = true
+                    }
                 }
-            }
-            self.validity[property.name] = isNewValueValid
-            self.barButtonShouldBeEnabled()
-            return isNewValueValid
-        })
+                self.validity[property.name] = isNewValueValid
+                self.barButtonShouldBeEnabled()
+                return isNewValueValid
+            })
     }
 
     private func cellForUpdatedTimestamp(tableView: UITableView, indexPath: IndexPath, currentEntity: ESPMContainerFmwk.Stock, property: Property) -> UITableViewCell {
@@ -262,31 +267,32 @@ class StockDetailViewController: FUIFormTableViewController, SAPFioriLoadingIndi
         if let propertyValue = currentEntity.updatedTimestamp {
             value = "\(propertyValue)"
         }
-        return CellCreationHelper.cellForProperty(tableView: tableView, indexPath: indexPath, entity: self.entity, property: property, value: value, editingIsAllowed: allowsEditableCells, changeHandler: { (newValue: String) -> Bool in
-            var isNewValueValid = false
-            // The property is optional, so nil value can be accepted
-            if newValue.isEmpty {
-                currentEntity.updatedTimestamp = nil
-                isNewValueValid = true
-            } else {
-                if let validValue = LocalDateTime.parse(newValue) { // This is just a simple solution to handle UTC only
-                    currentEntity.updatedTimestamp = validValue
+        return CellCreationHelper.cellForProperty(tableView: tableView, indexPath: indexPath, entity: entity, property: property, value: value, editingIsAllowed: allowsEditableCells, changeHandler:
+            { (newValue: String) -> Bool in
+                var isNewValueValid = false
+                // The property is optional, so nil value can be accepted
+                if newValue.isEmpty {
+                    currentEntity.updatedTimestamp = nil
                     isNewValueValid = true
+                } else {
+                    if let validValue = LocalDateTime.parse(newValue) { // This is just a simple solution to handle UTC only
+                        currentEntity.updatedTimestamp = validValue
+                        isNewValueValid = true
+                    }
                 }
-            }
-            self.validity[property.name] = isNewValueValid
-            self.barButtonShouldBeEnabled()
-            return isNewValueValid
-        })
+                self.validity[property.name] = isNewValueValid
+                self.barButtonShouldBeEnabled()
+                return isNewValueValid
+            })
     }
 
     // MARK: - OData functionalities
 
     @objc func createEntity() {
-        self.showFioriLoadingIndicator()
-        self.view.endEditing(true)
-        self.logger.info("Creating entity in backend.")
-        self.dataService.createEntity(self.entity) { error in
+        showFioriLoadingIndicator()
+        view.endEditing(true)
+        logger.info("Creating entity in backend.")
+        dataService.createEntity(entity) { error in
             self.hideFioriLoadingIndicator()
             if let error = error {
                 self.logger.error("Create entry failed. Error: \(error)", error: error)
@@ -309,18 +315,18 @@ class StockDetailViewController: FUIFormTableViewController, SAPFioriLoadingIndi
 
         // Key properties without default value should be invalid by default for Create scenario
         if newEntity.productID == nil || newEntity.productID!.isEmpty {
-            self.validity["ProductId"] = false
+            validity["ProductId"] = false
         }
 
-        self.barButtonShouldBeEnabled()
+        barButtonShouldBeEnabled()
         return newEntity
     }
 
     @objc func updateEntity(_: AnyObject) {
-        self.showFioriLoadingIndicator()
-        self.view.endEditing(true)
-        self.logger.info("Updating entity in backend.")
-        self.dataService.updateEntity(self.entity) { error in
+        showFioriLoadingIndicator()
+        view.endEditing(true)
+        logger.info("Updating entity in backend.")
+        dataService.updateEntity(entity) { error in
             self.hideFioriLoadingIndicator()
             if let error = error {
                 self.logger.error("Update entry failed. Error: \(error)", error: error)
@@ -348,10 +354,10 @@ class StockDetailViewController: FUIFormTableViewController, SAPFioriLoadingIndi
 
     // Check if all text fields are valid
     private func barButtonShouldBeEnabled() {
-        let anyFieldInvalid = self.validity.values.first { field in
+        let anyFieldInvalid = validity.values.first { field in
             field == false
         }
-        self.navigationItem.rightBarButtonItem?.isEnabled = anyFieldInvalid == nil
+        navigationItem.rightBarButtonItem?.isEnabled = anyFieldInvalid == nil
     }
 }
 

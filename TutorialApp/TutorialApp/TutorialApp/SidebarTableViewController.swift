@@ -2,8 +2,8 @@
 //  SidebarTableViewController.swift
 //  TutorialApp
 //
-//  Created by Muessig, Kevin on 12.07.21.
-//  Copyright © 2021 SAP. All rights reserved.
+//  Created by Muessig, Kevin on 05.01.22.
+//  Copyright © 2022 SAP. All rights reserved.
 //
 
 import UIKit
@@ -17,9 +17,9 @@ class SidebarTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        navigationItem.title = NSLocalizedString("Navigation", comment: "")
-        
         tableView.register(FUIObjectTableViewCell.self, forCellReuseIdentifier: FUIObjectTableViewCell.reuseIdentifier)
+        
+        navigationItem.title = NSLocalizedString("Navigation", comment: "")
     }
 
     // MARK: - Table view data source
@@ -29,10 +29,9 @@ class SidebarTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
         return 3
     }
-
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: FUIObjectTableViewCell.reuseIdentifier) as! FUIObjectTableViewCell
 
@@ -60,7 +59,7 @@ class SidebarTableViewController: UITableViewController {
     override func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
         viewSelected(at: indexPath)
     }
-
+    
     // CollectionType selection helper
     private func viewSelected(at indexPath: IndexPath) {
         // Load the EntityType specific ViewController from the specific storyboard"
@@ -87,4 +86,5 @@ class SidebarTableViewController: UITableViewController {
         // Display the Detail View Controller
         splitViewController?.showDetailViewController(rightNavigationController, sender: nil)
     }
+
 }

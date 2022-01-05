@@ -2,11 +2,10 @@
 //  AppDelegate+MenuBuilder.swift
 //  TutorialApp
 //
-//  Created by Muessig, Kevin on 12.07.21.
-//  Copyright © 2021 SAP. All rights reserved.
+//  Created by Muessig, Kevin on 05.01.22.
+//  Copyright © 2022 SAP. All rights reserved.
 //
 
-import Foundation
 import UIKit
 
 extension AppDelegate {

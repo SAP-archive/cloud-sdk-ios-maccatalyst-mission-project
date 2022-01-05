@@ -1,9 +1,9 @@
-// # Proxy Compiler 21.5.5
+// # Proxy Compiler 21.11.3
 
 import Foundation
 import SAPOData
 
-internal class ESPMContainerFactory {
+internal enum ESPMContainerFactory {
     static func registerAll() throws {
         ESPMContainerMetadata.ComplexTypes.address.registerFactory(ObjectFactory.with(create: { Address(withDefaults: false) }, createWithDecoder: { d in try Address(from: d) }))
         ESPMContainerMetadata.EntityTypes.customer.registerFactory(ObjectFactory.with(create: { Customer(withDefaults: false) }, sparse: { m in Customer(withDefaults: false, withIndexMap: m) }, decode: { d in try Customer(from: d) }))

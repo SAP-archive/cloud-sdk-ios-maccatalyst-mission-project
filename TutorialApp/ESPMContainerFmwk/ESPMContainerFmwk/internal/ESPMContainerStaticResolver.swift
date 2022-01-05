@@ -1,9 +1,9 @@
-// # Proxy Compiler 21.5.5
+// # Proxy Compiler 21.11.3
 
 import Foundation
 import SAPOData
 
-internal class ESPMContainerStaticResolver {
+internal enum ESPMContainerStaticResolver {
     static func resolve() {
         ESPMContainerStaticResolver.resolve1()
     }

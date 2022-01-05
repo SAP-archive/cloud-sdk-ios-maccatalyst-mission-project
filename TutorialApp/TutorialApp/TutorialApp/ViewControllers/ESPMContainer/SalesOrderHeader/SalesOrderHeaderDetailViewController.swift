@@ -1,7 +1,7 @@
 //
 // TutorialApp
 //
-// Created by SAP BTP SDK Assistant for iOS application on 08/09/21
+// Created by SAP BTP SDK Assistant for iOS v7.0.0 application on 04/01/22
 //
 
 import ESPMContainerFmwk
@@ -20,13 +20,13 @@ class SalesOrderHeaderDetailViewController: FUIFormTableViewController, SAPFiori
     private var _entity: ESPMContainerFmwk.SalesOrderHeader?
     var entity: ESPMContainerFmwk.SalesOrderHeader {
         get {
-            if self._entity == nil {
-                self._entity = self.createEntityWithDefaultValues()
+            if _entity == nil {
+                _entity = createEntityWithDefaultValues()
             }
-            return self._entity!
+            return _entity!
         }
         set {
-            self._entity = newValue
+            _entity = newValue
         }
     }
 
@@ -42,8 +42,8 @@ class SalesOrderHeaderDetailViewController: FUIFormTableViewController, SAPFiori
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.tableView.rowHeight = UITableView.automaticDimension
-        self.tableView.estimatedRowHeight = 44
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 44
     }
 
     override func didReceiveMemoryWarning() {
@@ -56,19 +56,19 @@ class SalesOrderHeaderDetailViewController: FUIFormTableViewController, SAPFiori
     override func prepare(for segue: UIStoryboardSegue, sender _: Any?) {
         if segue.identifier == "updateEntity" {
             // Show the Detail view with the current entity, where the properties scan be edited and updated
-            self.logger.info("Showing a view to update the selected entity.")
+            logger.info("Showing a view to update the selected entity.")
             let dest = segue.destination as! UINavigationController
             let detailViewController = dest.viewControllers[0] as! SalesOrderHeaderDetailViewController
             detailViewController.title = NSLocalizedString("keyUpdateEntityTitle", value: "Update Entity", comment: "XTIT: Title of update selected entity screen.")
-            detailViewController.dataService = self.dataService
-            detailViewController.entity = self.entity
+            detailViewController.dataService = dataService
+            detailViewController.entity = entity
             let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: detailViewController, action: #selector(detailViewController.updateEntity))
             detailViewController.navigationItem.rightBarButtonItem = doneButton
             let cancelButton = UIBarButtonItem(title: NSLocalizedString("keyCancelButtonToGoPreviousScreen", value: "Cancel", comment: "XBUT: Title of Cancel button."), style: .plain, target: detailViewController, action: #selector(detailViewController.cancel))
             detailViewController.navigationItem.leftBarButtonItem = cancelButton
             detailViewController.allowsEditableCells = true
             detailViewController.entityUpdater = self
-            detailViewController.entitySetName = self.entitySetName
+            detailViewController.entitySetName = entitySetName
         }
     }
 
@@ -77,27 +77,27 @@ class SalesOrderHeaderDetailViewController: FUIFormTableViewController, SAPFiori
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch indexPath.row {
         case 0:
-            return self.cellForCreatedAt(tableView: tableView, indexPath: indexPath, currentEntity: self.entity, property: SalesOrderHeader.createdAt)
+            return cellForCreatedAt(tableView: tableView, indexPath: indexPath, currentEntity: entity, property: SalesOrderHeader.createdAt)
         case 1:
-            return self.cellForCurrencyCode(tableView: tableView, indexPath: indexPath, currentEntity: self.entity, property: SalesOrderHeader.currencyCode)
+            return cellForCurrencyCode(tableView: tableView, indexPath: indexPath, currentEntity: entity, property: SalesOrderHeader.currencyCode)
         case 2:
-            return self.cellForCustomerID(tableView: tableView, indexPath: indexPath, currentEntity: self.entity, property: SalesOrderHeader.customerID)
+            return cellForCustomerID(tableView: tableView, indexPath: indexPath, currentEntity: entity, property: SalesOrderHeader.customerID)
         case 3:
-            return self.cellForGrossAmount(tableView: tableView, indexPath: indexPath, currentEntity: self.entity, property: SalesOrderHeader.grossAmount)
+            return cellForGrossAmount(tableView: tableView, indexPath: indexPath, currentEntity: entity, property: SalesOrderHeader.grossAmount)
         case 4:
-            return self.cellForLifeCycleStatus(tableView: tableView, indexPath: indexPath, currentEntity: self.entity, property: SalesOrderHeader.lifeCycleStatus)
+            return cellForLifeCycleStatus(tableView: tableView, indexPath: indexPath, currentEntity: entity, property: SalesOrderHeader.lifeCycleStatus)
         case 5:
-            return self.cellForLifeCycleStatusName(tableView: tableView, indexPath: indexPath, currentEntity: self.entity, property: SalesOrderHeader.lifeCycleStatusName)
+            return cellForLifeCycleStatusName(tableView: tableView, indexPath: indexPath, currentEntity: entity, property: SalesOrderHeader.lifeCycleStatusName)
         case 6:
-            return self.cellForNetAmount(tableView: tableView, indexPath: indexPath, currentEntity: self.entity, property: SalesOrderHeader.netAmount)
+            return cellForNetAmount(tableView: tableView, indexPath: indexPath, currentEntity: entity, property: SalesOrderHeader.netAmount)
         case 7:
-            return self.cellForSalesOrderID(tableView: tableView, indexPath: indexPath, currentEntity: self.entity, property: SalesOrderHeader.salesOrderID)
+            return cellForSalesOrderID(tableView: tableView, indexPath: indexPath, currentEntity: entity, property: SalesOrderHeader.salesOrderID)
         case 8:
-            return self.cellForTaxAmount(tableView: tableView, indexPath: indexPath, currentEntity: self.entity, property: SalesOrderHeader.taxAmount)
+            return cellForTaxAmount(tableView: tableView, indexPath: indexPath, currentEntity: entity, property: SalesOrderHeader.taxAmount)
         case 9:
             let cell = CellCreationHelper.cellForDefault(tableView: tableView, indexPath: indexPath, editingIsAllowed: false)
             cell.keyName = "Items"
-            if self.entity.isNew {
+            if entity.isNew {
                 cell.title.textColor = UIColor.lightGray
             }
             cell.value = " "
@@ -107,7 +107,7 @@ class SalesOrderHeaderDetailViewController: FUIFormTableViewController, SAPFiori
         case 10:
             let cell = CellCreationHelper.cellForDefault(tableView: tableView, indexPath: indexPath, editingIsAllowed: false)
             cell.keyName = "CustomerDetails"
-            if self.entity.isNew {
+            if entity.isNew {
                 cell.title.textColor = UIColor.lightGray
             }
             cell.value = " "
@@ -124,18 +124,18 @@ class SalesOrderHeaderDetailViewController: FUIFormTableViewController, SAPFiori
     }
 
     override func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if self.preventNavigationLoop {
+        if preventNavigationLoop {
             AlertHelper.displayAlert(with: NSLocalizedString("keyAlertNavigationLoop", value: "No further navigation is possible.", comment: "XTIT: Title of alert message about preventing navigation loop."), error: nil, viewController: self)
             return
         }
         switch indexPath.row {
         case 9:
-            if !self.entity.isNew {
-                self.showFioriLoadingIndicator()
+            if !entity.isNew {
+                showFioriLoadingIndicator()
                 let destinationStoryBoard = UIStoryboard(name: "SalesOrderItem", bundle: nil)
                 let masterViewController = destinationStoryBoard.instantiateViewController(withIdentifier: "SalesOrderItemMaster")
                 func loadProperty(_ completionHandler: @escaping ([SalesOrderItem]?, Error?) -> Void) {
-                    self.dataService.loadProperty(SalesOrderHeader.items, into: self.entity) { error in
+                    dataService.loadProperty(SalesOrderHeader.items, into: entity) { error in
                         self.hideFioriLoadingIndicator()
                         if let error = error {
                             completionHandler(nil, error)
@@ -148,14 +148,14 @@ class SalesOrderHeaderDetailViewController: FUIFormTableViewController, SAPFiori
                 masterViewController.navigationItem.title = "Items"
                 (masterViewController as! SalesOrderItemMasterViewController).preventNavigationLoop = true
                 (masterViewController as! SalesOrderItemMasterViewController).dataService = dataService
-                self.navigationController?.pushViewController(masterViewController, animated: true)
+                navigationController?.pushViewController(masterViewController, animated: true)
             }
         case 10:
-            if !self.entity.isNew {
-                self.showFioriLoadingIndicator()
+            if !entity.isNew {
+                showFioriLoadingIndicator()
                 let destinationStoryBoard = UIStoryboard(name: "Customer", bundle: nil)
                 let destinationDetailVC = destinationStoryBoard.instantiateViewController(withIdentifier: "CustomerDetailViewController") as! CustomerDetailViewController
-                self.dataService.loadProperty(SalesOrderHeader.customerDetails, into: self.entity) { error in
+                dataService.loadProperty(SalesOrderHeader.customerDetails, into: entity) { error in
                     self.hideFioriLoadingIndicator()
                     if let error = error {
                         AlertHelper.displayAlert(with: NSLocalizedString("keyErrorLoadingData", value: "Loading data failed!", comment: "XTIT: Title of loading data error pop up."), error: error, viewController: self)
@@ -163,14 +163,14 @@ class SalesOrderHeaderDetailViewController: FUIFormTableViewController, SAPFiori
                     }
                 }
 
-                if let customerDetails = self.entity.customerDetails {
+                if let customerDetails = entity.customerDetails {
                     destinationDetailVC.entity = customerDetails
                 }
                 destinationDetailVC.navigationItem.leftItemsSupplementBackButton = true
                 destinationDetailVC.navigationItem.title = "CustomerDetails"
                 destinationDetailVC.allowsEditableCells = false
                 destinationDetailVC.preventNavigationLoop = true
-                self.navigationController?.pushViewController(destinationDetailVC, animated: true)
+                navigationController?.pushViewController(destinationDetailVC, animated: true)
             }
         default:
             return
@@ -184,22 +184,23 @@ class SalesOrderHeaderDetailViewController: FUIFormTableViewController, SAPFiori
         if let propertyValue = currentEntity.createdAt {
             value = "\(propertyValue)"
         }
-        return CellCreationHelper.cellForProperty(tableView: tableView, indexPath: indexPath, entity: self.entity, property: property, value: value, editingIsAllowed: allowsEditableCells, changeHandler: { (newValue: String) -> Bool in
-            var isNewValueValid = false
-            // The property is optional, so nil value can be accepted
-            if newValue.isEmpty {
-                currentEntity.createdAt = nil
-                isNewValueValid = true
-            } else {
-                if let validValue = LocalDateTime.parse(newValue) { // This is just a simple solution to handle UTC only
-                    currentEntity.createdAt = validValue
+        return CellCreationHelper.cellForProperty(tableView: tableView, indexPath: indexPath, entity: entity, property: property, value: value, editingIsAllowed: allowsEditableCells, changeHandler:
+            { (newValue: String) -> Bool in
+                var isNewValueValid = false
+                // The property is optional, so nil value can be accepted
+                if newValue.isEmpty {
+                    currentEntity.createdAt = nil
                     isNewValueValid = true
+                } else {
+                    if let validValue = LocalDateTime.parse(newValue) { // This is just a simple solution to handle UTC only
+                        currentEntity.createdAt = validValue
+                        isNewValueValid = true
+                    }
                 }
-            }
-            self.validity[property.name] = isNewValueValid
-            self.barButtonShouldBeEnabled()
-            return isNewValueValid
-        })
+                self.validity[property.name] = isNewValueValid
+                self.barButtonShouldBeEnabled()
+                return isNewValueValid
+            })
     }
 
     private func cellForCurrencyCode(tableView: UITableView, indexPath: IndexPath, currentEntity: ESPMContainerFmwk.SalesOrderHeader, property: Property) -> UITableViewCell {
@@ -207,22 +208,23 @@ class SalesOrderHeaderDetailViewController: FUIFormTableViewController, SAPFiori
         if let propertyValue = currentEntity.currencyCode {
             value = "\(propertyValue)"
         }
-        return CellCreationHelper.cellForProperty(tableView: tableView, indexPath: indexPath, entity: self.entity, property: property, value: value, editingIsAllowed: allowsEditableCells, changeHandler: { (newValue: String) -> Bool in
-            var isNewValueValid = false
-            // The property is optional, so nil value can be accepted
-            if newValue.isEmpty {
-                currentEntity.currencyCode = nil
-                isNewValueValid = true
-            } else {
-                if SalesOrderHeader.currencyCode.isOptional || newValue != "" {
-                    currentEntity.currencyCode = newValue
+        return CellCreationHelper.cellForProperty(tableView: tableView, indexPath: indexPath, entity: entity, property: property, value: value, editingIsAllowed: allowsEditableCells, changeHandler:
+            { (newValue: String) -> Bool in
+                var isNewValueValid = false
+                // The property is optional, so nil value can be accepted
+                if newValue.isEmpty {
+                    currentEntity.currencyCode = nil
                     isNewValueValid = true
+                } else {
+                    if SalesOrderHeader.currencyCode.isOptional || newValue != "" {
+                        currentEntity.currencyCode = newValue
+                        isNewValueValid = true
+                    }
                 }
-            }
-            self.validity[property.name] = isNewValueValid
-            self.barButtonShouldBeEnabled()
-            return isNewValueValid
-        })
+                self.validity[property.name] = isNewValueValid
+                self.barButtonShouldBeEnabled()
+                return isNewValueValid
+            })
     }
 
     private func cellForCustomerID(tableView: UITableView, indexPath: IndexPath, currentEntity: ESPMContainerFmwk.SalesOrderHeader, property: Property) -> UITableViewCell {
@@ -230,22 +232,23 @@ class SalesOrderHeaderDetailViewController: FUIFormTableViewController, SAPFiori
         if let propertyValue = currentEntity.customerID {
             value = "\(propertyValue)"
         }
-        return CellCreationHelper.cellForProperty(tableView: tableView, indexPath: indexPath, entity: self.entity, property: property, value: value, editingIsAllowed: allowsEditableCells, changeHandler: { (newValue: String) -> Bool in
-            var isNewValueValid = false
-            // The property is optional, so nil value can be accepted
-            if newValue.isEmpty {
-                currentEntity.customerID = nil
-                isNewValueValid = true
-            } else {
-                if SalesOrderHeader.customerID.isOptional || newValue != "" {
-                    currentEntity.customerID = newValue
+        return CellCreationHelper.cellForProperty(tableView: tableView, indexPath: indexPath, entity: entity, property: property, value: value, editingIsAllowed: allowsEditableCells, changeHandler:
+            { (newValue: String) -> Bool in
+                var isNewValueValid = false
+                // The property is optional, so nil value can be accepted
+                if newValue.isEmpty {
+                    currentEntity.customerID = nil
                     isNewValueValid = true
+                } else {
+                    if SalesOrderHeader.customerID.isOptional || newValue != "" {
+                        currentEntity.customerID = newValue
+                        isNewValueValid = true
+                    }
                 }
-            }
-            self.validity[property.name] = isNewValueValid
-            self.barButtonShouldBeEnabled()
-            return isNewValueValid
-        })
+                self.validity[property.name] = isNewValueValid
+                self.barButtonShouldBeEnabled()
+                return isNewValueValid
+            })
     }
 
     private func cellForGrossAmount(tableView: UITableView, indexPath: IndexPath, currentEntity: ESPMContainerFmwk.SalesOrderHeader, property: Property) -> UITableViewCell {
@@ -253,22 +256,23 @@ class SalesOrderHeaderDetailViewController: FUIFormTableViewController, SAPFiori
         if let propertyValue = currentEntity.grossAmount {
             value = "\(propertyValue)"
         }
-        return CellCreationHelper.cellForProperty(tableView: tableView, indexPath: indexPath, entity: self.entity, property: property, value: value, editingIsAllowed: allowsEditableCells, changeHandler: { (newValue: String) -> Bool in
-            var isNewValueValid = false
-            // The property is optional, so nil value can be accepted
-            if newValue.isEmpty {
-                currentEntity.grossAmount = nil
-                isNewValueValid = true
-            } else {
-                if let validValue = BigDecimal.parse(newValue) {
-                    currentEntity.grossAmount = validValue
+        return CellCreationHelper.cellForProperty(tableView: tableView, indexPath: indexPath, entity: entity, property: property, value: value, editingIsAllowed: allowsEditableCells, changeHandler:
+            { (newValue: String) -> Bool in
+                var isNewValueValid = false
+                // The property is optional, so nil value can be accepted
+                if newValue.isEmpty {
+                    currentEntity.grossAmount = nil
                     isNewValueValid = true
+                } else {
+                    if let validValue = BigDecimal.parse(newValue) {
+                        currentEntity.grossAmount = validValue
+                        isNewValueValid = true
+                    }
                 }
-            }
-            self.validity[property.name] = isNewValueValid
-            self.barButtonShouldBeEnabled()
-            return isNewValueValid
-        })
+                self.validity[property.name] = isNewValueValid
+                self.barButtonShouldBeEnabled()
+                return isNewValueValid
+            })
     }
 
     private func cellForLifeCycleStatus(tableView: UITableView, indexPath: IndexPath, currentEntity: ESPMContainerFmwk.SalesOrderHeader, property: Property) -> UITableViewCell {
@@ -276,22 +280,23 @@ class SalesOrderHeaderDetailViewController: FUIFormTableViewController, SAPFiori
         if let propertyValue = currentEntity.lifeCycleStatus {
             value = "\(propertyValue)"
         }
-        return CellCreationHelper.cellForProperty(tableView: tableView, indexPath: indexPath, entity: self.entity, property: property, value: value, editingIsAllowed: allowsEditableCells, changeHandler: { (newValue: String) -> Bool in
-            var isNewValueValid = false
-            // The property is optional, so nil value can be accepted
-            if newValue.isEmpty {
-                currentEntity.lifeCycleStatus = nil
-                isNewValueValid = true
-            } else {
-                if SalesOrderHeader.lifeCycleStatus.isOptional || newValue != "" {
-                    currentEntity.lifeCycleStatus = newValue
+        return CellCreationHelper.cellForProperty(tableView: tableView, indexPath: indexPath, entity: entity, property: property, value: value, editingIsAllowed: allowsEditableCells, changeHandler:
+            { (newValue: String) -> Bool in
+                var isNewValueValid = false
+                // The property is optional, so nil value can be accepted
+                if newValue.isEmpty {
+                    currentEntity.lifeCycleStatus = nil
                     isNewValueValid = true
+                } else {
+                    if SalesOrderHeader.lifeCycleStatus.isOptional || newValue != "" {
+                        currentEntity.lifeCycleStatus = newValue
+                        isNewValueValid = true
+                    }
                 }
-            }
-            self.validity[property.name] = isNewValueValid
-            self.barButtonShouldBeEnabled()
-            return isNewValueValid
-        })
+                self.validity[property.name] = isNewValueValid
+                self.barButtonShouldBeEnabled()
+                return isNewValueValid
+            })
     }
 
     private func cellForLifeCycleStatusName(tableView: UITableView, indexPath: IndexPath, currentEntity: ESPMContainerFmwk.SalesOrderHeader, property: Property) -> UITableViewCell {
@@ -299,22 +304,23 @@ class SalesOrderHeaderDetailViewController: FUIFormTableViewController, SAPFiori
         if let propertyValue = currentEntity.lifeCycleStatusName {
             value = "\(propertyValue)"
         }
-        return CellCreationHelper.cellForProperty(tableView: tableView, indexPath: indexPath, entity: self.entity, property: property, value: value, editingIsAllowed: allowsEditableCells, changeHandler: { (newValue: String) -> Bool in
-            var isNewValueValid = false
-            // The property is optional, so nil value can be accepted
-            if newValue.isEmpty {
-                currentEntity.lifeCycleStatusName = nil
-                isNewValueValid = true
-            } else {
-                if SalesOrderHeader.lifeCycleStatusName.isOptional || newValue != "" {
-                    currentEntity.lifeCycleStatusName = newValue
+        return CellCreationHelper.cellForProperty(tableView: tableView, indexPath: indexPath, entity: entity, property: property, value: value, editingIsAllowed: allowsEditableCells, changeHandler:
+            { (newValue: String) -> Bool in
+                var isNewValueValid = false
+                // The property is optional, so nil value can be accepted
+                if newValue.isEmpty {
+                    currentEntity.lifeCycleStatusName = nil
                     isNewValueValid = true
+                } else {
+                    if SalesOrderHeader.lifeCycleStatusName.isOptional || newValue != "" {
+                        currentEntity.lifeCycleStatusName = newValue
+                        isNewValueValid = true
+                    }
                 }
-            }
-            self.validity[property.name] = isNewValueValid
-            self.barButtonShouldBeEnabled()
-            return isNewValueValid
-        })
+                self.validity[property.name] = isNewValueValid
+                self.barButtonShouldBeEnabled()
+                return isNewValueValid
+            })
     }
 
     private func cellForNetAmount(tableView: UITableView, indexPath: IndexPath, currentEntity: ESPMContainerFmwk.SalesOrderHeader, property: Property) -> UITableViewCell {
@@ -322,22 +328,23 @@ class SalesOrderHeaderDetailViewController: FUIFormTableViewController, SAPFiori
         if let propertyValue = currentEntity.netAmount {
             value = "\(propertyValue)"
         }
-        return CellCreationHelper.cellForProperty(tableView: tableView, indexPath: indexPath, entity: self.entity, property: property, value: value, editingIsAllowed: allowsEditableCells, changeHandler: { (newValue: String) -> Bool in
-            var isNewValueValid = false
-            // The property is optional, so nil value can be accepted
-            if newValue.isEmpty {
-                currentEntity.netAmount = nil
-                isNewValueValid = true
-            } else {
-                if let validValue = BigDecimal.parse(newValue) {
-                    currentEntity.netAmount = validValue
+        return CellCreationHelper.cellForProperty(tableView: tableView, indexPath: indexPath, entity: entity, property: property, value: value, editingIsAllowed: allowsEditableCells, changeHandler:
+            { (newValue: String) -> Bool in
+                var isNewValueValid = false
+                // The property is optional, so nil value can be accepted
+                if newValue.isEmpty {
+                    currentEntity.netAmount = nil
                     isNewValueValid = true
+                } else {
+                    if let validValue = BigDecimal.parse(newValue) {
+                        currentEntity.netAmount = validValue
+                        isNewValueValid = true
+                    }
                 }
-            }
-            self.validity[property.name] = isNewValueValid
-            self.barButtonShouldBeEnabled()
-            return isNewValueValid
-        })
+                self.validity[property.name] = isNewValueValid
+                self.barButtonShouldBeEnabled()
+                return isNewValueValid
+            })
     }
 
     private func cellForSalesOrderID(tableView: UITableView, indexPath: IndexPath, currentEntity: ESPMContainerFmwk.SalesOrderHeader, property: Property) -> UITableViewCell {
@@ -345,22 +352,23 @@ class SalesOrderHeaderDetailViewController: FUIFormTableViewController, SAPFiori
         if let propertyValue = currentEntity.salesOrderID {
             value = "\(propertyValue)"
         }
-        return CellCreationHelper.cellForProperty(tableView: tableView, indexPath: indexPath, entity: self.entity, property: property, value: value, editingIsAllowed: allowsEditableCells, changeHandler: { (newValue: String) -> Bool in
-            var isNewValueValid = false
-            // The property is optional, so nil value can be accepted
-            if newValue.isEmpty {
-                currentEntity.salesOrderID = nil
-                isNewValueValid = true
-            } else {
-                if SalesOrderHeader.salesOrderID.isOptional || newValue != "" {
-                    currentEntity.salesOrderID = newValue
+        return CellCreationHelper.cellForProperty(tableView: tableView, indexPath: indexPath, entity: entity, property: property, value: value, editingIsAllowed: allowsEditableCells, changeHandler:
+            { (newValue: String) -> Bool in
+                var isNewValueValid = false
+                // The property is optional, so nil value can be accepted
+                if newValue.isEmpty {
+                    currentEntity.salesOrderID = nil
                     isNewValueValid = true
+                } else {
+                    if SalesOrderHeader.salesOrderID.isOptional || newValue != "" {
+                        currentEntity.salesOrderID = newValue
+                        isNewValueValid = true
+                    }
                 }
-            }
-            self.validity[property.name] = isNewValueValid
-            self.barButtonShouldBeEnabled()
-            return isNewValueValid
-        })
+                self.validity[property.name] = isNewValueValid
+                self.barButtonShouldBeEnabled()
+                return isNewValueValid
+            })
     }
 
     private func cellForTaxAmount(tableView: UITableView, indexPath: IndexPath, currentEntity: ESPMContainerFmwk.SalesOrderHeader, property: Property) -> UITableViewCell {
@@ -368,31 +376,32 @@ class SalesOrderHeaderDetailViewController: FUIFormTableViewController, SAPFiori
         if let propertyValue = currentEntity.taxAmount {
             value = "\(propertyValue)"
         }
-        return CellCreationHelper.cellForProperty(tableView: tableView, indexPath: indexPath, entity: self.entity, property: property, value: value, editingIsAllowed: allowsEditableCells, changeHandler: { (newValue: String) -> Bool in
-            var isNewValueValid = false
-            // The property is optional, so nil value can be accepted
-            if newValue.isEmpty {
-                currentEntity.taxAmount = nil
-                isNewValueValid = true
-            } else {
-                if let validValue = BigDecimal.parse(newValue) {
-                    currentEntity.taxAmount = validValue
+        return CellCreationHelper.cellForProperty(tableView: tableView, indexPath: indexPath, entity: entity, property: property, value: value, editingIsAllowed: allowsEditableCells, changeHandler:
+            { (newValue: String) -> Bool in
+                var isNewValueValid = false
+                // The property is optional, so nil value can be accepted
+                if newValue.isEmpty {
+                    currentEntity.taxAmount = nil
                     isNewValueValid = true
+                } else {
+                    if let validValue = BigDecimal.parse(newValue) {
+                        currentEntity.taxAmount = validValue
+                        isNewValueValid = true
+                    }
                 }
-            }
-            self.validity[property.name] = isNewValueValid
-            self.barButtonShouldBeEnabled()
-            return isNewValueValid
-        })
+                self.validity[property.name] = isNewValueValid
+                self.barButtonShouldBeEnabled()
+                return isNewValueValid
+            })
     }
 
     // MARK: - OData functionalities
 
     @objc func createEntity() {
-        self.showFioriLoadingIndicator()
-        self.view.endEditing(true)
-        self.logger.info("Creating entity in backend.")
-        self.dataService.createEntity(self.entity) { error in
+        showFioriLoadingIndicator()
+        view.endEditing(true)
+        logger.info("Creating entity in backend.")
+        dataService.createEntity(entity) { error in
             self.hideFioriLoadingIndicator()
             if let error = error {
                 self.logger.error("Create entry failed. Error: \(error)", error: error)
@@ -415,18 +424,18 @@ class SalesOrderHeaderDetailViewController: FUIFormTableViewController, SAPFiori
 
         // Key properties without default value should be invalid by default for Create scenario
         if newEntity.salesOrderID == nil || newEntity.salesOrderID!.isEmpty {
-            self.validity["SalesOrderId"] = false
+            validity["SalesOrderId"] = false
         }
 
-        self.barButtonShouldBeEnabled()
+        barButtonShouldBeEnabled()
         return newEntity
     }
 
     @objc func updateEntity(_: AnyObject) {
-        self.showFioriLoadingIndicator()
-        self.view.endEditing(true)
-        self.logger.info("Updating entity in backend.")
-        self.dataService.updateEntity(self.entity) { error in
+        showFioriLoadingIndicator()
+        view.endEditing(true)
+        logger.info("Updating entity in backend.")
+        dataService.updateEntity(entity) { error in
             self.hideFioriLoadingIndicator()
             if let error = error {
                 self.logger.error("Update entry failed. Error: \(error)", error: error)
@@ -454,10 +463,10 @@ class SalesOrderHeaderDetailViewController: FUIFormTableViewController, SAPFiori
 
     // Check if all text fields are valid
     private func barButtonShouldBeEnabled() {
-        let anyFieldInvalid = self.validity.values.first { field in
+        let anyFieldInvalid = validity.values.first { field in
             field == false
         }
-        self.navigationItem.rightBarButtonItem?.isEnabled = anyFieldInvalid == nil
+        navigationItem.rightBarButtonItem?.isEnabled = anyFieldInvalid == nil
     }
 }
 

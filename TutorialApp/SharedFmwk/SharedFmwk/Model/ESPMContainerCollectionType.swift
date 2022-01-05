@@ -1,22 +1,22 @@
 //
 // TutorialApp
 //
-// Created by SAP BTP SDK Assistant for iOS application on 08/09/21
+// Created by SAP BTP SDK Assistant for iOS v7.0.0 application on 04/01/22
 //
 
 import Foundation
 
 public enum ESPMContainerCollectionType: CaseIterable {
+    case salesOrderItems
+    case productTexts
+    case stock
+    case purchaseOrderHeaders
+    case customers
     case suppliers
     case products
-    case stock
-    case customers
     case productCategories
-    case purchaseOrderItems
-    case productTexts
-    case purchaseOrderHeaders
     case salesOrderHeaders
-    case salesOrderItems
+    case purchaseOrderItems
 
     public init?(rawValue: String) {
         guard let type = ESPMContainerCollectionType.allCases.first(where: { rawValue == $0.description }) else {
@@ -27,16 +27,16 @@ public enum ESPMContainerCollectionType: CaseIterable {
 
     public var description: String {
         switch self {
+        case .salesOrderItems: return "SalesOrderItems"
+        case .productTexts: return "ProductTexts"
+        case .stock: return "Stock"
+        case .purchaseOrderHeaders: return "PurchaseOrderHeaders"
+        case .customers: return "Customers"
         case .suppliers: return "Suppliers"
         case .products: return "Products"
-        case .stock: return "Stock"
-        case .customers: return "Customers"
         case .productCategories: return "ProductCategories"
-        case .purchaseOrderItems: return "PurchaseOrderItems"
-        case .productTexts: return "ProductTexts"
-        case .purchaseOrderHeaders: return "PurchaseOrderHeaders"
         case .salesOrderHeaders: return "SalesOrderHeaders"
-        case .salesOrderItems: return "SalesOrderItems"
+        case .purchaseOrderItems: return "PurchaseOrderItems"
         }
     }
 }

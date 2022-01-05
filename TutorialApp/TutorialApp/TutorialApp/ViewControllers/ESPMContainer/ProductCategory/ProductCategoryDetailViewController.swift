@@ -1,7 +1,7 @@
 //
 // TutorialApp
 //
-// Created by SAP BTP SDK Assistant for iOS application on 08/09/21
+// Created by SAP BTP SDK Assistant for iOS v7.0.0 application on 04/01/22
 //
 
 import ESPMContainerFmwk
@@ -20,13 +20,13 @@ class ProductCategoryDetailViewController: FUIFormTableViewController, SAPFioriL
     private var _entity: ESPMContainerFmwk.ProductCategory?
     var entity: ESPMContainerFmwk.ProductCategory {
         get {
-            if self._entity == nil {
-                self._entity = self.createEntityWithDefaultValues()
+            if _entity == nil {
+                _entity = createEntityWithDefaultValues()
             }
-            return self._entity!
+            return _entity!
         }
         set {
-            self._entity = newValue
+            _entity = newValue
         }
     }
 
@@ -42,8 +42,8 @@ class ProductCategoryDetailViewController: FUIFormTableViewController, SAPFioriL
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.tableView.rowHeight = UITableView.automaticDimension
-        self.tableView.estimatedRowHeight = 44
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 44
     }
 
     override func didReceiveMemoryWarning() {
@@ -56,19 +56,19 @@ class ProductCategoryDetailViewController: FUIFormTableViewController, SAPFioriL
     override func prepare(for segue: UIStoryboardSegue, sender _: Any?) {
         if segue.identifier == "updateEntity" {
             // Show the Detail view with the current entity, where the properties scan be edited and updated
-            self.logger.info("Showing a view to update the selected entity.")
+            logger.info("Showing a view to update the selected entity.")
             let dest = segue.destination as! UINavigationController
             let detailViewController = dest.viewControllers[0] as! ProductCategoryDetailViewController
             detailViewController.title = NSLocalizedString("keyUpdateEntityTitle", value: "Update Entity", comment: "XTIT: Title of update selected entity screen.")
-            detailViewController.dataService = self.dataService
-            detailViewController.entity = self.entity
+            detailViewController.dataService = dataService
+            detailViewController.entity = entity
             let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: detailViewController, action: #selector(detailViewController.updateEntity))
             detailViewController.navigationItem.rightBarButtonItem = doneButton
             let cancelButton = UIBarButtonItem(title: NSLocalizedString("keyCancelButtonToGoPreviousScreen", value: "Cancel", comment: "XBUT: Title of Cancel button."), style: .plain, target: detailViewController, action: #selector(detailViewController.cancel))
             detailViewController.navigationItem.leftBarButtonItem = cancelButton
             detailViewController.allowsEditableCells = true
             detailViewController.entityUpdater = self
-            detailViewController.entitySetName = self.entitySetName
+            detailViewController.entitySetName = entitySetName
         }
     }
 
@@ -77,17 +77,17 @@ class ProductCategoryDetailViewController: FUIFormTableViewController, SAPFioriL
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch indexPath.row {
         case 0:
-            return self.cellForCategory(tableView: tableView, indexPath: indexPath, currentEntity: self.entity, property: ProductCategory.category)
+            return cellForCategory(tableView: tableView, indexPath: indexPath, currentEntity: entity, property: ProductCategory.category)
         case 1:
-            return self.cellForCategoryName(tableView: tableView, indexPath: indexPath, currentEntity: self.entity, property: ProductCategory.categoryName)
+            return cellForCategoryName(tableView: tableView, indexPath: indexPath, currentEntity: entity, property: ProductCategory.categoryName)
         case 2:
-            return self.cellForMainCategory(tableView: tableView, indexPath: indexPath, currentEntity: self.entity, property: ProductCategory.mainCategory)
+            return cellForMainCategory(tableView: tableView, indexPath: indexPath, currentEntity: entity, property: ProductCategory.mainCategory)
         case 3:
-            return self.cellForMainCategoryName(tableView: tableView, indexPath: indexPath, currentEntity: self.entity, property: ProductCategory.mainCategoryName)
+            return cellForMainCategoryName(tableView: tableView, indexPath: indexPath, currentEntity: entity, property: ProductCategory.mainCategoryName)
         case 4:
-            return self.cellForNumberOfProducts(tableView: tableView, indexPath: indexPath, currentEntity: self.entity, property: ProductCategory.numberOfProducts)
+            return cellForNumberOfProducts(tableView: tableView, indexPath: indexPath, currentEntity: entity, property: ProductCategory.numberOfProducts)
         case 5:
-            return self.cellForUpdatedTimestamp(tableView: tableView, indexPath: indexPath, currentEntity: self.entity, property: ProductCategory.updatedTimestamp)
+            return cellForUpdatedTimestamp(tableView: tableView, indexPath: indexPath, currentEntity: entity, property: ProductCategory.updatedTimestamp)
         default:
             return UITableViewCell()
         }
@@ -98,7 +98,7 @@ class ProductCategoryDetailViewController: FUIFormTableViewController, SAPFioriL
     }
 
     override func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if self.preventNavigationLoop {
+        if preventNavigationLoop {
             AlertHelper.displayAlert(with: NSLocalizedString("keyAlertNavigationLoop", value: "No further navigation is possible.", comment: "XTIT: Title of alert message about preventing navigation loop."), error: nil, viewController: self)
             return
         }
@@ -115,22 +115,23 @@ class ProductCategoryDetailViewController: FUIFormTableViewController, SAPFioriL
         if let propertyValue = currentEntity.category {
             value = "\(propertyValue)"
         }
-        return CellCreationHelper.cellForProperty(tableView: tableView, indexPath: indexPath, entity: self.entity, property: property, value: value, editingIsAllowed: allowsEditableCells, changeHandler: { (newValue: String) -> Bool in
-            var isNewValueValid = false
-            // The property is optional, so nil value can be accepted
-            if newValue.isEmpty {
-                currentEntity.category = nil
-                isNewValueValid = true
-            } else {
-                if ProductCategory.category.isOptional || newValue != "" {
-                    currentEntity.category = newValue
+        return CellCreationHelper.cellForProperty(tableView: tableView, indexPath: indexPath, entity: entity, property: property, value: value, editingIsAllowed: allowsEditableCells, changeHandler:
+            { (newValue: String) -> Bool in
+                var isNewValueValid = false
+                // The property is optional, so nil value can be accepted
+                if newValue.isEmpty {
+                    currentEntity.category = nil
                     isNewValueValid = true
+                } else {
+                    if ProductCategory.category.isOptional || newValue != "" {
+                        currentEntity.category = newValue
+                        isNewValueValid = true
+                    }
                 }
-            }
-            self.validity[property.name] = isNewValueValid
-            self.barButtonShouldBeEnabled()
-            return isNewValueValid
-        })
+                self.validity[property.name] = isNewValueValid
+                self.barButtonShouldBeEnabled()
+                return isNewValueValid
+            })
     }
 
     private func cellForCategoryName(tableView: UITableView, indexPath: IndexPath, currentEntity: ESPMContainerFmwk.ProductCategory, property: Property) -> UITableViewCell {
@@ -138,22 +139,23 @@ class ProductCategoryDetailViewController: FUIFormTableViewController, SAPFioriL
         if let propertyValue = currentEntity.categoryName {
             value = "\(propertyValue)"
         }
-        return CellCreationHelper.cellForProperty(tableView: tableView, indexPath: indexPath, entity: self.entity, property: property, value: value, editingIsAllowed: allowsEditableCells, changeHandler: { (newValue: String) -> Bool in
-            var isNewValueValid = false
-            // The property is optional, so nil value can be accepted
-            if newValue.isEmpty {
-                currentEntity.categoryName = nil
-                isNewValueValid = true
-            } else {
-                if ProductCategory.categoryName.isOptional || newValue != "" {
-                    currentEntity.categoryName = newValue
+        return CellCreationHelper.cellForProperty(tableView: tableView, indexPath: indexPath, entity: entity, property: property, value: value, editingIsAllowed: allowsEditableCells, changeHandler:
+            { (newValue: String) -> Bool in
+                var isNewValueValid = false
+                // The property is optional, so nil value can be accepted
+                if newValue.isEmpty {
+                    currentEntity.categoryName = nil
                     isNewValueValid = true
+                } else {
+                    if ProductCategory.categoryName.isOptional || newValue != "" {
+                        currentEntity.categoryName = newValue
+                        isNewValueValid = true
+                    }
                 }
-            }
-            self.validity[property.name] = isNewValueValid
-            self.barButtonShouldBeEnabled()
-            return isNewValueValid
-        })
+                self.validity[property.name] = isNewValueValid
+                self.barButtonShouldBeEnabled()
+                return isNewValueValid
+            })
     }
 
     private func cellForMainCategory(tableView: UITableView, indexPath: IndexPath, currentEntity: ESPMContainerFmwk.ProductCategory, property: Property) -> UITableViewCell {
@@ -161,22 +163,23 @@ class ProductCategoryDetailViewController: FUIFormTableViewController, SAPFioriL
         if let propertyValue = currentEntity.mainCategory {
             value = "\(propertyValue)"
         }
-        return CellCreationHelper.cellForProperty(tableView: tableView, indexPath: indexPath, entity: self.entity, property: property, value: value, editingIsAllowed: allowsEditableCells, changeHandler: { (newValue: String) -> Bool in
-            var isNewValueValid = false
-            // The property is optional, so nil value can be accepted
-            if newValue.isEmpty {
-                currentEntity.mainCategory = nil
-                isNewValueValid = true
-            } else {
-                if ProductCategory.mainCategory.isOptional || newValue != "" {
-                    currentEntity.mainCategory = newValue
+        return CellCreationHelper.cellForProperty(tableView: tableView, indexPath: indexPath, entity: entity, property: property, value: value, editingIsAllowed: allowsEditableCells, changeHandler:
+            { (newValue: String) -> Bool in
+                var isNewValueValid = false
+                // The property is optional, so nil value can be accepted
+                if newValue.isEmpty {
+                    currentEntity.mainCategory = nil
                     isNewValueValid = true
+                } else {
+                    if ProductCategory.mainCategory.isOptional || newValue != "" {
+                        currentEntity.mainCategory = newValue
+                        isNewValueValid = true
+                    }
                 }
-            }
-            self.validity[property.name] = isNewValueValid
-            self.barButtonShouldBeEnabled()
-            return isNewValueValid
-        })
+                self.validity[property.name] = isNewValueValid
+                self.barButtonShouldBeEnabled()
+                return isNewValueValid
+            })
     }
 
     private func cellForMainCategoryName(tableView: UITableView, indexPath: IndexPath, currentEntity: ESPMContainerFmwk.ProductCategory, property: Property) -> UITableViewCell {
@@ -184,22 +187,23 @@ class ProductCategoryDetailViewController: FUIFormTableViewController, SAPFioriL
         if let propertyValue = currentEntity.mainCategoryName {
             value = "\(propertyValue)"
         }
-        return CellCreationHelper.cellForProperty(tableView: tableView, indexPath: indexPath, entity: self.entity, property: property, value: value, editingIsAllowed: allowsEditableCells, changeHandler: { (newValue: String) -> Bool in
-            var isNewValueValid = false
-            // The property is optional, so nil value can be accepted
-            if newValue.isEmpty {
-                currentEntity.mainCategoryName = nil
-                isNewValueValid = true
-            } else {
-                if ProductCategory.mainCategoryName.isOptional || newValue != "" {
-                    currentEntity.mainCategoryName = newValue
+        return CellCreationHelper.cellForProperty(tableView: tableView, indexPath: indexPath, entity: entity, property: property, value: value, editingIsAllowed: allowsEditableCells, changeHandler:
+            { (newValue: String) -> Bool in
+                var isNewValueValid = false
+                // The property is optional, so nil value can be accepted
+                if newValue.isEmpty {
+                    currentEntity.mainCategoryName = nil
                     isNewValueValid = true
+                } else {
+                    if ProductCategory.mainCategoryName.isOptional || newValue != "" {
+                        currentEntity.mainCategoryName = newValue
+                        isNewValueValid = true
+                    }
                 }
-            }
-            self.validity[property.name] = isNewValueValid
-            self.barButtonShouldBeEnabled()
-            return isNewValueValid
-        })
+                self.validity[property.name] = isNewValueValid
+                self.barButtonShouldBeEnabled()
+                return isNewValueValid
+            })
     }
 
     private func cellForNumberOfProducts(tableView: UITableView, indexPath: IndexPath, currentEntity: ESPMContainerFmwk.ProductCategory, property: Property) -> UITableViewCell {
@@ -207,22 +211,23 @@ class ProductCategoryDetailViewController: FUIFormTableViewController, SAPFioriL
         if let propertyValue = currentEntity.numberOfProducts {
             value = "\(propertyValue)"
         }
-        return CellCreationHelper.cellForProperty(tableView: tableView, indexPath: indexPath, entity: self.entity, property: property, value: value, editingIsAllowed: allowsEditableCells, changeHandler: { (newValue: String) -> Bool in
-            var isNewValueValid = false
-            // The property is optional, so nil value can be accepted
-            if newValue.isEmpty {
-                currentEntity.numberOfProducts = nil
-                isNewValueValid = true
-            } else {
-                if let validValue = Int64(newValue) {
-                    currentEntity.numberOfProducts = validValue
+        return CellCreationHelper.cellForProperty(tableView: tableView, indexPath: indexPath, entity: entity, property: property, value: value, editingIsAllowed: allowsEditableCells, changeHandler:
+            { (newValue: String) -> Bool in
+                var isNewValueValid = false
+                // The property is optional, so nil value can be accepted
+                if newValue.isEmpty {
+                    currentEntity.numberOfProducts = nil
                     isNewValueValid = true
+                } else {
+                    if let validValue = Int64(newValue) {
+                        currentEntity.numberOfProducts = validValue
+                        isNewValueValid = true
+                    }
                 }
-            }
-            self.validity[property.name] = isNewValueValid
-            self.barButtonShouldBeEnabled()
-            return isNewValueValid
-        })
+                self.validity[property.name] = isNewValueValid
+                self.barButtonShouldBeEnabled()
+                return isNewValueValid
+            })
     }
 
     private func cellForUpdatedTimestamp(tableView: UITableView, indexPath: IndexPath, currentEntity: ESPMContainerFmwk.ProductCategory, property: Property) -> UITableViewCell {
@@ -230,31 +235,32 @@ class ProductCategoryDetailViewController: FUIFormTableViewController, SAPFioriL
         if let propertyValue = currentEntity.updatedTimestamp {
             value = "\(propertyValue)"
         }
-        return CellCreationHelper.cellForProperty(tableView: tableView, indexPath: indexPath, entity: self.entity, property: property, value: value, editingIsAllowed: allowsEditableCells, changeHandler: { (newValue: String) -> Bool in
-            var isNewValueValid = false
-            // The property is optional, so nil value can be accepted
-            if newValue.isEmpty {
-                currentEntity.updatedTimestamp = nil
-                isNewValueValid = true
-            } else {
-                if let validValue = LocalDateTime.parse(newValue) { // This is just a simple solution to handle UTC only
-                    currentEntity.updatedTimestamp = validValue
+        return CellCreationHelper.cellForProperty(tableView: tableView, indexPath: indexPath, entity: entity, property: property, value: value, editingIsAllowed: allowsEditableCells, changeHandler:
+            { (newValue: String) -> Bool in
+                var isNewValueValid = false
+                // The property is optional, so nil value can be accepted
+                if newValue.isEmpty {
+                    currentEntity.updatedTimestamp = nil
                     isNewValueValid = true
+                } else {
+                    if let validValue = LocalDateTime.parse(newValue) { // This is just a simple solution to handle UTC only
+                        currentEntity.updatedTimestamp = validValue
+                        isNewValueValid = true
+                    }
                 }
-            }
-            self.validity[property.name] = isNewValueValid
-            self.barButtonShouldBeEnabled()
-            return isNewValueValid
-        })
+                self.validity[property.name] = isNewValueValid
+                self.barButtonShouldBeEnabled()
+                return isNewValueValid
+            })
     }
 
     // MARK: - OData functionalities
 
     @objc func createEntity() {
-        self.showFioriLoadingIndicator()
-        self.view.endEditing(true)
-        self.logger.info("Creating entity in backend.")
-        self.dataService.createEntity(self.entity) { error in
+        showFioriLoadingIndicator()
+        view.endEditing(true)
+        logger.info("Creating entity in backend.")
+        dataService.createEntity(entity) { error in
             self.hideFioriLoadingIndicator()
             if let error = error {
                 self.logger.error("Create entry failed. Error: \(error)", error: error)
@@ -277,18 +283,18 @@ class ProductCategoryDetailViewController: FUIFormTableViewController, SAPFioriL
 
         // Key properties without default value should be invalid by default for Create scenario
         if newEntity.category == nil || newEntity.category!.isEmpty {
-            self.validity["Category"] = false
+            validity["Category"] = false
         }
 
-        self.barButtonShouldBeEnabled()
+        barButtonShouldBeEnabled()
         return newEntity
     }
 
     @objc func updateEntity(_: AnyObject) {
-        self.showFioriLoadingIndicator()
-        self.view.endEditing(true)
-        self.logger.info("Updating entity in backend.")
-        self.dataService.updateEntity(self.entity) { error in
+        showFioriLoadingIndicator()
+        view.endEditing(true)
+        logger.info("Updating entity in backend.")
+        dataService.updateEntity(entity) { error in
             self.hideFioriLoadingIndicator()
             if let error = error {
                 self.logger.error("Update entry failed. Error: \(error)", error: error)
@@ -316,10 +322,10 @@ class ProductCategoryDetailViewController: FUIFormTableViewController, SAPFioriL
 
     // Check if all text fields are valid
     private func barButtonShouldBeEnabled() {
-        let anyFieldInvalid = self.validity.values.first { field in
+        let anyFieldInvalid = validity.values.first { field in
             field == false
         }
-        self.navigationItem.rightBarButtonItem?.isEnabled = anyFieldInvalid == nil
+        navigationItem.rightBarButtonItem?.isEnabled = anyFieldInvalid == nil
     }
 }
 

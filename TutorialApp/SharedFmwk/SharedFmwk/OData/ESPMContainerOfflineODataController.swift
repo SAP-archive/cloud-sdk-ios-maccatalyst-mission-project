@@ -1,7 +1,7 @@
 //
 // TutorialApp
 //
-// Created by SAP BTP SDK Assistant for iOS application on 08/09/21
+// Created by SAP BTP SDK Assistant for iOS v7.0.0 application on 04/01/22
 //
 
 import ESPMContainerFmwk
@@ -53,13 +53,13 @@ public class ESPMContainerOfflineODataController: ODataControlling {
         // Setup an instance of delegate. See sample code below for definition of OfflineODataDelegateSample class.
         let offlineODataProvider = try! OfflineODataProvider(serviceRoot: serviceRoot, parameters: offlineParameters, sapURLSession: sapURLSession, delegate: delegate)
         try configureDefiningQueries(on: offlineODataProvider)
-        self.dataService = ESPMContainer(provider: offlineODataProvider)
+        dataService = ESPMContainer(provider: offlineODataProvider)
     }
 
     public func openOfflineStore(synchronize: Bool, completionHandler: @escaping (Swift.Error?) -> Void) {
-        if !self.isOfflineStoreOpened {
+        if !isOfflineStoreOpened {
             // The OfflineODataProvider needs to be opened before performing any operations.
-            self.dataService.open { error in
+            dataService.open { error in
                 if let error = error {
                     self.logger.error("Could not open offline store.", error: error)
                     completionHandler(error)
@@ -83,26 +83,26 @@ public class ESPMContainerOfflineODataController: ODataControlling {
     }
 
     public func closeOfflineStore() {
-        if self.isOfflineStoreOpened {
+        if isOfflineStoreOpened {
             do {
                 // the Offline store should be closed when it is no longer used.
-                try self.dataService.close()
-                self.isOfflineStoreOpened = false
+                try dataService.close()
+                isOfflineStoreOpened = false
             } catch {
-                self.logger.error("Offline Store closing failed.")
+                logger.error("Offline Store closing failed.")
             }
         }
-        self.logger.info("Offline Store closed.")
+        logger.info("Offline Store closed.")
     }
 
     // You can read more about data synchnonization: https://help.sap.com/viewer/fc1a59c210d848babfb3f758a6f55cb1/Latest/en-US/59ae11dc4df345bc8073f9da45170706.html
     public func synchronize(completionHandler: @escaping (Swift.Error?) -> Void) {
-        if !self.isOfflineStoreOpened {
-            self.logger.error("Offline Store is still closed")
+        if !isOfflineStoreOpened {
+            logger.error("Offline Store is still closed")
             completionHandler(Error.storeClosed)
             return
         }
-        self.uploadOfflineStore { error in
+        uploadOfflineStore { error in
             if let error = error {
                 completionHandler(error)
                 return
@@ -120,25 +120,25 @@ public class ESPMContainerOfflineODataController: ODataControlling {
         // Although it is not the best practice, we are defining this query limit as top=20.
         // If the service supports paging, then paging should be used instead of top!
         do {
+            try offlineODataProvider.add(definingQuery: OfflineODataDefiningQuery(name: ESPMContainerMetadata.EntitySets.salesOrderItems.localName, query: DataQuery().from(ESPMContainerMetadata.EntitySets.salesOrderItems).selectAll().top(20), automaticallyRetrievesStreams: false))
+            try offlineODataProvider.add(definingQuery: OfflineODataDefiningQuery(name: ESPMContainerMetadata.EntitySets.productTexts.localName, query: DataQuery().from(ESPMContainerMetadata.EntitySets.productTexts).selectAll().top(20), automaticallyRetrievesStreams: false))
+            try offlineODataProvider.add(definingQuery: OfflineODataDefiningQuery(name: ESPMContainerMetadata.EntitySets.stock.localName, query: DataQuery().from(ESPMContainerMetadata.EntitySets.stock).selectAll().top(20), automaticallyRetrievesStreams: false))
+            try offlineODataProvider.add(definingQuery: OfflineODataDefiningQuery(name: ESPMContainerMetadata.EntitySets.purchaseOrderHeaders.localName, query: DataQuery().from(ESPMContainerMetadata.EntitySets.purchaseOrderHeaders).selectAll().top(20), automaticallyRetrievesStreams: false))
+            try offlineODataProvider.add(definingQuery: OfflineODataDefiningQuery(name: ESPMContainerMetadata.EntitySets.customers.localName, query: DataQuery().from(ESPMContainerMetadata.EntitySets.customers).selectAll().top(20), automaticallyRetrievesStreams: false))
             try offlineODataProvider.add(definingQuery: OfflineODataDefiningQuery(name: ESPMContainerMetadata.EntitySets.suppliers.localName, query: DataQuery().from(ESPMContainerMetadata.EntitySets.suppliers).selectAll().top(20), automaticallyRetrievesStreams: false))
             try offlineODataProvider.add(definingQuery: OfflineODataDefiningQuery(name: ESPMContainerMetadata.EntitySets.products.localName, query: DataQuery().from(ESPMContainerMetadata.EntitySets.products).selectAll().top(20), automaticallyRetrievesStreams: true))
-            try offlineODataProvider.add(definingQuery: OfflineODataDefiningQuery(name: ESPMContainerMetadata.EntitySets.stock.localName, query: DataQuery().from(ESPMContainerMetadata.EntitySets.stock).selectAll().top(20), automaticallyRetrievesStreams: false))
-            try offlineODataProvider.add(definingQuery: OfflineODataDefiningQuery(name: ESPMContainerMetadata.EntitySets.customers.localName, query: DataQuery().from(ESPMContainerMetadata.EntitySets.customers).selectAll().top(20), automaticallyRetrievesStreams: false))
             try offlineODataProvider.add(definingQuery: OfflineODataDefiningQuery(name: ESPMContainerMetadata.EntitySets.productCategories.localName, query: DataQuery().from(ESPMContainerMetadata.EntitySets.productCategories).selectAll().top(20), automaticallyRetrievesStreams: false))
-            try offlineODataProvider.add(definingQuery: OfflineODataDefiningQuery(name: ESPMContainerMetadata.EntitySets.purchaseOrderItems.localName, query: DataQuery().from(ESPMContainerMetadata.EntitySets.purchaseOrderItems).selectAll().top(20), automaticallyRetrievesStreams: false))
-            try offlineODataProvider.add(definingQuery: OfflineODataDefiningQuery(name: ESPMContainerMetadata.EntitySets.productTexts.localName, query: DataQuery().from(ESPMContainerMetadata.EntitySets.productTexts).selectAll().top(20), automaticallyRetrievesStreams: false))
-            try offlineODataProvider.add(definingQuery: OfflineODataDefiningQuery(name: ESPMContainerMetadata.EntitySets.purchaseOrderHeaders.localName, query: DataQuery().from(ESPMContainerMetadata.EntitySets.purchaseOrderHeaders).selectAll().top(20), automaticallyRetrievesStreams: false))
             try offlineODataProvider.add(definingQuery: OfflineODataDefiningQuery(name: ESPMContainerMetadata.EntitySets.salesOrderHeaders.localName, query: DataQuery().from(ESPMContainerMetadata.EntitySets.salesOrderHeaders).selectAll().top(20), automaticallyRetrievesStreams: false))
-            try offlineODataProvider.add(definingQuery: OfflineODataDefiningQuery(name: ESPMContainerMetadata.EntitySets.salesOrderItems.localName, query: DataQuery().from(ESPMContainerMetadata.EntitySets.salesOrderItems).selectAll().top(20), automaticallyRetrievesStreams: false))
+            try offlineODataProvider.add(definingQuery: OfflineODataDefiningQuery(name: ESPMContainerMetadata.EntitySets.purchaseOrderItems.localName, query: DataQuery().from(ESPMContainerMetadata.EntitySets.purchaseOrderItems).selectAll().top(20), automaticallyRetrievesStreams: false))
         } catch {
-            self.logger.error("Failed to add defining query for Offline Store initialization", error: error)
+            logger.error("Failed to add defining query for Offline Store initialization", error: error)
             throw error
         }
     }
 
     private func downloadOfflineStore(completionHandler: @escaping (Swift.Error?) -> Void) {
         // the download function updates the client’s offline store from the backend.
-        self.dataService.download { error in
+        dataService.download { error in
             if let error = error {
                 self.logger.error("Offline Store download failed", error: error)
             } else {
@@ -150,7 +150,7 @@ public class ESPMContainerOfflineODataController: ODataControlling {
 
     private func uploadOfflineStore(completionHandler: @escaping (Swift.Error?) -> Void) {
         // the upload function updates the backend from the client’s offline store.
-        self.dataService.upload { error in
+        dataService.upload { error in
             if let error = error {
                 self.logger.error("Offline Store upload failed.", error: error)
                 completionHandler(error)

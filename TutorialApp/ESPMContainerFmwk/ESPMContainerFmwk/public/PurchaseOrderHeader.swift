@@ -1,4 +1,4 @@
-// # Proxy Compiler 21.5.5
+// # Proxy Compiler 21.11.3
 
 import Foundation
 import SAPOData
@@ -49,7 +49,7 @@ open class PurchaseOrderHeader: EntityValue {
     }
 
     open func copy() -> PurchaseOrderHeader {
-        return CastRequired<PurchaseOrderHeader>.from(self.copyEntity())
+        return CastRequired<PurchaseOrderHeader>.from(copyEntity())
     }
 
     open class var currencyCode: Property {
@@ -104,7 +104,7 @@ open class PurchaseOrderHeader: EntityValue {
         }
     }
 
-    open override var isProxy: Bool {
+    override open var isProxy: Bool {
         return true
     }
 
@@ -265,10 +265,10 @@ open class PurchaseOrderHeader: EntityValue {
 
     open var taxAmount: BigDecimal? {
         get {
-            return DecimalValue.optional(self.optionalValue(for: PurchaseOrderHeader.taxAmount))
+            return DecimalValue.optional(optionalValue(for: PurchaseOrderHeader.taxAmount))
         }
         set(value) {
-            self.setOptionalValue(for: PurchaseOrderHeader.taxAmount, to: DecimalValue.of(optional: value))
+            setOptionalValue(for: PurchaseOrderHeader.taxAmount, to: DecimalValue.of(optional: value))
         }
     }
 }

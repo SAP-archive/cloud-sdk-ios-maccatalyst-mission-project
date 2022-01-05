@@ -26,7 +26,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <segue destination="AbA-MP-qfJ" kind="show" identifier="showDetail" id="ddc-f0-d79"/>
+                                    <segue destination="AbA-MP-qfJ" kind="show" identifier="showDetail" id="325-a1-b36"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -128,7 +128,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="ddc-f0-d79"/>
+        <segue reference="325-a1-b36"/>
     </inferredMetricsTieBreakers>
 </document>
 

@@ -16,10 +16,9 @@
 #
 #   PROJECT: (optional) Directory where the project is available. Default: this project, so ./
 #
-#   ASSISTANT_LOCATION: Environment variable containing the path where Assistant is installed. The script checks for ASSISTANT_LOCATION environment location, if it is not set uses this default value: $DEFAULT_ASSISTANT_LOCATION
 
 FRAMEWORK_NAMES=( SAPCommon SAPFiori SAPFioriFlows SAPFoundation SAPOData SAPOfflineOData )
-DEFAULT_ASSISTANT_LOCATION="/Applications/SAP BTP SDK Assistant for iOS.app/Contents/Resources/iOSFrameworks/Release-xcframework/"
+FRAMEWORK_LOCATION="/Users/Shared/SAPbtpSDKassistantForIOS-Resources/7.0.0/Release-xcframework/"
 
 PROJECT="$1"
 
@@ -31,14 +30,8 @@ if [ -z "$PROJECT" ]; then
     export PROJECT="${PROJECT_DIR}/../Release-xcframework/"
 fi
 
-ASSISTANT_LOCATION="`launchctl getenv ASSISTANT_LOCATION`"
-
-if [ -z "$ASSISTANT_LOCATION" ]; then
-    export ASSISTANT_LOCATION="$DEFAULT_ASSISTANT_LOCATION"
-fi
-
 for i in ${FRAMEWORK_NAMES[@]}; do
-    if [ ! -d "$PROJECT$i.xcframework" -a -d "$ASSISTANT_LOCATION$i.xcframework" ]; then
-        cp -R "$ASSISTANT_LOCATION$i.xcframework" "$PROJECT"
+    if [ ! -d "$PROJECT$i.xcframework" -a -d "$FRAMEWORK_LOCATION$i.xcframework" ]; then
+        cp -R "$FRAMEWORK_LOCATION$i.xcframework" "$PROJECT"
     fi
 done

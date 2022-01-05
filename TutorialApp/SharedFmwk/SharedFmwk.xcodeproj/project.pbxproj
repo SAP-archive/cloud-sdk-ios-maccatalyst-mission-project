@@ -7,29 +7,29 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0B09854C971F380F496FBD5B /* ESPMContainerFmwk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D797001C170C33DCEB07102F /* ESPMContainerFmwk.framework */; };
-		341EAF617493ECF3E9F8DABA /* ODataContainerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D215BF30132857C80A951F1 /* ODataContainerType.swift */; };
-		61A6D63335B9DEC0E9169420 /* ESPMContainerCollectionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B2BD9613F49B706E555A36 /* ESPMContainerCollectionType.swift */; };
-		79DCE0138A4653AF69E39D22 /* ODataControlling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81B41222098A68C207DF2A45 /* ODataControlling.swift */; };
-		82D61C2B6370C96F993565C8 /* ESPMContainerOfflineODataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A78BB1903E21CDCE4993CAB /* ESPMContainerOfflineODataController.swift */; };
-		847BE9EDD09129594E23C4D0 /* SAPOfflineOData.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D64B85E8E5C0602D485ECAC /* SAPOfflineOData.xcframework */; };
-		E39DE35FB377654D7AB393D4 /* SAPFoundation.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84987D7664FD37DDE56FE4DA /* SAPFoundation.xcframework */; };
-		F509A94438B10DFDF0E6CFBF /* SAPCommon.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DD9834ACB98372BC5FCA195 /* SAPCommon.xcframework */; };
-		FCEF1C8BD9788FD4E352153B /* SAPOData.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73A69B712D756F46D1B1BC70 /* SAPOData.xcframework */; };
+		0B7998BA23F7E5DCA02DDA34 /* SAPOfflineOData.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97D36676AE36D96706462EF1 /* SAPOfflineOData.xcframework */; };
+		2B59A4E1748A6203FB8753DC /* SAPFoundation.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAA7187ABDCFDC5D5B0818CC /* SAPFoundation.xcframework */; };
+		55FF3AB03CEBD10027A6E19E /* ESPMContainerOfflineODataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBAD4E209B37D562DF73D368 /* ESPMContainerOfflineODataController.swift */; };
+		5E66C7A11843304F0F3200DA /* ESPMContainerCollectionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1304A7038E50E2D9FC99EF /* ESPMContainerCollectionType.swift */; };
+		6181059F70A63C8B535AE841 /* SAPCommon.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB5ACEF803A72CAED7A189EE /* SAPCommon.xcframework */; };
+		7059A5262C2C2CB7AC347BBF /* SAPOData.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A169BE306A857D3CC850B61 /* SAPOData.xcframework */; };
+		717D0370EC5CDE580F0C5A11 /* ODataContainerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBC59D5818395DCB2A1CC0E0 /* ODataContainerType.swift */; };
+		C523267F26F869C6F8D32851 /* ODataControlling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2467BE30EAEF3E327E328FC1 /* ODataControlling.swift */; };
+		D4888B421EDE65612A19B277 /* ESPMContainerFmwk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E23577E26020BE2BFF5A87A1 /* ESPMContainerFmwk.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		1DD9834ACB98372BC5FCA195 /* SAPCommon.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.xcframework; name = SAPCommon.xcframework; path = "../Release-xcframework/SAPCommon.xcframework"; sourceTree = "<group>"; };
-		4D215BF30132857C80A951F1 /* ODataContainerType.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ODataContainerType.swift; path = Model/ODataContainerType.swift; sourceTree = "<group>"; };
-		4D64B85E8E5C0602D485ECAC /* SAPOfflineOData.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.xcframework; name = SAPOfflineOData.xcframework; path = "../Release-xcframework/SAPOfflineOData.xcframework"; sourceTree = "<group>"; };
-		6A78BB1903E21CDCE4993CAB /* ESPMContainerOfflineODataController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ESPMContainerOfflineODataController.swift; path = OData/ESPMContainerOfflineODataController.swift; sourceTree = "<group>"; };
-		73A69B712D756F46D1B1BC70 /* SAPOData.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.xcframework; name = SAPOData.xcframework; path = "../Release-xcframework/SAPOData.xcframework"; sourceTree = "<group>"; };
-		81B41222098A68C207DF2A45 /* ODataControlling.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ODataControlling.swift; path = OData/ODataControlling.swift; sourceTree = "<group>"; };
-		84987D7664FD37DDE56FE4DA /* SAPFoundation.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.xcframework; name = SAPFoundation.xcframework; path = "../Release-xcframework/SAPFoundation.xcframework"; sourceTree = "<group>"; };
+		2467BE30EAEF3E327E328FC1 /* ODataControlling.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ODataControlling.swift; path = OData/ODataControlling.swift; sourceTree = "<group>"; };
+		3A169BE306A857D3CC850B61 /* SAPOData.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.xcframework; name = SAPOData.xcframework; path = "../Release-xcframework/SAPOData.xcframework"; sourceTree = "<group>"; };
 		91C75DB92463F04100ECC4ED /* SharedFmwk.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SharedFmwk.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		91C75DBD2463F04100ECC4ED /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		A9B2BD9613F49B706E555A36 /* ESPMContainerCollectionType.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ESPMContainerCollectionType.swift; path = Model/ESPMContainerCollectionType.swift; sourceTree = "<group>"; };
-		D797001C170C33DCEB07102F /* ESPMContainerFmwk.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 1; path = ESPMContainerFmwk.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		97D36676AE36D96706462EF1 /* SAPOfflineOData.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.xcframework; name = SAPOfflineOData.xcframework; path = "../Release-xcframework/SAPOfflineOData.xcframework"; sourceTree = "<group>"; };
+		AAA7187ABDCFDC5D5B0818CC /* SAPFoundation.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.xcframework; name = SAPFoundation.xcframework; path = "../Release-xcframework/SAPFoundation.xcframework"; sourceTree = "<group>"; };
+		AB5ACEF803A72CAED7A189EE /* SAPCommon.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.xcframework; name = SAPCommon.xcframework; path = "../Release-xcframework/SAPCommon.xcframework"; sourceTree = "<group>"; };
+		BBC59D5818395DCB2A1CC0E0 /* ODataContainerType.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ODataContainerType.swift; path = Model/ODataContainerType.swift; sourceTree = "<group>"; };
+		E23577E26020BE2BFF5A87A1 /* ESPMContainerFmwk.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 1; path = ESPMContainerFmwk.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FA1304A7038E50E2D9FC99EF /* ESPMContainerCollectionType.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ESPMContainerCollectionType.swift; path = Model/ESPMContainerCollectionType.swift; sourceTree = "<group>"; };
+		FBAD4E209B37D562DF73D368 /* ESPMContainerOfflineODataController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ESPMContainerOfflineODataController.swift; path = OData/ESPMContainerOfflineODataController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -37,36 +37,33 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E39DE35FB377654D7AB393D4 /* SAPFoundation.xcframework in Frameworks */,
-				FCEF1C8BD9788FD4E352153B /* SAPOData.xcframework in Frameworks */,
-				847BE9EDD09129594E23C4D0 /* SAPOfflineOData.xcframework in Frameworks */,
-				F509A94438B10DFDF0E6CFBF /* SAPCommon.xcframework in Frameworks */,
-				0B09854C971F380F496FBD5B /* ESPMContainerFmwk.framework in Frameworks */,
+				2B59A4E1748A6203FB8753DC /* SAPFoundation.xcframework in Frameworks */,
+				D4888B421EDE65612A19B277 /* ESPMContainerFmwk.framework in Frameworks */,
+				7059A5262C2C2CB7AC347BBF /* SAPOData.xcframework in Frameworks */,
+				0B7998BA23F7E5DCA02DDA34 /* SAPOfflineOData.xcframework in Frameworks */,
+				6181059F70A63C8B535AE841 /* SAPCommon.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		2874380151A2CABD2578D088 /* OData */ = {
+		2398B33762E1ABFE3B1079CB /* OData */ = {
 			isa = PBXGroup;
 			children = (
-				81B41222098A68C207DF2A45 /* ODataControlling.swift */,
-				6A78BB1903E21CDCE4993CAB /* ESPMContainerOfflineODataController.swift */,
+				2467BE30EAEF3E327E328FC1 /* ODataControlling.swift */,
+				FBAD4E209B37D562DF73D368 /* ESPMContainerOfflineODataController.swift */,
 			);
 			name = OData;
 			sourceTree = "<group>";
 		};
-		73D28444A81E7103041C6CCC /* Frameworks */ = {
+		7EBB06F5E9049151ABB45986 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				84987D7664FD37DDE56FE4DA /* SAPFoundation.xcframework */,
-				73A69B712D756F46D1B1BC70 /* SAPOData.xcframework */,
-				4D64B85E8E5C0602D485ECAC /* SAPOfflineOData.xcframework */,
-				1DD9834ACB98372BC5FCA195 /* SAPCommon.xcframework */,
-				D797001C170C33DCEB07102F /* ESPMContainerFmwk.framework */,
+				BBC59D5818395DCB2A1CC0E0 /* ODataContainerType.swift */,
+				FA1304A7038E50E2D9FC99EF /* ESPMContainerCollectionType.swift */,
 			);
-			name = Frameworks;
+			name = Model;
 			sourceTree = "<group>";
 		};
 		91C75DAF2463F04100ECC4ED = {
@@ -74,7 +71,7 @@
 			children = (
 				91C75DBB2463F04100ECC4ED /* SharedFmwk */,
 				91C75DBA2463F04100ECC4ED /* Products */,
-				73D28444A81E7103041C6CCC /* Frameworks */,
+				A60197EA8749134271949578 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -90,19 +87,22 @@
 			isa = PBXGroup;
 			children = (
 				91C75DBD2463F04100ECC4ED /* Info.plist */,
-				2874380151A2CABD2578D088 /* OData */,
-				C41ED43C6DD3BA9458F90419 /* Model */,
+				2398B33762E1ABFE3B1079CB /* OData */,
+				7EBB06F5E9049151ABB45986 /* Model */,
 			);
 			path = SharedFmwk;
 			sourceTree = "<group>";
 		};
-		C41ED43C6DD3BA9458F90419 /* Model */ = {
+		A60197EA8749134271949578 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				4D215BF30132857C80A951F1 /* ODataContainerType.swift */,
-				A9B2BD9613F49B706E555A36 /* ESPMContainerCollectionType.swift */,
+				AAA7187ABDCFDC5D5B0818CC /* SAPFoundation.xcframework */,
+				E23577E26020BE2BFF5A87A1 /* ESPMContainerFmwk.framework */,
+				3A169BE306A857D3CC850B61 /* SAPOData.xcframework */,
+				97D36676AE36D96706462EF1 /* SAPOfflineOData.xcframework */,
+				AB5ACEF803A72CAED7A189EE /* SAPCommon.xcframework */,
 			);
-			name = Model;
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -183,10 +183,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				79DCE0138A4653AF69E39D22 /* ODataControlling.swift in Sources */,
-				82D61C2B6370C96F993565C8 /* ESPMContainerOfflineODataController.swift in Sources */,
-				341EAF617493ECF3E9F8DABA /* ODataContainerType.swift in Sources */,
-				61A6D63335B9DEC0E9169420 /* ESPMContainerCollectionType.swift in Sources */,
+				C523267F26F869C6F8D32851 /* ODataControlling.swift in Sources */,
+				55FF3AB03CEBD10027A6E19E /* ESPMContainerOfflineODataController.swift in Sources */,
+				717D0370EC5CDE580F0C5A11 /* ODataContainerType.swift in Sources */,
+				5E66C7A11843304F0F3200DA /* ESPMContainerCollectionType.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

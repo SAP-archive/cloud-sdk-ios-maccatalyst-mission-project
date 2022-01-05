@@ -1,7 +1,7 @@
 //
 // TutorialApp
 //
-// Created by SAP BTP SDK Assistant for iOS application on 08/09/21
+// Created by SAP BTP SDK Assistant for iOS v7.0.0 application on 04/01/22
 //
 
 import Foundation
@@ -15,6 +15,7 @@ import UserNotifications
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDelegate, ConnectivityObserver, UNUserNotificationCenterDelegate {
     var window: UIWindow?
+    private var coveringView: UIView?
     /// Logger instance initialization
     private let logger = Logger.shared(named: "AppDelegateLogger")
     private var flowProvider = OnboardingFlowProvider()
@@ -26,18 +27,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
     var sessionManager: OnboardingSessionManager<ApplicationOnboardingSession>!
 
     func application(_: UIApplication, didFinishLaunchingWithOptions _: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        self.initializeLogUploader()
-        self.initializeUsageCollection()
+        initializeLogUploader()
+        initializeUsageCollection()
         // Set a FUIInfoViewController as the rootViewController, since there it is none set in the Main.storyboard
         // Also, hide potentially sensitive data of the real application screen during onboarding
-        self.window = UIWindow(frame: UIScreen.main.bounds)
-        self.window!.rootViewController = FUIInfoViewController.createInstanceFromStoryboard()
-        self.window!.makeKey()
+        window = UIWindow(frame: UIScreen.main.bounds)
+        window!.rootViewController = FUIInfoViewController.createSplashScreenInstanceFromStoryboard()
+        window!.makeKey()
 
         // Read more about Logging: https://help.sap.com/viewer/fc1a59c210d848babfb3f758a6f55cb1/Latest/en-US/879aaebaa8e6401dac100ea9bb8b817d.html
         Logger.root.logLevel = .debug
 
-        self.initializeOnboarding()
+        initializeOnboarding()
         ConnectivityReceiver.registerObserver(self)
 
         // Customize the UI to align SAP style
@@ -60,6 +61,40 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
             }
 
             self.onboardingErrorHandler?.handleUnlockingError(error)
+        }
+    }
+
+    func applicationWillResignActive(_: UIApplication) {
+        hideAppScreen()
+    }
+
+    func applicationDidBecomeActive(_: UIApplication) {
+        showAppScreen()
+    }
+
+    func hideAppScreen() {
+        guard coveringView == nil else {
+            return
+        }
+        let storyboard = UIStoryboard(name: "LaunchScreen", bundle: nil)
+        let vc = storyboard.instantiateViewController(identifier: "LaunchScreen")
+        coveringView = vc.view
+        coveringView!.frame = window!.bounds
+        coveringView!.alpha = 0
+        window!.addSubview(coveringView!)
+        window!.bringSubviewToFront(coveringView!)
+
+        UIView.animate(withDuration: 0.3) {
+            self.coveringView?.alpha = 1.0
+        }
+    }
+
+    func showAppScreen() {
+        UIView.animate(withDuration: 0.3) {
+            self.coveringView?.alpha = 0
+        } completion: { _ in
+            self.coveringView?.removeFromSuperview()
+            self.coveringView = nil
         }
     }
 
@@ -101,13 +136,13 @@ extension OnboardingSessionManager {
 extension AppDelegate {
     /// Setup an onboarding session instance
     func initializeOnboarding() {
-        let presentationDelegate = ApplicationUIManager(window: self.window!)
-        self.onboardingErrorHandler = OnboardingErrorHandler()
-        self.sessionManager = OnboardingSessionManager(presentationDelegate: presentationDelegate, flowProvider: self.flowProvider, delegate: self.onboardingErrorHandler)
+        let presentationDelegate = ApplicationUIManager(window: window!)
+        onboardingErrorHandler = OnboardingErrorHandler()
+        sessionManager = OnboardingSessionManager(presentationDelegate: presentationDelegate, flowProvider: flowProvider, delegate: onboardingErrorHandler)
         presentationDelegate.isOnboarding = true
         presentationDelegate.showSplashScreenForOnboarding { _ in }
 
-        self.onboardUser()
+        onboardUser()
     }
 
     /// Start demo mode
@@ -120,7 +155,7 @@ extension AppDelegate {
         alertController.addAction(
             UIAlertAction(title: LocalizedStrings.AppDelegate.startDemoModeRestartTitle, style: .default) { _ in
                 self.onboardUser()
-        })
+            })
 
         DispatchQueue.main.async {
             guard let topViewController = ModalUIViewControllerPresenter.topPresentedViewController() else {
@@ -132,19 +167,19 @@ extension AppDelegate {
 
     /// Application specific code after successful onboard
     func afterOnboard() {
-        guard let _ = self.sessionManager.onboardingSession else {
+        guard let _ = sessionManager.onboardingSession else {
             fatalError("Invalid state")
         }
 
-        self.initializeRemoteNotification()
-        self.uploadLogs()
-        self.uploadUsageReport()
-        self.uploadCrashReport()
+        initializeRemoteNotification()
+        uploadLogs()
+        uploadUsageReport()
+        uploadCrashReport()
     }
 
     /// Start onboarding a user
     func onboardUser() {
-        self.sessionManager.open { error in
+        sessionManager.open { error in
             if let error = error {
                 self.onboardingErrorHandler?.handleOnboardingError(error)
                 return
@@ -159,12 +194,12 @@ extension AppDelegate {
 extension AppDelegate {
     func connectionEstablished() {
         // connection established
-        self.logger.info("Connection established.")
+        logger.info("Connection established.")
     }
 
     func connectionChanged(_ previousReachabilityType: ReachabilityType, reachabilityType _: ReachabilityType) {
         // connection changed
-        self.logger.info("Connection changed.")
+        logger.info("Connection changed.")
         if case previousReachabilityType = ReachabilityType.offline {
             // connection established
             self.flowProvider.runSynchingFlow = true
@@ -178,7 +213,7 @@ extension AppDelegate {
 
     func connectionLost() {
         // connection lost
-        self.logger.info("Connection lost.")
+        logger.info("Connection lost.")
     }
 }
 
@@ -215,23 +250,23 @@ extension AppDelegate {
     // MARK: AppDelegate method implementations for remote notification handling
 
     func application(_: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-        self.uploadDeviceTokenForRemoteNotification(deviceToken)
+        uploadDeviceTokenForRemoteNotification(deviceToken)
     }
 
     func application(_: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
-        self.logger.error("Failed to register for Remote Notification", error: error)
+        logger.error("Failed to register for Remote Notification", error: error)
     }
 
     // Called to let your app know which action was selected by the user for a given notification.
     func userNotificationCenter(_: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
-        self.logger.info("App opened via user selecting notification: \(response.notification.request.content.body)")
+        logger.info("App opened via user selecting notification: \(response.notification.request.content.body)")
         // Here is where you want to take action to handle the notification, maybe navigate the user to a given screen.
         completionHandler()
     }
 
     // Called when a notification is delivered to a foreground app.
     func userNotificationCenter(_: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-        self.logger.info("Remote Notification arrived while app was in foreground: \(notification.request.content.body)")
+        logger.info("Remote Notification arrived while app was in foreground: \(notification.request.content.body)")
         // Currently we are presenting the notification alert as the application were in the background.
         // If you have handled the notification and do not want to display an alert, call the completionHandler with empty options: completionHandler([])
         completionHandler([.banner, .sound])
@@ -247,12 +282,12 @@ extension AppDelegate {
             // Attaches a LogUploadFileHandler instance to the root of the logging system
             try SAPcpmsLogUploader.attachToRootLogger()
         } catch {
-            self.logger.error("Failed to attach to root logger.", error: error)
+            logger.error("Failed to attach to root logger.", error: error)
         }
     }
 
     private func uploadLogs() {
-        guard let session = self.sessionManager.onboardingSession else {
+        guard let session = sessionManager.onboardingSession else {
             // Onboarding not yet performed
             return
         }
@@ -275,12 +310,12 @@ extension AppDelegate {
             // Required call to configure OSlifecycle notification, specify data collection items during event triggers, and configure usage store behavior.
             try UsageBroker.shared.start()
         } catch {
-            self.logger.error("Failed to initialize usage collection.", error: error)
+            logger.error("Failed to initialize usage collection.", error: error)
         }
     }
 
     private func uploadUsageReport() {
-        guard self.sessionManager.onboardingSession != nil else {
+        guard sessionManager.onboardingSession != nil else {
             // Onboarding not yet performed
             return
         }
@@ -293,7 +328,7 @@ extension AppDelegate {
 
 extension AppDelegate {
     private func uploadCrashReport() {
-        guard let session = self.sessionManager.onboardingSession else {
+        guard let session = sessionManager.onboardingSession else {
             // Onboarding not yet performed
             return
         }

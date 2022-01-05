@@ -1,7 +1,7 @@
 //
 // TutorialApp
 //
-// Created by SAP BTP SDK Assistant for iOS application on 08/09/21
+// Created by SAP BTP SDK Assistant for iOS v7.0.0 application on 04/01/22
 //
 
 import SAPCommon
@@ -25,13 +25,13 @@ public class OnboardingFlowProvider: OnboardingFlowProviding {
     public func flow(for _: OnboardingControlling, flowType: OnboardingFlow.FlowType, completionHandler: @escaping (OnboardingFlow?, Error?) -> Void) {
         switch flowType {
         case .onboard:
-            completionHandler(self.onboardingFlow(), nil)
+            completionHandler(onboardingFlow(), nil)
         case let .restore(onboardingID):
-            completionHandler(self.restoringFlow(for: onboardingID), nil)
+            completionHandler(restoringFlow(for: onboardingID), nil)
         case .background:
             break
         case let .reset(onboardingID):
-            completionHandler(self.resettingFlow(for: onboardingID), nil)
+            completionHandler(resettingFlow(for: onboardingID), nil)
         @unknown default:
             break
         }
@@ -40,7 +40,7 @@ public class OnboardingFlowProvider: OnboardingFlowProviding {
     // MARK: – Internal
 
     func onboardingFlow() -> OnboardingFlow {
-        let steps = self.onboardingSteps
+        let steps = onboardingSteps
         let context = OnboardingContext(presentationDelegate: OnboardingFlowProvider.modalUIViewControllerPresenter)
         let flow = OnboardingFlow(flowType: .onboard, context: context, steps: steps)
         return flow
@@ -48,11 +48,11 @@ public class OnboardingFlowProvider: OnboardingFlowProviding {
 
     func restoringFlow(for onboardingID: UUID) -> OnboardingFlow {
         var steps = [OnboardingStep]()
-        if self.runSynchingFlow {
-            steps = self.offlineSyncingSteps
-            self.runSynchingFlow = false
+        if runSynchingFlow {
+            steps = offlineSyncingSteps
+            runSynchingFlow = false
         } else {
-            steps = self.restoringSteps
+            steps = restoringSteps
         }
         var context = OnboardingContext(onboardingID: onboardingID, presentationDelegate: OnboardingFlowProvider.modalUIViewControllerPresenter)
         context.onboardingID = onboardingID
@@ -61,7 +61,7 @@ public class OnboardingFlowProvider: OnboardingFlowProviding {
     }
 
     func resettingFlow(for onboardingID: UUID) -> OnboardingFlow {
-        let steps = self.resettingSteps
+        let steps = resettingSteps
         var context = OnboardingContext(onboardingID: onboardingID, presentationDelegate: OnboardingFlowProvider.modalUIViewControllerPresenter)
         context.onboardingID = onboardingID
         let flow = OnboardingFlow(flowType: .reset(onboardingID: onboardingID), context: context, steps: steps)
@@ -72,13 +72,13 @@ public class OnboardingFlowProvider: OnboardingFlowProviding {
 
     public var onboardingSteps: [OnboardingStep] {
         return [
-            self.configuredWelcomeScreenStep(),
+            configuredWelcomeScreenStep(),
             CompositeStep(steps: SAPcpmsDefaultSteps.configuration),
-            OAuth2AuthenticationStep(presenter: FioriWKWebViewPresenter(webViewDelegate: self)),
+            OAuth2AuthenticationStep(presenter: FioriASWebAuthenticationSessionPresenter()),
             CompositeStep(steps: SAPcpmsDefaultSteps.settingsDownload),
             CompositeStep(steps: SAPcpmsDefaultSteps.applyDuringOnboard),
-            self.configuredUserConsentStep(),
-            self.configuredDataCollectionConsentStep(),
+            configuredUserConsentStep(),
+            configuredDataCollectionConsentStep(),
             StoreManagerStep(),
 
             ODataOnboardingStep(),
@@ -88,26 +88,26 @@ public class OnboardingFlowProvider: OnboardingFlowProviding {
     public var restoringSteps: [OnboardingStep] {
         return [
             StoreManagerStep(),
-            self.configuredWelcomeScreenStep(),
+            configuredWelcomeScreenStep(),
             CompositeStep(steps: SAPcpmsDefaultSteps.configuration),
-            OAuth2AuthenticationStep(presenter: FioriWKWebViewPresenter(webViewDelegate: self)),
+            OAuth2AuthenticationStep(presenter: FioriASWebAuthenticationSessionPresenter()),
             CompositeStep(steps: SAPcpmsDefaultSteps.settingsDownload),
             CompositeStep(steps: SAPcpmsDefaultSteps.applyDuringRestore),
-            self.configuredDataCollectionConsentStep(),
+            configuredDataCollectionConsentStep(),
             ODataOnboardingStep(),
         ]
     }
 
     public var offlineSyncingSteps: [OnboardingStep] {
         return [
-            self.configuredWelcomeScreenStep(),
+            configuredWelcomeScreenStep(),
             CompositeStep(steps: SAPcpmsDefaultSteps.settingsDownload),
             CompositeStep(steps: SAPcpmsDefaultSteps.applyDuringRestore),
         ]
     }
 
     public var resettingSteps: [OnboardingStep] {
-        return self.onboardingSteps
+        return onboardingSteps
     }
 
     // MARK: – Step configuration
@@ -120,7 +120,7 @@ public class OnboardingFlowProvider: OnboardingFlowProviding {
 
         welcomeScreenStep.welcomeScreenCustomizationHandler = { welcomeStepUI in
             welcomeStepUI.headlineLabel.text = "TutorialApp"
-            welcomeStepUI.detailLabel.text = NSLocalizedString("keyWelcomeScreenMessage", value: "This application was generated by SAP BTP SDK Assistant for iOS", comment: "XMSG: Message on WelcomeScreen")
+            welcomeStepUI.detailLabel.text = NSLocalizedString("keyWelcomeScreenMessage", value: "This application was generated by SAP BTP SDK Assistant for iOS" + " v7.0.0", comment: "XMSG: Message on WelcomeScreen")
             welcomeStepUI.primaryActionButton.titleLabel?.text = NSLocalizedString("keyWelcomeScreenStartButton", value: "Start", comment: "XBUT: Title of start button on WelcomeScreen")
 
             if let welcomeScreen = welcomeStepUI as? FUIWelcomeScreen {
@@ -151,31 +151,5 @@ public class OnboardingFlowProvider: OnboardingFlowProviding {
 
     private func configuredDataCollectionConsentStep() -> DataCollectionConsentStep {
         return DataCollectionConsentStep()
-    }
-}
-
-// MARK: - SAPWKNavigationDelegate
-
-// The WKWebView occasionally returns an NSURLErrorCancelled error if a redirect happens too fast.
-// In case of OAuth with SAP's identity provider (IDP) we do not treat this as an error.
-extension OnboardingFlowProvider: SAPWKNavigationDelegate {
-    public func webView(_: WKWebView, handleFailed _: WKNavigation!, withError error: Error) -> Error? {
-        if self.isCancelledError(error) {
-            return nil
-        }
-        return error
-    }
-
-    public func webView(_: WKWebView, handleFailedProvisionalNavigation _: WKNavigation!, withError error: Error) -> Error? {
-        if self.isCancelledError(error) {
-            return nil
-        }
-        return error
-    }
-
-    private func isCancelledError(_ error: Error) -> Bool {
-        let nsError = error as NSError
-        return nsError.domain == NSURLErrorDomain &&
-            nsError.code == NSURLErrorCancelled
     }
 }

@@ -1,7 +1,7 @@
 //
 // TutorialApp
 //
-// Created by SAP BTP SDK Assistant for iOS application on 08/09/21
+// Created by SAP BTP SDK Assistant for iOS v7.0.0 application on 04/01/22
 //
 
 import ESPMContainerFmwk
@@ -15,7 +15,7 @@ import SAPOfflineOData
 class ProductMasterViewController: FUIFormTableViewController, SAPFioriLoadingIndicator {
     var dataService: ESPMContainer<OfflineODataProvider>!
     public var loadEntitiesBlock: ((_ completionHandler: @escaping ([ESPMContainerFmwk.Product]?, Error?) -> Void) -> Void)?
-    private var entities: [ESPMContainerFmwk.Product] = [ESPMContainerFmwk.Product]()
+    private var entities = [ESPMContainerFmwk.Product]()
 
     private var entityImages = [Int: UIImage]()
     private let logger = Logger.shared(named: "ProductMasterViewControllerLogger")
@@ -26,14 +26,14 @@ class ProductMasterViewController: FUIFormTableViewController, SAPFioriLoadingIn
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.edgesForExtendedLayout = []
+        edgesForExtendedLayout = []
         // Add refreshcontrol UI
-        self.refreshControl?.addTarget(self, action: #selector(self.refresh), for: UIControl.Event.valueChanged)
-        self.tableView.addSubview(self.refreshControl!)
+        refreshControl?.addTarget(self, action: #selector(refresh), for: UIControl.Event.valueChanged)
+        tableView.addSubview(refreshControl!)
         // Cell height settings
-        self.tableView.rowHeight = UITableView.automaticDimension
-        self.tableView.estimatedRowHeight = 98
-        self.updateTable()
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 98
+        updateTable()
     }
 
     var preventNavigationLoop = false
@@ -41,7 +41,7 @@ class ProductMasterViewController: FUIFormTableViewController, SAPFioriLoadingIn
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.clearsSelectionOnViewWillAppear = self.splitViewController!.isCollapsed
+        clearsSelectionOnViewWillAppear = splitViewController!.isCollapsed
     }
 
     override func didReceiveMemoryWarning() {
@@ -52,7 +52,7 @@ class ProductMasterViewController: FUIFormTableViewController, SAPFioriLoadingIn
     // MARK: - Table view data source
 
     override func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
-        return self.entities.count
+        return entities.count
     }
 
     override func tableView(_: UITableView, canEditRowAt _: IndexPath) -> Bool {
@@ -60,11 +60,11 @@ class ProductMasterViewController: FUIFormTableViewController, SAPFioriLoadingIn
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let product = self.entities[indexPath.row]
+        let product = entities[indexPath.row]
 
         let cell = CellCreationHelper.objectCellWithNonEditableContent(tableView: tableView, indexPath: indexPath, key: "ProductId", value: "\(product.productID!)")
         cell.preserveDetailImageSpacing = true
-        if let image = image(for: indexPath, product: self.entities[indexPath.row]) {
+        if let image = image(for: indexPath, product: entities[indexPath.row]) {
             cell.detailImage = image
             cell.detailImageView.contentMode = .scaleAspectFit
         }
@@ -76,8 +76,8 @@ class ProductMasterViewController: FUIFormTableViewController, SAPFioriLoadingIn
         if editingStyle != .delete {
             return
         }
-        let currentEntity = self.entities[indexPath.row]
-        self.dataService.deleteEntity(currentEntity) { error in
+        let currentEntity = entities[indexPath.row]
+        dataService.deleteEntity(currentEntity) { error in
             if let error = error {
                 self.logger.error("Delete entry failed.", error: error)
                 AlertHelper.displayAlert(with: NSLocalizedString("keyErrorDeletingEntryTitle", value: "Delete entry failed", comment: "XTIT: Title of deleting entry error pop up."), error: error, viewController: self)
@@ -91,7 +91,7 @@ class ProductMasterViewController: FUIFormTableViewController, SAPFioriLoadingIn
     // MARK: - Data accessing
 
     func requestEntities(completionHandler: @escaping (Error?) -> Void) {
-        self.loadEntitiesBlock! { entities, error in
+        loadEntitiesBlock! { entities, error in
             if let error = error {
                 completionHandler(error)
                 return
@@ -106,23 +106,23 @@ class ProductMasterViewController: FUIFormTableViewController, SAPFioriLoadingIn
     override func prepare(for segue: UIStoryboardSegue, sender _: Any?) {
         if segue.identifier == "showDetail" {
             // Show the selected Entity on the Detail view
-            guard let indexPath = self.tableView.indexPathForSelectedRow else {
+            guard let indexPath = tableView.indexPathForSelectedRow else {
                 return
             }
-            self.logger.info("Showing details of the chosen element.")
-            let selectedEntity = self.entities[indexPath.row]
+            logger.info("Showing details of the chosen element.")
+            let selectedEntity = entities[indexPath.row]
             let detailViewController = segue.destination as! ProductDetailViewController
             detailViewController.entity = selectedEntity
             detailViewController.navigationItem.leftItemsSupplementBackButton = true
-            detailViewController.navigationItem.title = self.entities[(self.tableView.indexPathForSelectedRow?.row)!].productID ?? ""
+            detailViewController.navigationItem.title = entities[(tableView.indexPathForSelectedRow?.row)!].productID ?? ""
             detailViewController.allowsEditableCells = false
             detailViewController.tableUpdater = self
-            detailViewController.preventNavigationLoop = self.preventNavigationLoop
-            detailViewController.dataService = self.dataService
-            detailViewController.entitySetName = self.entitySetName
+            detailViewController.preventNavigationLoop = preventNavigationLoop
+            detailViewController.dataService = dataService
+            detailViewController.entitySetName = entitySetName
         } else if segue.identifier == "addEntity" {
             // Show the Detail view with a new Entity, which can be filled to create on the server
-            self.logger.info("Showing view to add new entity.")
+            logger.info("Showing view to add new entity.")
             let dest = segue.destination as! UINavigationController
             let detailViewController = dest.viewControllers[0] as! ProductDetailViewController
             detailViewController.title = NSLocalizedString("keyAddEntityTitle", value: "Add Entity", comment: "XTIT: Title of add new entity screen.")
@@ -132,18 +132,18 @@ class ProductMasterViewController: FUIFormTableViewController, SAPFioriLoadingIn
             detailViewController.navigationItem.leftBarButtonItem = cancelButton
             detailViewController.allowsEditableCells = true
             detailViewController.tableUpdater = self
-            detailViewController.dataService = self.dataService
-            detailViewController.entitySetName = self.entitySetName
+            detailViewController.dataService = dataService
+            detailViewController.entitySetName = entitySetName
         }
     }
 
     // MARK: - Image loading
 
     private func image(for indexPath: IndexPath, product: Product) -> UIImage? {
-        if let image = self.entityImages[indexPath.row] {
+        if let image = entityImages[indexPath.row] {
             return image
         } else {
-            self.dataService.downloadMedia(entity: product, completionHandler: { data, error in
+            dataService.downloadMedia(entity: product, completionHandler: { data, error in
                 if let error = error {
                     self.logger.error("Download media failed. Error: \(error)")
                     return
@@ -173,7 +173,7 @@ class ProductMasterViewController: FUIFormTableViewController, SAPFioriLoadingIn
     // MARK: - Table update
 
     func updateTable() {
-        self.showFioriLoadingIndicator()
+        showFioriLoadingIndicator()
         DispatchQueue.global().async {
             self.loadData {
                 self.hideFioriLoadingIndicator()
@@ -182,7 +182,7 @@ class ProductMasterViewController: FUIFormTableViewController, SAPFioriLoadingIn
     }
 
     private func loadData(completionHandler: @escaping () -> Void) {
-        self.requestEntities { error in
+        requestEntities { error in
             defer {
                 completionHandler()
             }
@@ -211,6 +211,6 @@ class ProductMasterViewController: FUIFormTableViewController, SAPFioriLoadingIn
 
 extension ProductMasterViewController: ESPMContainerEntitySetUpdaterDelegate {
     func entitySetHasChanged() {
-        self.updateTable()
+        updateTable()
     }
 }

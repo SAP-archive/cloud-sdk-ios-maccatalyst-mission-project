@@ -1,7 +1,7 @@
 //
 // TutorialApp
 //
-// Created by SAP BTP SDK Assistant for iOS application on 08/09/21
+// Created by SAP BTP SDK Assistant for iOS v7.0.0 application on 04/01/22
 //
 
 import Foundation
@@ -12,6 +12,9 @@ class LocalizedStrings {
         static let startDemoModeTitle = NSLocalizedString("keyDemoModeSelectedTitle", value: "Demo Mode", comment: "XTIT: Title of alert action that the demo mode is selected.")
         static let startDemoModeMessage = NSLocalizedString("keyDemoModeSelectedMessage", value: "The Demo mode with Offline OData is not implemented in the generated application.", comment: "XMSG: Message that the user selected the demo mode.")
         static let startDemoModeRestartTitle = NSLocalizedString("keyGoBackButtonTitle", value: "Go back", comment: "XBUT: Title of go back button.")
+        static let urlNotSupportedTitle = NSLocalizedString("keyUrlNotSupportedAlertTitle", value: "Alert!", comment: "XTIT: Title of alert action that the url is not supported.")
+        static let urlNotSupportedMessage = NSLocalizedString("keyUrlNotSupportedMessage", value: "This url is currently not supported.", comment: "XMSG: Message that the url is not supported.")
+        static let urlNotSupportedOKButtonTitle = NSLocalizedString("keyUrlNotSupportedOKButtonTitle", value: "Okay", comment: "XBUT: Title of ok button.")
     }
 
     enum Onboarding {

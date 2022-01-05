@@ -8,29 +8,29 @@
 			<key>config</key>
 			<dict>
 				<key>oauth2.authorizationEndpoint</key>
-				<string>https://6dcf76a7trial-dev-com-sap-example.cfapps.eu10.hana.ondemand.com/oauth2/api/v1/authorize</string>
+				<string>https://6dcf76a7trial-dev-com-example-tutorialapp.cfapps.eu10.hana.ondemand.com/oauth2/api/v1/authorize</string>
 				<key>oauth2.clients</key>
 				<array>
 					<dict>
 						<key>clientID</key>
-						<string>d9d70158-a9f3-4603-8967-2be6ed818d2c</string>
+						<string>9538677f-7e8a-4068-bcc1-3b4a1ff3cbdc</string>
 						<key>grantType</key>
 						<string>authorization_code</string>
 						<key>redirectURL</key>
-						<string>https://6dcf76a7trial-dev-com-sap-example.cfapps.eu10.hana.ondemand.com</string>
+						<string>com.example.TutorialApp://6dcf76a7trial-dev-com-example-tutorialapp.cfapps.eu10.hana.ondemand.com</string>
 					</dict>
 				</array>
 				<key>oauth2.tokenEndpoint</key>
-				<string>https://6dcf76a7trial-dev-com-sap-example.cfapps.eu10.hana.ondemand.com/oauth2/api/v1/token</string>
+				<string>https://6dcf76a7trial-dev-com-example-tutorialapp.cfapps.eu10.hana.ondemand.com/oauth2/api/v1/token</string>
 				<key>oauth2.xsuaaAuthorizationEndpoint</key>
-				<string>https://6dcf76a7trial.authentication.eu10.hana.ondemand.com/oauth/authorize?response_type=code&amp;client_id=sb-com-sap-example-dev!t108471&amp;redirect_uri=https%3A%2F%2F6dcf76a7trial-dev-com-sap-example.cfapps.eu10.hana.ondemand.com%2Flogin%2Fcallback</string>
+				<string>https://6dcf76a7trial.authentication.eu10.hana.ondemand.com/oauth/authorize?response_type=code&amp;client_id=sb-com-example-tutorialapp-dev!t108471&amp;redirect_uri=https%3A%2F%2F6dcf76a7trial-dev-com-example-tutorialapp.cfapps.eu10.hana.ondemand.com%2Flogin%2Fcallback</string>
 			</dict>
 			<key>type</key>
 			<string>oauth2</string>
 		</dict>
 	</array>
 	<key>host</key>
-	<string>6dcf76a7trial-dev-com-sap-example.cfapps.eu10.hana.ondemand.com</string>
+	<string>6dcf76a7trial-dev-com-example-tutorialapp.cfapps.eu10.hana.ondemand.com</string>
 	<key>protocol</key>
 	<string>https</string>
 </dict>
