@@ -1,3 +1,5 @@
+![](https://img.shields.io/badge/STATUS-NOT%20CURRENTLY%20MAINTAINED-red.svg?longCache=true&style=flat)
+
 # Build an iOS and MacOS App with One Code Line Using SAP BTP SDK for iOS - Sample Project
 
 [![REUSE status](https://api.reuse.software/badge/github.com/SAP-samples/cloud-sdk-ios-maccatalyst-mission-project)](https://api.reuse.software/info/github.com/SAP-samples/cloud-sdk-ios-maccatalyst-mission-project)
